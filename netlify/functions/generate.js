@@ -344,67 +344,105 @@ Enhance this query for better results.`
                     let xmlPrompt = '';
                     
                     if (category === 'TECHNICAL' || needsCode) {
-                        xmlPrompt = `Generate a technical XML structure with:
-- Code generation capabilities
-- Debugging focus
-- Best practices enforcement
-- Performance optimization
-- Error handling
-Query: "${enhancedQuery}"
-Role: ${selectedPersonality}`;
+                        xmlPrompt = `Create XML structure for technical assistance:
+<expert-mode>
+<identity>${selectedPersonality}</identity>
+<capabilities>code-generation debugging optimization</capabilities>
+<approach>${strategy}</approach>
+<quality>production-ready</quality>
+</expert-mode>
+<task>
+<query>${enhancedQuery}</query>
+<requirements>complete-solution best-practices error-handling</requirements>
+</task>`;
                     } else if (category === 'CREATIVE') {
-                        xmlPrompt = `Generate a creative XML structure with:
-- Maximum imagination
-- Originality prioritized
-- Engaging narrative
-- Vivid descriptions
-- Emotional depth
-Query: "${enhancedQuery}"
-Role: ${selectedPersonality}`;
+                        xmlPrompt = `Create XML for creative response:
+<creative-engine>
+<role>${selectedPersonality}</role>
+<mode>unlimited-imagination</mode>
+<style>${strategy}</style>
+</creative-engine>
+<prompt>
+<content>${enhancedQuery}</content>
+<goals>originality engagement surprise</goals>
+</prompt>`;
                     } else if (category === 'ANALYTICAL') {
-                        xmlPrompt = `Generate an analytical XML structure with:
-- Data-driven approach
-- Evidence-based reasoning
-- Multi-perspective analysis
-- Structured insights
-- Actionable recommendations
-Query: "${enhancedQuery}"
-Role: ${selectedPersonality}`;
+                        xmlPrompt = `Create XML for analysis:
+<analyst-mode>
+<expert>${selectedPersonality}</expert>
+<methodology>${strategy}</methodology>
+<depth>comprehensive</depth>
+</analyst-mode>
+<analysis-request>
+<query>${enhancedQuery}</query>
+<outputs>insights recommendations evidence</outputs>
+</analysis-request>`;
                     } else if (category === 'EDUCATIONAL') {
-                        xmlPrompt = `Generate an educational XML structure with:
-- Clear explanations
-- Logical progression
-- Practical examples
-- Understanding checks
-- Long-term retention focus
-Query: "${enhancedQuery}"
-Role: ${selectedPersonality}`;
+                        xmlPrompt = `Create XML for teaching:
+<educator-config>
+<instructor>${selectedPersonality}</instructor>
+<pedagogy>${strategy}</pedagogy>
+<clarity>maximum</clarity>
+</educator-config>
+<lesson>
+<topic>${enhancedQuery}</topic>
+<structure>explain examples practice summary</structure>
+</lesson>`;
                     } else if (category === 'PROBLEM_SOLVING') {
-                        xmlPrompt = `Generate a problem-solving XML structure with:
-- Root cause analysis
-- Multiple solution paths
-- Step-by-step implementation
-- Success metrics
-- Contingency planning
-Query: "${enhancedQuery}"
-Role: ${selectedPersonality}`;
+                        xmlPrompt = `Create XML for solution:
+<solver-mode>
+<expert>${selectedPersonality}</expert>
+<approach>${strategy}</approach>
+<thoroughness>complete</thoroughness>
+</solver-mode>
+<problem>
+<description>${enhancedQuery}</description>
+<deliverables>analysis solutions implementation</deliverables>
+</problem>`;
                     } else {
-                        xmlPrompt = `Generate an adaptive XML structure optimized for:
-Category: ${category}
-Strategy: ${strategy}
-Complexity: ${complexity}
-Query: "${enhancedQuery}"
-Role: ${selectedPersonality}`;
+                        xmlPrompt = `Create optimized XML:
+<assistant>
+<role>${selectedPersonality}</role>
+<optimization>${category.toLowerCase()}-focused</optimization>
+<strategy>${strategy}</strategy>
+</assistant>
+<request>
+<content>${enhancedQuery}</content>
+<quality>exceptional detailed actionable</quality>
+</request>`;
                     }
                     
                     const structureResponse = await callGroqAPI({
-                        systemPrompt: `Generate ONLY a specialized XML structure for the request. No explanations, just the XML.
-The structure should be optimized for maximum effectiveness and quality output.
-Include specific directives, quality markers, and output specifications.`,
-                        userPrompt: xmlPrompt
+                        systemPrompt: `CRITICAL: Output ONLY raw XML with NO additional text, explanations, or markdown formatting.
+
+Create an optimized prompt structure that:
+1. Maximizes response quality
+2. Provides clear behavioral directives
+3. Includes specific output requirements
+4. Uses effective XML tags that guide behavior
+
+The XML must start with < and end with > with nothing before or after.`,
+                        userPrompt: xmlPrompt + '\n\nREMEMBER: Output ONLY the XML structure, no text before or after.'
                     });
                     
-                    result = structureResponse;
+                    // Clean the response to ensure it's pure XML
+                    result = structureResponse.trim();
+                    
+                    // Remove any markdown formatting if present
+                    if (result.includes('```')) {
+                        result = result.replace(/```xml\n?/g, '').replace(/```\n?/g, '').trim();
+                    }
+                    
+                    // If the response doesn't start with < or has extra text, try to extract XML
+                    if (!result.startsWith('<')) {
+                        const xmlMatch = result.match(/<[\s\S]*>/);
+                        if (xmlMatch) {
+                            result = xmlMatch[0];
+                        } else {
+                            // Use the prompt directly as fallback
+                            result = xmlPrompt;
+                        }
+                    }
                     
                 } catch (error) {
                     console.error('Error in enhanced safe query processing:', error);
