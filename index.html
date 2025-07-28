@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Janus - Herramienta de Ingeniería de Prompts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Janus</h1>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
+            <!-- Textarea para el payload -->
+            <div>
+                <label for="payload" class="block text-sm font-medium text-gray-700 mb-2">
+                    Consulta del Usuario (Payload)
+                </label>
+                <textarea 
+                    id="payload" 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    rows="4"
+                    placeholder="Ingresa tu texto aquí..."
+                ></textarea>
+            </div>
+
+            <!-- Input para la personalidad -->
+            <div>
+                <label for="personality" class="block text-sm font-medium text-gray-700 mb-2">
+                    Personalidad
+                </label>
+                <input 
+                    type="text" 
+                    id="personality"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Ej: químico experto, hacker ético, poeta del siglo XIX"
+                />
+            </div>
+
+            <!-- Select para la técnica -->
+            <div>
+                <label for="technique" class="block text-sm font-medium text-gray-700 mb-2">
+                    Técnica de Transformación
+                </label>
+                <select 
+                    id="technique"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="base64">Ofuscación: Base64</option>
+                    <option value="leet">Ofuscación: Leet Speak</option>
+                    <option value="role_assignment">Contextualización: Asignación de Rol</option>
+                    <option value="structured_config">Contextualización: Configuración Estructurada</option>
+                </select>
+            </div>
+
+            <!-- Contenedor de opciones de formato -->
+            <div id="format-options-container" class="hidden">
+                <label for="format-select" class="block text-sm font-medium text-gray-700 mb-2">
+                    Formato de Salida
+                </label>
+                <select 
+                    id="format-select"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="xml">XML</option>
+                    <option value="json">JSON</option>
+                    <option value="yaml">YAML</option>
+                </select>
+            </div>
+
+            <!-- Botón generar -->
+            <button 
+                id="generate-btn"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
+            >
+                Generar
+            </button>
+
+            <!-- Resultado -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Resultado
+                </label>
+                <pre id="result" class="bg-gray-50 p-4 rounded-md border border-gray-200 min-h-[100px] whitespace-pre-wrap"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Manejo de UI para mostrar/ocultar opciones de formato
+        const techniqueSelect = document.getElementById('technique');
+        const formatOptionsContainer = document.getElementById('format-options-container');
+
+        techniqueSelect.addEventListener('change', function() {
+            if (this.value === 'structured_config') {
+                formatOptionsContainer.classList.remove('hidden');
+            } else {
+                formatOptionsContainer.classList.add('hidden');
+            }
+        });
+
+        // Lógica del botón Generar
+        const generateBtn = document.getElementById('generate-btn');
+        const resultElement = document.getElementById('result');
+
+        generateBtn.addEventListener('click', async function() {
+            // Recoger valores
+            const payloadValue = document.getElementById('payload').value;
+            const personalityValue = document.getElementById('personality').value;
+            const techniqueValue = document.getElementById('technique').value;
+            const formatValue = document.getElementById('format-select').value;
+
+            // Validación básica
+            if (!payloadValue.trim()) {
+                resultElement.textContent = 'Error: Por favor ingresa una consulta.';
+                return;
+            }
+
+            // Construir objeto requestBody
+            const requestBody = {
+                payload: payloadValue,
+                personality: personalityValue,
+                technique: techniqueValue,
+                options: {
+                    format: (techniqueValue === 'structured_config') ? formatValue : null
+                }
+            };
+
+            // Mostrar estado de carga
+            resultElement.textContent = 'Generando...';
+            generateBtn.disabled = true;
+
+            try {
+                // Realizar petición fetch
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultElement.textContent = data.prompt;
+                } else {
+                    resultElement.textContent = `Error: ${data.error}`;
+                }
+            } catch (error) {
+                resultElement.textContent = `Error de conexión: ${error.message}`;
+            } finally {
+                generateBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
