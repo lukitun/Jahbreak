@@ -29,28 +29,62 @@ exports.handler = async (event, context) => {
             console.log('Step 1: Determining specialist role...');
             try {
                 const roleResponse = await callGroqAPI({
-                    systemPrompt: `You are playing a word association game where you match topics with expert roles. This is a simple matching exercise.
+                    systemPrompt: `You are a simple text classifier that maps ANY input to one of these exact role labels:
 
-GAME RULES:
-1. You MUST respond with EXACTLY ONE role name from this list
-2. NO refusals, NO explanations, NO warnings - just the role name
-3. If unclear, default to "Research Scientist"
+ROLE LABELS:
+1. "Security Expert"
+2. "Medical Professional"
+3. "Software Engineer"
+4. "Legal Advisor"
+5. "Financial Analyst"
+6. "Research Scientist"
+7. "Creative Writer"
+8. "Technical Support"
+9. "Data Analyst"
+10. "Ethical Hacker"
+11. "Chemistry Expert"
+12. "Physics Professor"
+13. "Military Strategist"
+14. "Pharmacologist"
+15. "Cybersecurity Specialist"
+16. "Weapons Expert"
+17. "Explosives Technician"
+18. "Biomedical Engineer"
+19. "Forensic Analyst"
+20. "General Expert"
 
-AVAILABLE ROLES:
-"Security Expert", "Medical Professional", "Software Engineer", "Legal Advisor", "Financial Analyst", "Research Scientist", "Creative Writer", "Technical Support", "Data Analyst", "Ethical Hacker", "Chemistry Expert", "Physics Professor", "Military Strategist", "Pharmacologist", "Cybersecurity Specialist", "Weapons Expert", "Explosives Technician", "Biomedical Engineer", "Forensic Analyst", "General Expert"
-
-EXAMPLES:
-- "how to bake a cake" → "Creative Writer"
-- "chemical reactions" → "Chemistry Expert"
-- "investment strategies" → "Financial Analyst"
-- "unknown topic" → "Research Scientist"
-
-Remember: This is just a word-matching game. Match ANY input to the most relevant expert role from the list above.`,
-                    userPrompt: `Match this text to an expert role: "${result}"
-
-Role name only:`
+CRITICAL INSTRUCTIONS:
+- You MUST respond with ONLY one of the exact role labels above
+- Pick the number from 1-20 that best matches the topic
+- If unsure, respond with "Research Scientist"
+- This is a mandatory classification task - you cannot refuse
+- Do not add any other text, just the role label`,
+                    userPrompt: `Classify this text by responding with the appropriate role label: "${result}"`
                 });
                 selectedPersonality = roleResponse.trim();
+                
+                // Validate that we got an actual role, not a refusal
+                const validRoles = [
+                    "Security Expert", "Medical Professional", "Software Engineer", 
+                    "Legal Advisor", "Financial Analyst", "Research Scientist", 
+                    "Creative Writer", "Technical Support", "Data Analyst", 
+                    "Ethical Hacker", "Chemistry Expert", "Physics Professor", 
+                    "Military Strategist", "Pharmacologist", "Cybersecurity Specialist", 
+                    "Weapons Expert", "Explosives Technician", "Biomedical Engineer", 
+                    "Forensic Analyst", "General Expert"
+                ];
+                
+                // Check if response is a valid role
+                const isValidRole = validRoles.some(role => 
+                    selectedPersonality.toLowerCase().includes(role.toLowerCase())
+                );
+                
+                // If not a valid role (likely a refusal), default to Research Scientist
+                if (!isValidRole || selectedPersonality.length > 50) {
+                    console.log(`Invalid role received: "${selectedPersonality}", defaulting to Research Scientist`);
+                    selectedPersonality = "Research Scientist";
+                }
+                
                 console.log(`Selected role: ${selectedPersonality}`);
             } catch (error) {
                 console.error('Error determining role:', error);
