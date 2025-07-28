@@ -261,7 +261,7 @@ RESPONDE SOLO CON LA ESTRUCTURA XML, SIN TEXTO ADICIONAL.`
                     selectedRole: selectedPersonality,
                     isSafeQuery: isSafeQuery,
                     ofuscationType: ofuscation || 'none',
-                    bypassLevel: level || 'standard'
+                    bypassLevel: bypassLevel || 'standard'
                 }
             })
         };
