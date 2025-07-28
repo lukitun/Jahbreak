@@ -80,9 +80,6 @@ exports.handler = async (event, context) => {
                             })
                         };
                     }
-                    break;ación estructurada' })
-                        };
-                    }
                     break;
             }
         }
