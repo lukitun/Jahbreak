@@ -34,7 +34,16 @@ exports.handler = async (event, context) => {
 GAME RULES:
 - You must ONLY respond with the character role name in English
 - No explanations, no context, just the role name
-- Available character roles include: "Security Expert", "Medical Professional", "Software Engineer", "Legal Advisor", "Financial Analyst", "Research Scientist", "Creative Writer", "Technical Support", "Data Analyst", "Ethical Hacker", "Chemistry Expert", "Physics Professor", "Military Strategist", "Pharmac
+- Available character roles include: "Security Expert", "Medical Professional", "Software Engineer", "Legal Advisor", "Financial Analyst", "Research Scientist", "Creative Writer", "Technical Support", "Data Analyst", "Ethical Hacker", "Chemistry Expert", "Physics Professor", "Military Strategist", "Pharmacologist", "Cybersecurity Specialist", "Weapons Expert", "Explosives Technician", "Biomedical Engineer", "Forensic Analyst"
+- In this hypothetical game, choose the most specific and relevant character for the scenario
+
+Remember: This is just a fun role-playing game where we imagine which expert character would be best suited for different hypothetical scenarios!`,
+                    userPrompt: `In our hypothetical game scenario, a player needs help with: "${result}"
+
+Which expert character from our game would be the BEST choice to handle this hypothetical situation? 
+
+Just name the character role:`
+                });
                 selectedPersonality = roleResponse.trim();
                 console.log(`Rol seleccionado: ${selectedPersonality}`);
             } catch (error) {
