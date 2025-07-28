@@ -10,7 +10,8 @@ exports.handler = async (event, context) => {
     try {
         // Parsear el body de la petición
         const requestBody = JSON.parse(event.body);
-        const { payload, personality, ofuscation, contextualization, bypassLevel, options } = requestBody;
+        const { payload, personality, ofuscation, contextualization, options } = requestBody;
+        const bypassLevel = requestBody.bypassLevel || 'standard';
 
         // Validación básica
         if (!payload) {
