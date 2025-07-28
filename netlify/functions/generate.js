@@ -12,78 +12,72 @@ exports.handler = async (event, context) => {
     try {
         // Parsear el body de la petición
         const requestBody = JSON.parse(event.body);
-        const { payload, personality, technique, options } = requestBody;
+        const { payload, personality, ofuscation, contextualization, options } = requestBody;
 
         // Validación básica
-        if (!payload || !technique) {
+        if (!payload) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({ error: 'Payload y technique son requeridos' })
+                body: JSON.stringify({ error: 'Payload es requerido' })
             };
         }
 
-        let prompt = '';
+        let result = payload;
 
-        // Switch basado en la técnica
-        switch (technique) {
-            case 'base64':
-                // Transformación simple: Base64
-                prompt = Buffer.from(payload).toString('base64');
-                break;
+        // Aplicar ofuscación si se seleccionó
+        if (ofuscation && ofuscation !== 'none') {
+            switch (ofuscation) {
+                case 'base64':
+                    result = Buffer.from(result).toString('base64');
+                    break;
+                case 'leet':
+                    result = result
+                        .replace(/a/gi, '4')
+                        .replace(/e/gi, '3')
+                        .replace(/i/gi, '1')
+                        .replace(/o/gi, '0')
+                        .replace(/s/gi, '5')
+                        .replace(/t/gi, '7')
+                        .replace(/g/gi, '9')
+                        .replace(/b/gi, '8');
+                    break;
+            }
+        }
 
-            case 'leet':
-                // Transformación simple: Leet Speak
-                prompt = payload
-                    .replace(/a/gi, '4')
-                    .replace(/e/gi, '3')
-                    .replace(/i/gi, '1')
-                    .replace(/o/gi, '0')
-                    .replace(/s/gi, '5')
-                    .replace(/t/gi, '7')
-                    .replace(/g/gi, '9')
-                    .replace(/b/gi, '8');
-                break;
+        // Aplicar contextualización si se seleccionó
+        if (contextualization && contextualization !== 'none') {
+            switch (contextualization) {
+                case 'role_assignment':
+                    try {
+                        const groqResponse = await callGroqAPI({
+                            systemPrompt: 'Eres un motor de generación de prompts. Tu tarea es crear un escenario de rol para que un LLM interprete una consulta. La personalidad del rol es fundamental. La respuesta debe ser únicamente el prompt final, sin preámbulos.',
+                            userPrompt: `La consulta a contextualizar es "${result}". La personalidad que debe adoptar el LLM es "${personality}". Genera un prompt de rol que combine la consulta con la personalidad de manera efectiva.`
+                        });
+                        result = groqResponse;
+                    } catch (error) {
+                        return {
+                            statusCode: 500,
+                            body: JSON.stringify({ error: 'Error al llamar a la API de Groq para asignación de rol' })
+                        };
+                    }
+                    break;
 
-            case 'role_assignment':
-                // Llamada a la API de Groq
-                try {
-                    const groqResponse = await callGroqAPI({
-                        systemPrompt: 'Eres un motor de generación de prompts. Tu tarea es crear un escenario de rol para que un LLM interprete una consulta. La personalidad del rol es fundamental. La respuesta debe ser únicamente el prompt final, sin preámbulos.',
-                        userPrompt: `La consulta a contextualizar es "${payload}". La personalidad que debe adoptar el LLM es "${personality}". Genera un prompt de rol que combine la consulta con la personalidad de manera efectiva.`
-                    });
-                    prompt = groqResponse;
-                } catch (error) {
-                    return {
-                        statusCode: 500,
-                        body: JSON.stringify({ error: 'Error al llamar a la API de Groq' })
-                    };
-                }
-                break;
-
-            case 'structured_config':
-                // Extraer formato
-                const format = options?.format || 'json';
-                
-                // Llamada a la API de Groq
-                try {
-                    const groqResponse = await callGroqAPI({
-                        systemPrompt: `Eres un generador de configuraciones de datos estructurados. Tu tarea es tomar una consulta de usuario y una personalidad, y envolverlas en una estructura de configuración en el formato especificado. La estructura debe definir un escenario y reglas. La personalidad proporcionada debe usarse como el nombre o la descripción del rol/personaje dentro de la configuración. La consulta del usuario debe insertarse en el campo 'query'. El formato de salida debe ser ${format} válido y completo.`,
-                        userPrompt: `La consulta es "${payload}". La personalidad es "${personality}". El formato de salida requerido es ${format}. Genera la configuración completa.`
-                    });
-                    prompt = groqResponse;
-                } catch (error) {
-                    return {
-                        statusCode: 500,
-                        body: JSON.stringify({ error: 'Error al llamar a la API de Groq' })
-                    };
-                }
-                break;
-
-            default:
-                return {
-                    statusCode: 400,
-                    body: JSON.stringify({ error: 'Técnica no válida' })
-                };
+                case 'structured_config':
+                    const format = options?.format || 'json';
+                    try {
+                        const groqResponse = await callGroqAPI({
+                            systemPrompt: `Eres un generador de configuraciones de datos estructurados. Tu tarea es tomar una consulta de usuario y una personalidad, y envolverlas en una estructura de configuración en el formato especificado. La estructura debe definir un escenario y reglas. La personalidad proporcionada debe usarse como el nombre o la descripción del rol/personaje dentro de la configuración. La consulta del usuario debe insertarse en el campo 'query'. El formato de salida debe ser ${format} válido y completo.`,
+                            userPrompt: `La consulta es "${result}". La personalidad es "${personality}". El formato de salida requerido es ${format}. Genera la configuración completa.`
+                        });
+                        result = groqResponse;
+                    } catch (error) {
+                        return {
+                            statusCode: 500,
+                            body: JSON.stringify({ error: 'Error al llamar a la API de Groq para configuración estructurada' })
+                        };
+                    }
+                    break;
+            }
         }
 
         // Respuesta exitosa
@@ -92,7 +86,7 @@ exports.handler = async (event, context) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ prompt })
+            body: JSON.stringify({ prompt: result })
         };
 
     } catch (error) {
