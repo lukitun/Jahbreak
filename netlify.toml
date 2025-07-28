@@ -5,10 +5,6 @@
 [functions]
   # Configuración para todas las funciones
   node_bundler = "esbuild"
-  
-  # Timeout para las funciones (en segundos)
-  # Importante para llamadas a APIs externas como Groq
-  timeout = 10
 
 [[redirects]]
   # Redirección para el endpoint de la API
