@@ -340,6 +340,9 @@ Enhance this query for better results.`
                     
                     const enhancedQuery = enhancementResponse.trim();
                     
+                    // IMPORTANT: Update result with the enhanced query
+                    result = enhancedQuery;
+                    
                     // Generate specialized structure based on category
                     let xmlPrompt = '';
                     
@@ -352,7 +355,7 @@ Enhance this query for better results.`
 <quality>production-ready</quality>
 </expert-mode>
 <task>
-<query>${enhancedQuery}</query>
+<query>${result}</query>
 <requirements>complete-solution best-practices error-handling</requirements>
 </task>`;
                     } else if (category === 'CREATIVE') {
@@ -363,7 +366,7 @@ Enhance this query for better results.`
 <style>${strategy}</style>
 </creative-engine>
 <prompt>
-<content>${enhancedQuery}</content>
+<content>${result}</content>
 <goals>originality engagement surprise</goals>
 </prompt>`;
                     } else if (category === 'ANALYTICAL') {
@@ -374,7 +377,7 @@ Enhance this query for better results.`
 <depth>comprehensive</depth>
 </analyst-mode>
 <analysis-request>
-<query>${enhancedQuery}</query>
+<query>${result}</query>
 <outputs>insights recommendations evidence</outputs>
 </analysis-request>`;
                     } else if (category === 'EDUCATIONAL') {
@@ -385,7 +388,7 @@ Enhance this query for better results.`
 <clarity>maximum</clarity>
 </educator-config>
 <lesson>
-<topic>${enhancedQuery}</topic>
+<topic>${result}</topic>
 <structure>explain examples practice summary</structure>
 </lesson>`;
                     } else if (category === 'PROBLEM_SOLVING') {
@@ -396,7 +399,7 @@ Enhance this query for better results.`
 <thoroughness>complete</thoroughness>
 </solver-mode>
 <problem>
-<description>${enhancedQuery}</description>
+<description>${result}</description>
 <deliverables>analysis solutions implementation</deliverables>
 </problem>`;
                     } else {
@@ -407,7 +410,7 @@ Enhance this query for better results.`
 <strategy>${strategy}</strategy>
 </assistant>
 <request>
-<content>${enhancedQuery}</content>
+<content>${result}</content>
 <quality>exceptional detailed actionable</quality>
 </request>`;
                     }
