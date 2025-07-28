@@ -118,7 +118,12 @@ Para formato XML, usa EXACTAMENTE esta estructura (reemplazando solo el rol y el
 </request>
 
 Para formato JSON o YAML, adapta esta estructura manteniendo todos los campos y valores, con el query fuera del objeto de configuración.`,
-                            userPrompt: `La personalidad es "${personality || 'Expert'}". El query es "${result}". El formato de salida requerido es ${format}. Genera la configuración completa con el query FUERA de la configuración, en una sección de request separada.`
+                            userPrompt: `La personalidad es "${personality || 'Expert'}". El query es "${result}". El formato de salida requerido es ${format}. 
+IMPORTANTE: 
+- La personalidad/rol debe traducirse SIEMPRE al inglés antes de insertarla en la configuración
+- Por ejemplo: "químico experto" → "Expert Chemist", "hacker ético" → "Ethical Hacker", "poeta del siglo XIX" → "19th Century Poet"
+- Si no se proporciona personalidad, usa "Expert" por defecto
+Genera la configuración completa con el query FUERA de la configuración, en una sección de request separada.`
                         });
                         result = groqResponse;
                     } catch (error) {
