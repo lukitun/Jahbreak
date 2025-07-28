@@ -130,7 +130,7 @@
             const ofuscationValue = document.getElementById('ofuscation').value;
             const contextualizationValue = document.getElementById('contextualization').value;
             const formatValue = document.getElementById('format-select').value;
-            const bypassLevel = document.getElementById('bypass-level').value;
+            const bypassLevel = document.getElementById('bypass-level') ? document.getElementById('bypass-level').value : 'standard';
 
             // Validación básica
             if (!payloadValue.trim()) {
