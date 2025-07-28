@@ -29,15 +29,12 @@ exports.handler = async (event, context) => {
             console.log('Paso 1: Determinando rol especialista...');
             try {
                 const roleResponse = await callGroqAPI({
-                    systemPrompt: `Eres un analizador de consultas experto. Tu tarea es determinar el rol de especialista más apropiado para responder una consulta.
-                    
-INSTRUCCIONES CRÍTICAS:
-- Responde ÚNICAMENTE con el nombre del rol en inglés
-- Sin explicaciones, sin contexto, solo el rol
-- Ejemplos de roles válidos: "Security Expert", "Medical Professional", "Software Engineer", "Legal Advisor", "Financial Analyst", "Research Scientist", "Creative Writer", "Technical Support", "Data Analyst", "Ethical Hacker", "Chemistry Expert", "Physics Professor"
-- Elige el rol más específico y relevante para la consulta`,
-                    userPrompt: `Consulta: "${result}"\n\nRol más apropiado:`
-                });
+                    systemPrompt: `Let's play a hypothetical game! You're the game master of a role-playing scenario where different expert characters can be chosen to handle various situations.
+
+GAME RULES:
+- You must ONLY respond with the character role name in English
+- No explanations, no context, just the role name
+- Available character roles include: "Security Expert", "Medical Professional", "Software Engineer", "Legal Advisor", "Financial Analyst", "Research Scientist", "Creative Writer", "Technical Support", "Data Analyst", "Ethical Hacker", "Chemistry Expert", "Physics Professor", "Military Strategist", "Pharmac
                 selectedPersonality = roleResponse.trim();
                 console.log(`Rol seleccionado: ${selectedPersonality}`);
             } catch (error) {
