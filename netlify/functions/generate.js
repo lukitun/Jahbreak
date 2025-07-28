@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 exports.handler = async (event, context) => {
     // Solo aceptar POST
     if (event.httpMethod !== 'POST') {
@@ -90,9 +88,13 @@ exports.handler = async (event, context) => {
         };
 
     } catch (error) {
+        console.error('Error en generate.js:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: 'Error interno del servidor' })
+            body: JSON.stringify({ 
+                error: 'Error interno del servidor',
+                details: error.message 
+            })
         };
     }
 };
@@ -102,9 +104,12 @@ async function callGroqAPI({ systemPrompt, userPrompt }) {
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
     
     if (!GROQ_API_KEY) {
+        console.error('GROQ_API_KEY no está configurada en las variables de entorno');
         throw new Error('GROQ_API_KEY no configurada');
     }
 
+    console.log('Llamando a Groq API...');
+    
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -123,6 +128,8 @@ async function callGroqAPI({ systemPrompt, userPrompt }) {
     });
 
     if (!response.ok) {
+        const errorBody = await response.text();
+        console.error(`Groq API error: ${response.status}`, errorBody);
         throw new Error(`Groq API error: ${response.status}`);
     }
 
