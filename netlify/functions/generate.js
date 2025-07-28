@@ -69,9 +69,18 @@ exports.handler = async (event, context) => {
                         });
                         result = groqResponse;
                     } catch (error) {
+                        console.error('Error detallado en structured_config:', error);
                         return {
                             statusCode: 500,
-                            body: JSON.stringify({ error: 'Error al llamar a la API de Groq para configuración estructurada' })
+                            body: JSON.stringify({ 
+                                error: 'Error al llamar a la API de Groq para configuración estructurada',
+                                details: error.message,
+                                format: format,
+                                personality: personality
+                            })
+                        };
+                    }
+                    break;ación estructurada' })
                         };
                     }
                     break;
@@ -117,7 +126,7 @@ async function callGroqAPI({ systemPrompt, userPrompt }) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            model: 'mixtral-8x7b-32768',
+            model: 'llama3-70b-8192',
             messages: [
                 { role: 'system', content: systemPrompt },
                 { role: 'user', content: userPrompt }
