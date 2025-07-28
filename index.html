@@ -3,149 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Janus - Herramienta de Ingeniería de Prompts</title>
+    <title>Jah Break</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen p-8">
-    <div class="max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Janus</h1>
-        
-        <div class="bg-white rounded-lg shadow-md p-6 space-y-6">
-            <!-- Textarea para el payload -->
-            <div>
-                <label for="payload" class="block text-sm font-medium text-gray-700 mb-2">
-                    Consulta del Usuario (Payload)
-                </label>
-                <textarea 
-                    id="payload" 
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    rows="4"
-                    placeholder="Ingresa tu texto aquí..."
-                ></textarea>
+<body class="bg-gray-50">
+    <div class="min-h-screen py-12 px-4">
+        <div class="max-w-2xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-bold text-gray-900 mb-2">Jah Break</h1>
+                <p class="text-gray-600">Herramienta de Ingeniería de Prompts</p>
             </div>
+            
+            <!-- Main Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                <div class="space-y-6">
+                    <!-- Payload -->
+                    <div>
+                        <label for="payload" class="block text-sm font-medium text-gray-700 mb-2">
+                            Consulta
+                        </label>
+                        <textarea 
+                            id="payload" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                            rows="4"
+                            placeholder="Escribe tu consulta aquí..."
+                        ></textarea>
+                    </div>
 
-            <!-- Input para la personalidad -->
-            <div>
-                <label for="personality" class="block text-sm font-medium text-gray-700 mb-2">
-                    Personalidad
-                </label>
-                <input 
-                    type="text" 
-                    id="personality"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Ej: químico experto, hacker ético, poeta del siglo XIX"
-                />
+                    <!-- Personality -->
+                    <div>
+                        <label for="personality" class="block text-sm font-medium text-gray-700 mb-2">
+                            Personalidad
+                        </label>
+                        <input 
+                            type="text" 
+                            id="personality"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="ej: experto en seguridad, analista de datos"
+                        />
+                    </div>
+
+                    <!-- Two columns for selects -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Obfuscation -->
+                        <div>
+                            <label for="ofuscation" class="block text-sm font-medium text-gray-700 mb-2">
+                                Ofuscación
+                            </label>
+                            <select 
+                                id="ofuscation"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                            >
+                                <option value="none">Ninguna</option>
+                                <option value="base64">Base64</option>
+                                <option value="leet">Leet Speak</option>
+                                <option value="rot13">ROT13</option>
+                                <option value="reverse">Texto Invertido</option>
+                                <option value="unicode">Unicode</option>
+                            </select>
+                        </div>
+
+                        <!-- Format -->
+                        <div>
+                            <label for="format-select" class="block text-sm font-medium text-gray-700 mb-2">
+                                Formato
+                            </label>
+                            <select 
+                                id="format-select"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white"
+                            >
+                                <option value="xml">XML</option>
+                                <option value="json">JSON</option>
+                                <option value="yaml">YAML</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p class="text-sm text-blue-800">
+                            <strong>Modo:</strong> Configuración Estructurada
+                        </p>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <button 
+                        id="generate-btn"
+                        class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium"
+                    >
+                        Generar
+                    </button>
+
+                    <!-- Result -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-sm font-medium text-gray-700">
+                                Resultado
+                            </label>
+                            <button 
+                                id="copy-btn"
+                                class="text-sm text-blue-600 hover:text-blue-700 font-medium disabled:text-gray-400 disabled:cursor-not-allowed"
+                                disabled
+                            >
+                                Copiar
+                            </button>
+                        </div>
+                        <pre id="result" class="bg-gray-50 border border-gray-200 rounded-lg p-4 min-h-[120px] text-sm font-mono text-gray-800 whitespace-pre-wrap overflow-x-auto"></pre>
+                    </div>
+                </div>
             </div>
-
-            <!-- Select para técnica de ofuscación -->
-            <div>
-                <label for="ofuscation" class="block text-sm font-medium text-gray-700 mb-2">
-                    Técnica de Ofuscación
-                </label>
-                <select 
-                    id="ofuscation"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    <option value="none">Ninguna</option>
-                    <option value="base64">Base64</option>
-                    <option value="leet">Leet Speak</option>
-                    <option value="rot13">ROT13</option>
-                    <option value="reverse">Texto Invertido</option>
-                    <option value="unicode">Unicode Alternativo</option>
-                </select>
-            </div>
-
-            <!-- Información sobre técnica de contextualización -->
-            <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
-                <p class="text-sm text-blue-800">
-                    <span class="font-semibold">Técnica de Contextualización:</span> Configuración Estructurada
-                </p>
-                <p class="text-xs text-blue-600 mt-1">
-                    Esta técnica genera prompts con una estructura de configuración formal en el formato seleccionado.
-                </p>
-            </div>
-
-            <!-- Opciones de formato (siempre visible) -->
-            <div>
-                <label for="format-select" class="block text-sm font-medium text-gray-700 mb-2">
-                    Formato de Salida
-                </label>
-                <select 
-                    id="format-select"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    <option value="xml">XML</option>
-                    <option value="json">JSON</option>
-                    <option value="yaml">YAML</option>
-                </select>
-            </div>
-
-            <!-- Botón generar -->
-            <button 
-                id="generate-btn"
-                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200"
-            >
-                Generar
-            </button>
-
-            <!-- Resultado -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                    Resultado
-                </label>
-                <pre id="result" class="bg-gray-50 p-4 rounded-md border border-gray-200 min-h-[100px] whitespace-pre-wrap font-mono text-sm"></pre>
-            </div>
-
-            <!-- Botón copiar -->
-            <button 
-                id="copy-btn"
-                class="w-full bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled
-            >
-                Copiar al Portapapeles
-            </button>
         </div>
     </div>
 
     <script>
-        // Lógica del botón Generar
+        // Elements
         const generateBtn = document.getElementById('generate-btn');
         const copyBtn = document.getElementById('copy-btn');
         const resultElement = document.getElementById('result');
+        const payloadInput = document.getElementById('payload');
+        const personalityInput = document.getElementById('personality');
+        const ofuscationSelect = document.getElementById('ofuscation');
+        const formatSelect = document.getElementById('format-select');
 
+        // Generate
         generateBtn.addEventListener('click', async function() {
-            // Recoger valores
-            const payloadValue = document.getElementById('payload').value;
-            const personalityValue = document.getElementById('personality').value;
-            const ofuscationValue = document.getElementById('ofuscation').value;
-            const formatValue = document.getElementById('format-select').value;
-
-            // Validación básica
-            if (!payloadValue.trim()) {
+            const payload = payloadInput.value.trim();
+            
+            if (!payload) {
                 resultElement.textContent = 'Por favor, ingresa una consulta.';
                 copyBtn.disabled = true;
                 return;
             }
 
-            // Construir objeto requestBody con contextualización fija
             const requestBody = {
-                payload: payloadValue,
-                personality: personalityValue,
-                ofuscation: ofuscationValue,
-                contextualization: 'structured_config', // Siempre configuración estructurada
+                payload: payload,
+                personality: personalityInput.value.trim(),
+                ofuscation: ofuscationSelect.value,
+                contextualization: 'structured_config',
                 bypassLevel: 'standard',
                 options: {
-                    format: formatValue
+                    format: formatSelect.value
                 }
             };
 
-            // Mostrar estado de carga
+            // Loading
             resultElement.textContent = 'Generando...';
             generateBtn.disabled = true;
+            generateBtn.textContent = 'Generando...';
             copyBtn.disabled = true;
 
             try {
-                // Realizar petición fetch
                 const response = await fetch('/api/generate', {
                     method: 'POST',
                     headers: {
@@ -161,47 +169,35 @@
                     copyBtn.disabled = false;
                 } else {
                     resultElement.textContent = data.error || 'Error al generar el prompt';
-                    copyBtn.disabled = true;
                 }
             } catch (error) {
                 resultElement.textContent = 'Error de conexión: ' + error.message;
-                copyBtn.disabled = true;
             } finally {
                 generateBtn.disabled = false;
+                generateBtn.textContent = 'Generar';
             }
         });
 
-        // Lógica del botón Copiar
+        // Copy
         copyBtn.addEventListener('click', async function() {
-            const textToCopy = resultElement.textContent;
+            const text = resultElement.textContent;
             
             try {
-                await navigator.clipboard.writeText(textToCopy);
-                
-                // Feedback visual
+                await navigator.clipboard.writeText(text);
                 const originalText = copyBtn.textContent;
                 copyBtn.textContent = '¡Copiado!';
-                copyBtn.classList.remove('bg-gray-500', 'hover:bg-gray-600');
-                copyBtn.classList.add('bg-green-500', 'hover:bg-green-600');
                 
                 setTimeout(() => {
                     copyBtn.textContent = originalText;
-                    copyBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
-                    copyBtn.classList.add('bg-gray-500', 'hover:bg-gray-600');
                 }, 2000);
             } catch (err) {
-                console.error('Error al copiar:', err);
-                copyBtn.textContent = 'Error al copiar';
-                setTimeout(() => {
-                    copyBtn.textContent = 'Copiar al Portapapeles';
-                }, 2000);
+                alert('Error al copiar');
             }
         });
 
-        // Limpiar resultado al cambiar valores
-        const inputs = ['payload', 'personality', 'ofuscation', 'format-select'];
-        inputs.forEach(id => {
-            document.getElementById(id).addEventListener('input', () => {
+        // Clear result when inputs change
+        [payloadInput, personalityInput, ofuscationSelect, formatSelect].forEach(element => {
+            element.addEventListener('input', () => {
                 if (resultElement.textContent && resultElement.textContent !== 'Por favor, ingresa una consulta.') {
                     resultElement.textContent = '';
                     copyBtn.disabled = true;
