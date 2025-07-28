@@ -55,26 +55,18 @@
                 </select>
             </div>
 
-            <!-- Select para técnica de contextualización -->
-            <div>
-                <label for="contextualization" class="block text-sm font-medium text-gray-700 mb-2">
-                    Técnica de Contextualización
-                </label>
-                <select 
-                    id="contextualization"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    <option value="none">Ninguna</option>
-                    <option value="role_assignment">Asignación de Rol</option>
-                    <option value="structured_config">Configuración Estructurada</option>
-                    <option value="hypothetical">Escenario Hipotético</option>
-                    <option value="academic">Marco Académico</option>
-                    <option value="fictional">Narrativa Ficticia</option>
-                </select>
+            <!-- Información sobre técnica de contextualización -->
+            <div class="bg-blue-50 border border-blue-200 rounded-md p-4">
+                <p class="text-sm text-blue-800">
+                    <span class="font-semibold">Técnica de Contextualización:</span> Configuración Estructurada
+                </p>
+                <p class="text-xs text-blue-600 mt-1">
+                    Esta técnica genera prompts con una estructura de configuración formal en el formato seleccionado.
+                </p>
             </div>
 
-            <!-- Contenedor de opciones de formato -->
-            <div id="format-options-container" class="hidden">
+            <!-- Opciones de formato (siempre visible) -->
+            <div>
                 <label for="format-select" class="block text-sm font-medium text-gray-700 mb-2">
                     Formato de Salida
                 </label>
@@ -101,26 +93,24 @@
                 <label class="block text-sm font-medium text-gray-700 mb-2">
                     Resultado
                 </label>
-                <pre id="result" class="bg-gray-50 p-4 rounded-md border border-gray-200 min-h-[100px] whitespace-pre-wrap"></pre>
+                <pre id="result" class="bg-gray-50 p-4 rounded-md border border-gray-200 min-h-[100px] whitespace-pre-wrap font-mono text-sm"></pre>
             </div>
+
+            <!-- Botón copiar -->
+            <button 
+                id="copy-btn"
+                class="w-full bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled
+            >
+                Copiar al Portapapeles
+            </button>
         </div>
     </div>
 
     <script>
-        // Manejo de UI para mostrar/ocultar opciones de formato
-        const contextualizationSelect = document.getElementById('contextualization');
-        const formatOptionsContainer = document.getElementById('format-options-container');
-
-        contextualizationSelect.addEventListener('change', function() {
-            if (this.value === 'structured_config') {
-                formatOptionsContainer.classList.remove('hidden');
-            } else {
-                formatOptionsContainer.classList.add('hidden');
-            }
-        });
-
         // Lógica del botón Generar
         const generateBtn = document.getElementById('generate-btn');
+        const copyBtn = document.getElementById('copy-btn');
         const resultElement = document.getElementById('result');
 
         generateBtn.addEventListener('click', async function() {
@@ -128,31 +118,31 @@
             const payloadValue = document.getElementById('payload').value;
             const personalityValue = document.getElementById('personality').value;
             const ofuscationValue = document.getElementById('ofuscation').value;
-            const contextualizationValue = document.getElementById('contextualization').value;
             const formatValue = document.getElementById('format-select').value;
-            const bypassLevel = document.getElementById('bypass-level') ? document.getElementById('bypass-level').value : 'standard';
 
             // Validación básica
             if (!payloadValue.trim()) {
-                resultElement.textContent = '';
+                resultElement.textContent = 'Por favor, ingresa una consulta.';
+                copyBtn.disabled = true;
                 return;
             }
 
-            // Construir objeto requestBody
+            // Construir objeto requestBody con contextualización fija
             const requestBody = {
                 payload: payloadValue,
                 personality: personalityValue,
                 ofuscation: ofuscationValue,
-                contextualization: contextualizationValue,
-                bypassLevel: bypassLevel,
+                contextualization: 'structured_config', // Siempre configuración estructurada
+                bypassLevel: 'standard',
                 options: {
-                    format: (contextualizationValue === 'structured_config') ? formatValue : null
+                    format: formatValue
                 }
             };
 
             // Mostrar estado de carga
             resultElement.textContent = 'Generando...';
             generateBtn.disabled = true;
+            copyBtn.disabled = true;
 
             try {
                 // Realizar petición fetch
@@ -168,14 +158,55 @@
 
                 if (response.ok) {
                     resultElement.textContent = data.prompt;
+                    copyBtn.disabled = false;
                 } else {
                     resultElement.textContent = data.error || 'Error al generar el prompt';
+                    copyBtn.disabled = true;
                 }
             } catch (error) {
-                resultElement.textContent = 'Error de conexión';
+                resultElement.textContent = 'Error de conexión: ' + error.message;
+                copyBtn.disabled = true;
             } finally {
                 generateBtn.disabled = false;
             }
+        });
+
+        // Lógica del botón Copiar
+        copyBtn.addEventListener('click', async function() {
+            const textToCopy = resultElement.textContent;
+            
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                
+                // Feedback visual
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '¡Copiado!';
+                copyBtn.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+                copyBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+                
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    copyBtn.classList.add('bg-gray-500', 'hover:bg-gray-600');
+                }, 2000);
+            } catch (err) {
+                console.error('Error al copiar:', err);
+                copyBtn.textContent = 'Error al copiar';
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copiar al Portapapeles';
+                }, 2000);
+            }
+        });
+
+        // Limpiar resultado al cambiar valores
+        const inputs = ['payload', 'personality', 'ofuscation', 'format-select'];
+        inputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                if (resultElement.textContent && resultElement.textContent !== 'Por favor, ingresa una consulta.') {
+                    resultElement.textContent = '';
+                    copyBtn.disabled = true;
+                }
+            });
         });
     </script>
 </body>
