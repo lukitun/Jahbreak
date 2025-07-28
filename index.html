@@ -49,6 +49,9 @@
                     <option value="none">Ninguna</option>
                     <option value="base64">Base64</option>
                     <option value="leet">Leet Speak</option>
+                    <option value="rot13">ROT13</option>
+                    <option value="reverse">Texto Invertido</option>
+                    <option value="unicode">Unicode Alternativo</option>
                 </select>
             </div>
 
@@ -64,6 +67,9 @@
                     <option value="none">Ninguna</option>
                     <option value="role_assignment">Asignación de Rol</option>
                     <option value="structured_config">Configuración Estructurada</option>
+                    <option value="hypothetical">Escenario Hipotético</option>
+                    <option value="academic">Marco Académico</option>
+                    <option value="fictional">Narrativa Ficticia</option>
                 </select>
             </div>
 
@@ -124,10 +130,11 @@
             const ofuscationValue = document.getElementById('ofuscation').value;
             const contextualizationValue = document.getElementById('contextualization').value;
             const formatValue = document.getElementById('format-select').value;
+            const bypassLevel = document.getElementById('bypass-level').value;
 
             // Validación básica
             if (!payloadValue.trim()) {
-                resultElement.textContent = 'Error: Por favor ingresa una consulta.';
+                resultElement.textContent = '';
                 return;
             }
 
@@ -137,6 +144,7 @@
                 personality: personalityValue,
                 ofuscation: ofuscationValue,
                 contextualization: contextualizationValue,
+                bypassLevel: bypassLevel,
                 options: {
                     format: (contextualizationValue === 'structured_config') ? formatValue : null
                 }
@@ -161,10 +169,10 @@
                 if (response.ok) {
                     resultElement.textContent = data.prompt;
                 } else {
-                    resultElement.textContent = `Error: ${data.error}`;
+                    resultElement.textContent = data.error || 'Error al generar el prompt';
                 }
             } catch (error) {
-                resultElement.textContent = `Error de conexión: ${error.message}`;
+                resultElement.textContent = 'Error de conexión';
             } finally {
                 generateBtn.disabled = false;
             }
