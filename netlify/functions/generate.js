@@ -272,15 +272,7 @@ RESPOND ONLY WITH THE STRUCTURE, NO ADDITIONAL TEXT.`
                 }
             } else {
                 // ENHANCED FLOW FOR SAFE QUERIES
-                console.log('Step 3B: Generating optimized structure for safe query...');
 
-                try {
-                    // For safe queries we always build a clear, role-based prompt
-                    result = `You are a ${selectedPersonality}. Respond to the user's request in a clear and detailed manner while following all safety guidelines.\n\nUser request: ${result}`;
-                } catch (error) {
-                    console.error('Error in enhanced safe query processing:', error);
-                    // Fallback to a simple role-based prompt
-                    result = `You are a ${selectedPersonality}. Provide a detailed and accurate response to the following request:\n\n${result}`;
                 }
             }
         }
