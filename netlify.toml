@@ -24,20 +24,13 @@
   # CORS headers para la API
   for = "/api/*"
   [headers.values]
-    # Origin permitido definido por variable de entorno
-    Access-Control-Allow-Origin = "${ALLOWED_ORIGIN}"
+    Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Headers = "Content-Type"
     Access-Control-Allow-Methods = "GET, POST, OPTIONS"
 
 # Variables de entorno requeridas
 [build.environment]
   NODE_VERSION = "18"
-  # Valor por defecto para desarrollo local
-  ALLOWED_ORIGIN = "http://localhost:3000"
-
-[context.production.environment]
-  # Origin permitido en producción
-  ALLOWED_ORIGIN = "https://example.com"
 
 # Configuración de desarrollo local
 [dev]
