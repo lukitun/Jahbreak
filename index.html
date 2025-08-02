@@ -11,10 +11,36 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a1a;
+            --card-hover-bg: #252525;
+            --border-color: #333;
+            --subtext-color: #888;
+            --label-color: #b4b4b4;
+            --select-bg: #0f0f0f;
+            --output-bg: #0f0f0f;
+            --footer-bg: #0f0f0f;
+        }
+
+        body.light-mode {
+            --bg-color: #f5f5f5;
+            --text-color: #1a1a1a;
+            --card-bg: #ffffff;
+            --card-hover-bg: #f0f0f0;
+            --border-color: #ddd;
+            --subtext-color: #555;
+            --label-color: #333;
+            --select-bg: #ffffff;
+            --output-bg: #f5f5f5;
+            --footer-bg: #ffffff;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
+            background: var(--bg-color);
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -31,7 +57,7 @@
             text-align: center;
             margin-bottom: 3rem;
             padding-bottom: 2rem;
-            border-bottom: 1px solid #2a2a2a;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .header-top {
@@ -39,6 +65,26 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--card-hover-bg);
         }
 
         h1 {
@@ -51,7 +97,7 @@
         }
 
         .subtitle {
-            color: #888;
+            color: var(--subtext-color);
             font-size: 1.1rem;
         }
 
@@ -60,17 +106,17 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.5rem 1rem;
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
             text-decoration: none;
-            color: #e0e0e0;
+            color: var(--text-color);
             font-size: 0.9rem;
             transition: all 0.3s ease;
         }
 
         .github-link:hover {
-            background: #252525;
+            background: var(--card-hover-bg);
             border-color: #667eea;
         }
 
@@ -86,7 +132,7 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #b4b4b4;
+            color: var(--label-color);
             font-weight: 500;
         }
 
@@ -94,10 +140,10 @@
             width: 100%;
             min-height: 120px;
             padding: 1rem;
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #e0e0e0;
+            color: var(--text-color);
             font-family: inherit;
             font-size: 1rem;
             resize: vertical;
@@ -112,10 +158,10 @@
         input[type="text"] {
             width: 100%;
             padding: 0.75rem 1rem;
-            background: #1a1a1a;
-            border: 1px solid #333;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            color: #e0e0e0;
+            color: var(--text-color);
             font-family: inherit;
             font-size: 1rem;
             transition: border-color 0.3s ease;
@@ -127,10 +173,10 @@
         }
 
         .option-group {
-            background: #1a1a1a;
+            background: var(--card-bg);
             padding: 1.5rem;
             border-radius: 8px;
-            border: 1px solid #2a2a2a;
+            border: 1px solid var(--border-color);
             margin-bottom: 1.5rem;
         }
 
@@ -143,10 +189,10 @@
         select {
             width: 100%;
             padding: 0.75rem 1rem;
-            background: #0f0f0f;
-            border: 1px solid #333;
+            background: var(--select-bg);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            color: #e0e0e0;
+            color: var(--text-color);
             font-family: inherit;
             font-size: 0.95rem;
             cursor: pointer;
@@ -183,8 +229,8 @@
         }
 
         .output-section {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 2rem;
@@ -203,22 +249,23 @@
 
         .copy-button {
             padding: 0.5rem 1rem;
-            background: #2a2a2a;
-            border: 1px solid #333;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            color: #e0e0e0;
+            color: var(--text-color);
             font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .copy-button:hover {
-            background: #333;
+            background: var(--card-hover-bg);
             border-color: #667eea;
         }
 
         .output-content {
-            background: #0f0f0f;
+            background: var(--output-bg);
+            color: var(--text-color);
             border-radius: 6px;
             padding: 1rem;
             font-family: 'Courier New', monospace;
@@ -230,15 +277,15 @@
         }
 
         footer {
-            background: #0f0f0f;
-            border-top: 1px solid #2a2a2a;
+            background: var(--footer-bg);
+            border-top: 1px solid var(--border-color);
             padding: 1.5rem 0;
             text-align: center;
             margin-top: auto;
         }
 
         .footer-content {
-            color: #888;
+            color: var(--subtext-color);
             font-size: 0.9rem;
         }
 
@@ -288,12 +335,15 @@
                     <h1>Jahbreak</h1>
                     <p class="subtitle">Advanced Prompt Engineering Tool</p>
                 </div>
-                <a href="https://github.com/lukitun/Jahbreak" target="_blank" rel="noopener noreferrer" class="github-link">
-                    <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    GitHub
-                </a>
+                <div class="header-actions">
+                    <button id="themeToggle" class="theme-toggle">Light Mode</button>
+                    <a href="https://github.com/lukitun/Jahbreak" target="_blank" rel="noopener noreferrer" class="github-link">
+                        <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
             </div>
         </header>
 
@@ -342,6 +392,20 @@
     </footer>
 
     <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggle.textContent = 'Dark Mode';
+        }
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeToggle.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
         async function generatePrompt() {
             const payload = document.getElementById('payload').value;
             const personality = document.getElementById('personality').value;
