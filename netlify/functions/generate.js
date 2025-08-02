@@ -283,11 +283,7 @@ Explicitly instruct the assistant to answer in the same language as the user's q
 Respond ONLY with the prompt.`,
                         userPrompt: `User request: "${result}"`
                     });
-                    result = `${promptResponse.trim()}\n\nAnswer in the same language as the user's query.`;
-                } catch (error) {
-                    console.error('Error in enhanced safe query processing:', error);
-                    // Fallback to a simple role-based prompt
-                    result = `You are a ${selectedPersonality}. Provide a detailed and accurate response to the following request. Answer in the same language as the user's query:\n\n${result}`;
+
                 }
             }
         }
