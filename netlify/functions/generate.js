@@ -296,6 +296,16 @@ Respond ONLY with the prompt.`,
             }
         }
 
+        const modeSuffixes = {
+            creative: "LET'S GOOO!!!",
+            enthusiastic: "This is going to be awesome!",
+            formal: "Respectfully,"
+        };
+
+        if (options?.mode && modeSuffixes[options.mode]) {
+            result += `\n${modeSuffixes[options.mode]}`;
+        }
+
         // Successful response with additional metadata
         return {
             statusCode: 200,
