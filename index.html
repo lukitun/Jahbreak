@@ -397,14 +397,7 @@
         function displayOutput(data) {
             const outputSection = document.getElementById('outputSection');
             const output = document.getElementById('output');
-
-            if (data?.metadata?.isSafeQuery === false) {
-                output.innerHTML =
-                    '⚠️ This query has been flagged as unsafe. Please review our <a href="https://openai.com/policies/usage-policies" target="_blank" rel="noopener noreferrer">usage policies</a>.';
-                outputSection.style.display = 'block';
-                return;
-            }
-
+            
             output.textContent = data.prompt;
             outputSection.style.display = 'block';
         }
