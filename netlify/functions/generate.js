@@ -125,8 +125,8 @@ DO NOT include explanations, only the word SAFE or UNSAFE.`,
             isSafeQuery = true; // Default to safe if evaluation fails
         }
 
-        // Apply obfuscation if selected
-        if (ofuscation && ofuscation !== 'none') {
+        // Apply obfuscation only for unsafe queries
+        if (ofuscation && ofuscation !== 'none' && !isSafeQuery) {
             switch (ofuscation) {
                 case 'base64':
                     result = Buffer.from(result).toString('base64');
@@ -159,6 +159,9 @@ DO NOT include explanations, only the word SAFE or UNSAFE.`,
                     }).join('');
                     break;
             }
+        } else if (ofuscation && ofuscation !== 'none' && isSafeQuery) {
+            // For safe queries, skip obfuscation even if requested
+            console.log('Skipping obfuscation for safe query');
         }
 
         // STEP 3: Apply structured_config contextualization based on query type
@@ -696,7 +699,7 @@ Think step by step to provide an exceptional response:
                 metadata: {
                     selectedRole: selectedPersonality,
                     isSafeQuery: isSafeQuery,
-                    ofuscationType: ofuscation || 'none',
+                    ofuscationType: (!isSafeQuery && ofuscation && ofuscation !== 'none') ? ofuscation : 'none',
                     bypassLevel: bypassLevel || 'standard'
                 }
             })
