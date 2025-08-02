@@ -279,14 +279,11 @@ RESPOND ONLY WITH THE STRUCTURE, NO ADDITIONAL TEXT.`
                     const promptResponse = await callGroqAPI({
                         systemPrompt: `You are a prompt generation expert. Create a clear and effective prompt for an AI assistant.
 The prompt should encourage thorough reasoning, remain within safety guidelines, and directly address the user's request.
+Explicitly instruct the assistant to answer in the same language as the user's query.
 Respond ONLY with the prompt.`,
                         userPrompt: `User request: "${result}"`
                     });
-                    result = promptResponse.trim();
-                } catch (error) {
-                    console.error('Error in enhanced safe query processing:', error);
-                    // Fallback to a simple role-based prompt
-                    result = `You are a ${selectedPersonality}. Provide a detailed and accurate response to the following request:\n\n${result}`;
+
                 }
             }
         }
