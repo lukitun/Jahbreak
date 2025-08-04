@@ -1,3 +1,7 @@
+/**
+ * Netlify function that generates optimized prompts using the Groq API.
+ * Expects a POST body with fields like `payload`, `personality`, and configuration options.
+ */
 exports.handler = async (event, context) => {
     // Only accept POST
     if (event.httpMethod !== 'POST') {
