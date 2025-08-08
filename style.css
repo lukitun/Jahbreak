@@ -294,6 +294,12 @@ footer {
     text-decoration: underline;
 }
 
+.disclaimer {
+    margin-top: 0.5rem;
+    color: var(--subtext-color);
+    font-size: 0.8rem;
+}
+
 .loading {
     display: none;
     text-align: center;

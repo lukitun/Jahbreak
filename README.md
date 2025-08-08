@@ -44,5 +44,8 @@ netlify deploy --prod
         └── generate.js  # Serverless prompt generator
 ```
 
+## Disclaimer
+This project is intended for research purposes only. Using this technology for illegal activities is strictly forbidden.
+
 ## License
 MIT
