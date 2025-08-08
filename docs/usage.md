@@ -12,3 +12,6 @@ Press **Ctrl+Enter** while focused on the text area to generate a prompt.
 
 ## Copying Results
 Use the **Copy** button to place the generated prompt on your clipboard.
+
+## Disclaimer
+This project is intended for research purposes only. Using this technology for illegal activities is strictly forbidden.
