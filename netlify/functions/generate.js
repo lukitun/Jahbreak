@@ -323,7 +323,9 @@ Respond ONLY with the prompt.`,
         };
 
         try {
-            const logsPath = path.join(__dirname, '..', 'data', 'usage.json');
+            const dataDir = path.join(__dirname, '..', 'data');
+            fs.mkdirSync(dataDir, { recursive: true });
+            const logsPath = path.join(dataDir, 'usage.json');
             let logs = [];
             if (fs.existsSync(logsPath)) {
                 logs = JSON.parse(fs.readFileSync(logsPath, 'utf8'));
