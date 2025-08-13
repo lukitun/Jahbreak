@@ -2,5 +2,8 @@
   "name": "janus-app",
   "version": "1.0.0",
   "description": "Herramienta de ingeniería de prompts para transformación de texto",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@supabase/supabase-js": "^2.55.0"
+  }
 }
