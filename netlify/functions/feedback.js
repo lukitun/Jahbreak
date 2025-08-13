@@ -18,7 +18,9 @@ exports.handler = async (event) => {
       feedback
     };
 
-    const filePath = path.join(__dirname, '..', 'data', 'feedback.json');
+    const dataDir = path.join(__dirname, '..', 'data');
+    fs.mkdirSync(dataDir, { recursive: true });
+    const filePath = path.join(dataDir, 'feedback.json');
     let logs = [];
     if (fs.existsSync(filePath)) {
       logs = JSON.parse(fs.readFileSync(filePath, 'utf8'));
