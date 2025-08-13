@@ -2,8 +2,7 @@
  * Netlify function that generates optimized prompts using the Groq API.
  * Expects a POST body with fields like `payload`, `personality`, and configuration options.
  */
-const { createClient } = require('@supabase/supabase-js');
-const supabase = createClient(process.env.SUPABASE_LINK, process.env.SUPABASE_SERVICE_KEY);
+
 exports.handler = async (event, context) => {
     // Only accept POST
     if (event.httpMethod !== 'POST') {
@@ -323,12 +322,7 @@ Respond ONLY with the prompt.`,
         };
 
         try {
-            const { error } = await supabase
-                .from('usage_logs')
-                .insert([logEntry]);
-            if (error) {
-                console.error('Failed to write usage log:', error);
-            }
+
         } catch (logError) {
             console.error('Failed to write usage log:', logError);
         }
