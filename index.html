@@ -72,6 +72,13 @@
                 </div>
                 <div class="output-content" id="output"></div>
             </div>
+
+            <div class="feedback-section" id="feedbackSection" style="display: none;">
+                <p>Was this prompt helpful?</p>
+                <button onclick="sendFeedback(true)">Yes</button>
+                <button onclick="sendFeedback(false)">No</button>
+                <div id="feedbackMessage"></div>
+            </div>
         </main>
     </div>
 

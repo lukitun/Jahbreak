@@ -69,6 +69,8 @@ function displayOutput(data) {
 
     output.textContent = data.prompt;
     outputSection.style.display = 'block';
+    document.getElementById('feedbackSection').style.display = 'block';
+    document.getElementById('feedbackMessage').textContent = '';
 }
 
 function showError(message) {
@@ -92,6 +94,23 @@ function copyToClipboard() {
     }).catch(() => {
         showError('Failed to copy to clipboard');
     });
+}
+
+async function sendFeedback(isHelpful) {
+    const payload = document.getElementById('payload').value;
+    const prompt = document.getElementById('output').textContent;
+    const messageEl = document.getElementById('feedbackMessage');
+
+    try {
+        await fetch('/.netlify/functions/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ payload, prompt, feedback: isHelpful ? 'success' : 'failure' })
+        });
+        messageEl.textContent = 'Feedback sent. Thank you!';
+    } catch (err) {
+        messageEl.textContent = 'Failed to send feedback';
+    }
 }
 
 // Handle Enter key in textarea
