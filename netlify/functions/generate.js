@@ -2,8 +2,7 @@
  * Netlify function that generates optimized prompts using the Groq API.
  * Expects a POST body with fields like `payload`, `personality`, and configuration options.
  */
-const fs = require('fs');
-const path = require('path');
+
 exports.handler = async (event, context) => {
     // Only accept POST
     if (event.httpMethod !== 'POST') {
@@ -323,13 +322,7 @@ Respond ONLY with the prompt.`,
         };
 
         try {
-            const logsPath = path.join(__dirname, '..', 'data', 'usage.json');
-            let logs = [];
-            if (fs.existsSync(logsPath)) {
-                logs = JSON.parse(fs.readFileSync(logsPath, 'utf8'));
-            }
-            logs.push(logEntry);
-            fs.writeFileSync(logsPath, JSON.stringify(logs, null, 2));
+
         } catch (logError) {
             console.error('Failed to write usage log:', logError);
         }

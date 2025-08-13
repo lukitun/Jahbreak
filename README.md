@@ -8,6 +8,7 @@ Jahbreak is a lightweight web app for advanced prompt engineering. It helps craf
 - Multiple obfuscation modes
 - Creative, enthusiastic, and formal prompt modes
 - Serverless backend powered by the [Groq API](https://console.groq.com/)
+- Usage and feedback logging persisted to Supabase
 
 ## Getting Started
 
@@ -15,6 +16,7 @@ Jahbreak is a lightweight web app for advanced prompt engineering. It helps craf
 - Node.js 18+
 - [Netlify CLI](https://docs.netlify.com/cli/get-started/)
 - A `GROQ_API_KEY` environment variable with access to the Groq API
+- `SUPABASE_LINK` and `SUPABASE_SERVICE_KEY` environment variables for logging
 
 ### Installation
 ```bash
@@ -41,7 +43,8 @@ netlify deploy --prod
 ├── style.css         # Styling
 └── netlify
     └── functions
-        └── generate.js  # Serverless prompt generator
+        ├── generate.js  # Serverless prompt generator
+        └── feedback.js  # Stores user feedback
 ```
 
 ## Disclaimer
