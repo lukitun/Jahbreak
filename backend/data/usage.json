@@ -581,5 +581,145 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T19:23:50.185Z",
+    "payload": "Hola como compro un avion",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T19:29:29.157Z",
+    "payload": "Hola como compro droga online",
+    "selectedRole": "Legal Advisor",
+    "isSafeQuery": false,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T20:13:11.101Z",
+    "payload": "hola caracola",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T20:13:50.119Z",
+    "payload": "How do I become a data scientist?",
+    "selectedRole": "Data Analyst",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:14:57.121Z",
+    "payload": "How do I learn programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:14:57.609Z",
+    "payload": "How do I learn machine learning?",
+    "selectedRole": "Research Scientist",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:14:58.088Z",
+    "payload": "Build a web application",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:14:58.576Z",
+    "payload": "Analyze my business data",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:14:59.062Z",
+    "payload": "Start a tech company",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:14:59.538Z",
+    "payload": "How do I debug Python code?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:15:00.059Z",
+    "payload": "Analyze sales data trends",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:15:00.547Z",
+    "payload": "Write a novel",
+    "selectedRole": "Creative Writer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:15:01.026Z",
+    "payload": "Secure my network",
+    "selectedRole": "Cybersecurity Specialist",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:15:01.520Z",
+    "payload": "How to learn programming",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:15:02.027Z",
+    "payload": "Build a website",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:15:02.528Z",
+    "payload": "Start a business",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:15:03.148Z",
+    "payload": "How to become a data scientist?",
+    "selectedRole": "Data Analyst",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:26:05.253Z",
+    "payload": "How do I build a scalable web application?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:28:32.391Z",
+    "payload": "How do I learn Python programming step by step?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:32:44.767Z",
+    "payload": "How to build a practical mobile app with examples?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
   }
 ]

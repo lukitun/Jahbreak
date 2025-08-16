@@ -122,36 +122,53 @@ Respond ONLY with: SAFE or UNSAFE`,
     }
 }
 
-// Generate high-quality prompts using new template system
-function generateHighQualitySafePrompts(payload, role) {
-    console.log('🚀 USING HIGH-QUALITY PROMPT TEMPLATES 🚀');
+// Generate high-quality prompts using AI-selected templates
+async function generateHighQualitySafePrompts(payload, role) {
+    console.log('🤖 USING AI-SELECTED TEMPLATE SYSTEM 🤖');
     
-    // Import the new prompt template functions
-    const {
-        generateDirectPrompt,
-        generateInteractivePrompt,
-        generateSocraticPrompt
-    } = require('../lib/promptTemplates');
-    
-    // Generate all three types of prompts
-    const directPrompt = generateDirectPrompt(payload, role);
-    const interactivePrompt = generateInteractivePrompt(payload, role);
-    const socraticPrompt = generateSocraticPrompt(payload, role);
-    
-    console.log(`🚀 Direct prompt generated (${directPrompt.length} characters)`);
-    console.log(`🚀 Interactive prompt generated (${interactivePrompt.length} characters)`);
-    console.log(`🚀 Socratic prompt generated (${socraticPrompt.length} characters)`);
-    
-    // Return all three prompts as a structured object
-    return {
-        direct: directPrompt,
-        interactive: interactivePrompt,
-        socratic: socraticPrompt,
-        // For backwards compatibility
-        oneShot: directPrompt,
-        twoShot: interactivePrompt,
-        prompt: directPrompt
-    };
+    try {
+        // Import the new template-based system
+        const { generateAllTechniquesWithTemplates } = require('../lib/promptTemplates');
+        
+        // Generate all three techniques using AI-selected templates
+        const result = await generateAllTechniquesWithTemplates(payload, role);
+        
+        console.log(`🤖 AI-selected templates used:`);
+        console.log(`  Direct: ${result.templateMetadata.direct.templateUsed} (${result.direct.length} chars)`);
+        console.log(`  Interactive: ${result.templateMetadata.interactive.templateUsed} (${result.interactive.length} chars)`);
+        console.log(`  Socratic: ${result.templateMetadata.socratic.templateUsed} (${result.socratic.length} chars)`);
+        
+        return result;
+        
+    } catch (error) {
+        console.error('❌ Error with AI template selection, falling back to simple generation:', error);
+        
+        // Fallback to original system if AI fails - use simple templates
+        console.log('🔄 Using fallback template generation functions');
+        const directPrompt = `You are a ${role}. Provide comprehensive guidance for: "${payload}"`;
+        const interactivePrompt = `You are a ${role}. Please ask clarifying questions about: "${payload}"`;
+        const socraticPrompt = `You are a ${role}. Guide discovery through questions about: "${payload}"`;
+        
+        console.log(`🔄 Fallback prompts generated:`);
+        console.log(`  Direct: ${directPrompt.length} characters`);
+        console.log(`  Interactive: ${interactivePrompt.length} characters`);
+        console.log(`  Socratic: ${socraticPrompt.length} characters`);
+        
+        return {
+            direct: directPrompt,
+            interactive: interactivePrompt,
+            socratic: socraticPrompt,
+            // For backwards compatibility
+            oneShot: directPrompt,
+            twoShot: interactivePrompt,
+            prompt: directPrompt,
+            templateMetadata: {
+                direct: { templateUsed: "fallback", description: "Fallback template due to AI error" },
+                interactive: { templateUsed: "fallback", description: "Fallback template due to AI error" },
+                socratic: { templateUsed: "fallback", description: "Fallback template due to AI error" }
+            }
+        };
+    }
 }
 
 // OLD FUNCTION - DEPRECATED
@@ -292,22 +309,23 @@ router.post('/', async (req, res) => {
         let result;
         let metadata;
 
-        // Step 3: Generate appropriate prompt using HIGH-QUALITY TEMPLATES
-        console.log(`🔍 Step 3: Using HIGH-QUALITY prompt generation`);
+        // Step 3: Generate appropriate prompt using AI-SELECTED TEMPLATES
+        console.log(`🔍 Step 3: Using AI-SELECTED template generation`);
         if (isSafeQuery) {
-            console.log('🟢 Processing as SAFE query - using HIGH-QUALITY templates...');
-            const promptData = generateHighQualitySafePrompts(payload, selectedRole);
+            console.log('🟢 Processing as SAFE query - using AI-SELECTED templates...');
+            const promptData = await generateHighQualitySafePrompts(payload, selectedRole);
             result = promptData; // Return the full object with all three prompts
-            console.log(`🟢 HIGH-QUALITY Safe prompts generated:`);
+            console.log(`🟢 AI-SELECTED Safe prompts generated:`);
             console.log(`   - Direct: ${promptData.direct.length} characters`);
             console.log(`   - Interactive: ${promptData.interactive.length} characters`);
             console.log(`   - Socratic: ${promptData.socratic.length} characters`);
             metadata = {
                 selectedRole: selectedRole,
                 isSafeQuery: true,
-                promptFormat: 'high-quality-three-techniques',
+                promptFormat: 'ai-selected-templates',
                 hasMultiplePrompts: true,
-                availableTechniques: ['direct', 'interactive', 'socratic']
+                availableTechniques: ['direct', 'interactive', 'socratic'],
+                templatesUsed: promptData.templateMetadata
             };
         } else {
             console.log('🔴 Processing as UNSAFE query...');
