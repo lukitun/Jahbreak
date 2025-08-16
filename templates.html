@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Explorer - Jahbreak</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a1a;
+            --card-hover-bg: #252525;
+            --border-color: #333;
+            --subtext-color: #888;
+            --label-color: #b4b4b4;
+            --accent-color: #667eea;
+            --footer-bg: #0f0f0f;
+        }
+
+        body.light-mode {
+            --bg-color: #f5f5f5;
+            --text-color: #1a1a1a;
+            --card-bg: #ffffff;
+            --card-hover-bg: #f0f0f0;
+            --border-color: #ddd;
+            --subtext-color: #555;
+            --label-color: #333;
+            --footer-bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--card-hover-bg);
+        }
+
+        .theme-toggle {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--card-hover-bg);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--subtext-color);
+            font-size: 1.1rem;
+        }
+
+        .category-section {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .category-description {
+            color: var(--subtext-color);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .template-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .template-card:hover {
+            background: var(--card-hover-bg);
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .template-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .template-description {
+            color: var(--subtext-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .template-preview {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: var(--label-color);
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .key-features {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .key-features h2 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .feature-item {
+            padding: 1rem;
+            background: var(--bg-color);
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--subtext-color);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: var(--footer-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-link {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: #764ba2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .header-top {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <div class="nav-links">
+                    <a href="/" class="nav-link">← Back to Generator</a>
+                    <a href="https://github.com/lukitun/Jahbreak" target="_blank" class="nav-link">GitHub</a>
+                </div>
+                <button class="theme-toggle" id="themeToggle">Light Mode</button>
+            </div>
+            <h1>Template Explorer</h1>
+            <p class="subtitle">Learn from our prompt engineering templates</p>
+        </header>
+
+        <main>
+            <div class="key-features">
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-title">Language Rule</div>
+                        <div class="feature-description">All templates include the rule to always respond in the query's language</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-title">Concise Design</div>
+                        <div class="feature-description">Optimized for clarity and efficiency without sacrificing effectiveness</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-title">Three Approaches</div>
+                        <div class="feature-description">Direct, Interactive, and Socratic methods for different needs</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-title">Role-Aware</div>
+                        <div class="feature-description">Templates adapt to user roles and expertise levels</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category-section">
+                <h2 class="category-title">Direct Templates</h2>
+                <p class="category-description">
+                    Straightforward templates that provide immediate, actionable guidance with clear structure and expert insights.
+                </p>
+                <div class="templates-grid" id="directTemplates">
+                    <!-- Direct templates will be loaded here -->
+                </div>
+            </div>
+
+            <div class="category-section">
+                <h2 class="category-title">Interactive Templates</h2>
+                <p class="category-description">
+                    Question-based templates that gather information before providing customized, context-aware guidance.
+                </p>
+                <div class="templates-grid" id="interactiveTemplates">
+                    <!-- Interactive templates will be loaded here -->
+                </div>
+            </div>
+
+            <div class="category-section">
+                <h2 class="category-title">Socratic Templates</h2>
+                <p class="category-description">
+                    Deep inquiry templates that guide users to discover insights through strategic questioning and reflection.
+                </p>
+                <div class="templates-grid" id="socraticTemplates">
+                    <!-- Socratic templates will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            Built and made by <a href="https://lukitun.xyz" target="_blank" rel="noopener noreferrer" class="footer-link">lukitun</a>
+            <p class="disclaimer">This application is for research purposes only. Using this technology for illegal activities is forbidden.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const storedTheme = localStorage.getItem('theme');
+        if (storedTheme === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggle.textContent = 'Dark Mode';
+        }
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            themeToggle.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        });
+
+        // Template data
+        const templates = {
+            direct: [
+                {
+                    name: "Comprehensive Framework",
+                    description: "Systematic methodology with detailed execution plans",
+                    preview: `SYSTEMATIC FRAMEWORK: "{query}"
+
+IMPLEMENTATION:
+1. FOUNDATION: Define objectives, assess resources, plan approach
+2. EXECUTION: Apply best practices, track progress, maintain quality
+3. OPTIMIZATION: Measure, gather feedback, scale
+
+EXPERT GUIDANCE ({specialty}):
+• Focus on fundamentals first
+• Use proven frameworks
+• Avoid common pitfalls
+• Plan for long-term success
+
+TIMELINE:
+Week 1: Foundation | Weeks 2-4: Implementation | Month 2+: Optimization
+
+Adapt this framework to your specific context and requirements.`
+                },
+                {
+                    name: "Expert Masterclass",
+                    description: "Deep expertise sharing with professional insights",
+                    preview: `EXPERT MASTERCLASS: "{query}"
+
+CORE PRINCIPLES ({specialty}):
+1. Master basics before advancing
+2. Maintain professional standards
+3. Apply real-world lessons
+4. Stay current with evolution
+
+EXPERT EXECUTION:
+• FOUNDATION: Build proper groundwork
+• IMPLEMENTATION: Apply industry standards
+• OPTIMIZATION: Use advanced techniques
+• MASTERY: Handle complex challenges
+
+INSIDER KNOWLEDGE:
+• Focus on high-impact fundamentals (80/20 rule)
+• Avoid common pitfalls through proven prevention
+• Follow consistent success patterns
+• Apply expert-only techniques`
+                },
+                {
+                    name: "Practical Blueprint",
+                    description: "Hands-on implementation with concrete examples and templates",
+                    preview: `PRACTICAL BLUEPRINT: "{query}"
+
+QUICK START:
+□ Prerequisites & setup
+□ Tools & environment
+□ First milestone
+□ Success validation
+
+IMPLEMENTATION:
+PHASE 1 (Days 1-3): Setup & foundation
+PHASE 2 (Week 1-2): Core development using {specialty} practices
+PHASE 3 (Week 3-4): Optimization & deployment
+
+DELIVERABLES:
+Day 1: Setup | Week 1: Prototype | Week 2: Refined version | Week 3: Production-ready
+
+SUCCESS ACCELERATORS:
+• Use proven templates
+• Apply automation
+• Implement quality gates
+• Follow best practices`
+                },
+                {
+                    name: "Strategic Roadmap",
+                    description: "Long-term vision with strategic planning and systematic progression",
+                    preview: `STRATEGIC ROADMAP: "{query}"
+
+VISION: Sustainable long-term success in {specialty}
+
+STRATEGIC HORIZONS:
+HORIZON 1 (0-3 months): Foundation - capabilities, standards, alignment
+HORIZON 2 (3-12 months): Expansion - scale, advanced {specialty}, value creation
+HORIZON 3 (12+ months): Leadership - recognition, innovation, lasting impact
+
+RESOURCE ALLOCATION:
+40% Foundation | 30% Value creation | 20% Strategic development | 10% Innovation
+
+EXECUTION PRINCIPLES:
+• Ruthless prioritization
+• Quality standards
+• Continuous learning
+• Stakeholder value
+• Strategic patience`
+                }
+            ],
+            interactive: [
+                {
+                    name: "Focused Dialogue",
+                    description: "3-4 strategic questions for efficient customization",
+                    preview: `FOCUSED CONSULTATION: "{query}"
+
+ESSENTIAL QUESTIONS:
+
+1. OBJECTIVES & SUCCESS: What specific outcome and success metrics? Deadlines/constraints?
+
+2. POSITION & RESOURCES: Experience level? Available resources (time, budget, tools, team)?
+
+3. CONTEXT & CONSTRAINTS: Broader goals? Specific requirements/limitations?
+
+4. APPROACH PREFERENCES: Hands-on, structured, or strategic? What's worked before?
+
+CUSTOMIZED RESPONSE:
+• Targeted action plan for your situation
+• Optimized approach for your style
+• Relevant resources and tools
+• Risk mitigation strategies
+
+EFFICIENCY FOCUS ({specialty}):
+• 80/20 high-impact activities
+• Shortcuts and accelerators
+• Common mistakes to avoid
+• Optimal sequencing`
+                },
+                {
+                    name: "Comprehensive Discovery",
+                    description: "7-9 questions for thorough, multi-dimensional exploration",
+                    preview: `COMPREHENSIVE DISCOVERY: "{query}"
+
+DISCOVERY QUESTIONS:
+
+FOUNDATIONAL:
+1. OBJECTIVES & METRICS: Goals and success measures? Immediate + long-term?
+2. CURRENT STATE: Knowledge level? Related skills? Familiar/unfamiliar areas?
+3. RESOURCES & CONSTRAINTS: Available resources? Deadlines/limitations?
+
+CONTEXTUAL:
+4. STAKEHOLDERS: Who's involved/affected? Organizational/personal context?
+5. EXPERIENCE: Previous attempts? What worked/didn't? Key insights?
+6. APPROACH & RISK: Methodical vs experimental? Risk tolerance?
+
+STRATEGIC:
+7. LEARNING STYLE: Hands-on/theoretical/examples? Communication preferences?
+8. SUCCESS PATTERNS: Past effective approaches? Motivation factors?
+9. FUTURE VISION: Long-term capability use? Specialization vs breadth?
+
+MULTI-LAYERED RESPONSE:
+STRATEGIC: Customized methodology, success pathway, risk management
+TACTICAL: Action plan, resource optimization, quality checkpoints
+OPERATIONAL: Daily structure, tools, support systems, progress tracking
+ADAPTIVE: Contingencies, scaling, knowledge transfer, optimization`
+                },
+                {
+                    name: "Iterative Refinement",
+                    description: "5-6 questions with progressive deepening and refinement",
+                    preview: `ITERATIVE DISCOVERY: "{query}"
+
+PROGRESSIVE METHODOLOGY:
+Using {specialties} expertise, I'll identify core variables then iteratively refine.
+
+DISCOVERY SEQUENCE:
+
+INITIAL:
+1. OBJECTIVE & CONTEXT: Specific outcome? Broader context? Goal connections?
+2. CAPABILITY & RESOURCES: Experience/skills? Biggest gaps? Previous attempts/budget/team?
+3. APPROACH & CONSTRAINTS: Challenge preferences? Learning style/risk tolerance/timeline?
+
+REFINEMENT:
+4. SUCCESS PATTERNS: Past effective approaches? Motivation factors?
+5. STAKEHOLDER DYNAMICS: Who's involved/affected? Collaboration preferences?
+6. SCALING & EVOLUTION: Future capability use? One-time vs expertise building?
+
+ITERATIVE FRAMEWORK:
+ITERATION 1: Foundation approach, pathway, success factors, essential tools
+ITERATION 2: Step-by-step breakdown, targeted materials, obstacles/countermeasures
+ITERATION 3: Efficiency techniques, quality enhancement, scaling, innovation`
+                }
+            ],
+            socratic: [
+                {
+                    name: "Guided Inquiry",
+                    description: "Classical Socratic method with guided self-discovery",
+                    preview: `SOCRATIC INQUIRY: "{query}"
+
+FOUNDATION: True understanding comes from within through guided self-discovery.
+
+DISCOVERY PROCESS:
+• Examine assumptions and hidden beliefs
+• Connect existing knowledge to new challenges
+• Arrive at authentic insights
+• Develop transferable critical thinking
+
+EXPLORATION QUESTIONS:
+
+FOUNDATIONAL:
+"What assumptions about this challenge are worth examining?"
+"How would you explain this to someone unfamiliar?"
+"What do you already know that's more valuable than you realize?"
+"What beliefs do you hold, and where did they originate?"
+
+ANALYTICAL:
+"What if you approached from the opposite direction?"
+"With unlimited resources, what would ideal look like?"
+"What patterns from other experiences might apply?"
+"How would you test if a solution works?"
+
+SYNTHESIS:
+"What connections exist with past successful solutions?"
+"How does this serve larger goals and values?"
+"What patterns emerge from these questions?"
+
+SOCRATIC PRINCIPLES:
+Knowledge from within | Quality questioning over quick answers | Understanding through examination | Wisdom through reflection`
+                },
+                {
+                    name: "Critical Thinking",
+                    description: "Develops analytical and evaluative thinking skills",
+                    preview: `CRITICAL THINKING DEVELOPMENT: "{query}"
+
+FRAMEWORK: Drawing from {specialty}, exceptional solutions emerge through systematic critical thinking.
+
+SYSTEMATIC INQUIRY:
+
+PROBLEM DECONSTRUCTION:
+"What exactly is the problem? Break into components?"
+"How do you know it's worth solving? Supporting evidence?"
+"Who might define this differently? What would that reveal?"
+"Real constraints vs perceived limitations?"
+
+EVIDENCE & REASONING:
+"What evidence are you using? How reliable/complete?"
+"What information might you be missing?"
+"How might confirmation bias affect selection?"
+"Logical steps connecting problem to solutions? Reasoning gaps?"
+
+PERSPECTIVE EXPLORATION:
+"How would a {different expert} approach this?"
+"What would status quo beneficiaries argue?"
+"If arguing opposite position, strongest points?"
+"What impossible solutions might actually work?"
+
+CRITICAL PRINCIPLES:
+Intellectual humility | Systematic analysis | Evidence-based reasoning | Perspective diversity | Metacognitive awareness`
+                },
+                {
+                    name: "Reflective Learning",
+                    description: "Personal growth and deep understanding through reflection",
+                    preview: `REFLECTIVE LEARNING JOURNEY: "{query}"
+
+PHILOSOPHY: True mastery comes from developing deep self-awareness about how you learn, think, and grow.
+
+REFLECTIVE PATHWAY:
+
+PERSONAL CONNECTION:
+"What draws you to this challenge? Deeper needs/values/aspirations?"
+"If successful, what would be different about how you see yourself?"
+"What fears/excitements arise? What do they tell you?"
+
+LEARNING PATTERNS:
+"When learning difficult things, what conditions served you best?"
+"What does 'understanding' feel like vs memorization?"
+"What patterns in how you approach new challenges?"
+
+WISDOM DEVELOPMENT:
+"What do you already know that you might be undervaluing?"
+"If you trusted instincts completely, what would they tell you?"
+"What advice would you give someone else facing this?"
+
+GROWTH & TRANSFORMATION:
+"What kind of person would you become through navigating this?"
+"How might this prepare you for future challenges?"
+"How would you design learning experience honoring strengths while stretching?"
+
+REFLECTIVE PRINCIPLES:
+Self-awareness foundation | Process over outcome | Integration of intellectual + emotional | Growth through challenge | Wisdom through reflection`
+                }
+            ]
+        };
+
+        // Function to create template card
+        function createTemplateCard(template) {
+            return `
+                <div class="template-card">
+                    <div class="template-name">${template.name}</div>
+                    <div class="template-description">${template.description}</div>
+                    <div class="template-preview">${template.preview}</div>
+                </div>
+            `;
+        }
+
+        // Load templates
+        function loadTemplates() {
+            document.getElementById('directTemplates').innerHTML = 
+                templates.direct.map(createTemplateCard).join('');
+            
+            document.getElementById('interactiveTemplates').innerHTML = 
+                templates.interactive.map(createTemplateCard).join('');
+            
+            document.getElementById('socraticTemplates').innerHTML = 
+                templates.socratic.map(createTemplateCard).join('');
+        }
+
+        // Initialize page
+        loadTemplates();
+    </script>
+</body>
+</html>
