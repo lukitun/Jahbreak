@@ -54,6 +54,11 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Serve templates page
+app.get('/templates', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'templates.html'));
+});
+
 // API routes
 app.use('/api/generate', generateRoute);
 app.use('/api/feedback', feedbackRoute);

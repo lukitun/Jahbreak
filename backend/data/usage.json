@@ -721,5 +721,19 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T20:40:23.122Z",
+    "payload": "como compro un avion\n",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T21:25:28.217Z",
+    "payload": "sadf",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
   }
 ]
