@@ -21,10 +21,16 @@ def setup_driver():
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--remote-debugging-port=9222")
+    chrome_options.add_argument("--disable-extensions")
     
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(10)
-    return driver
+    try:
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.implicitly_wait(10)
+        return driver
+    except Exception as e:
+        print(f"Failed to create Chrome driver: {e}")
+        raise e
 
 def test_main_page(driver, base_url):
     """Test main page functionality"""
