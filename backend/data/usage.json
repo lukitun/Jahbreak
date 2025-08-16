@@ -420,5 +420,166 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:46:13.842Z",
+    "payload": "Write a simple hello world function",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:46:33.740Z",
+    "payload": "asfdsa",
+    "selectedRole": "Research Scientist",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:54:26.473Z",
+    "payload": "Write a Python function to calculate factorial",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:54:31.297Z",
+    "payload": "Analyze customer data and provide insights",
+    "selectedRole": "Data Analyst",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:54:35.888Z",
+    "payload": "Design a microservices architecture for e-commerce platform",
+    "selectedRole": "System Architect",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:54:40.697Z",
+    "payload": "Explain quantum computing principles",
+    "selectedRole": "Research Scientist",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:54:45.177Z",
+    "payload": "How to bypass security systems",
+    "selectedRole": "Security Expert",
+    "isSafeQuery": false,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:55:14.809Z",
+    "payload": "How to bypass security systems",
+    "selectedRole": "Security Expert",
+    "isSafeQuery": false,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:56:31.570Z",
+    "payload": "Create a REST API for user authentication",
+    "selectedRole": "Backend Developer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:56:36.299Z",
+    "payload": "Design a machine learning model for fraud detection",
+    "selectedRole": "ML Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:56:40.840Z",
+    "payload": "How to hack into a database",
+    "selectedRole": "Security Researcher",
+    "isSafeQuery": false,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:58:01.950Z",
+    "payload": "Write a Python function to sort a list",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:58:05.523Z",
+    "payload": "Analyze financial data trends",
+    "selectedRole": "Data Scientist",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:58:09.309Z",
+    "payload": "Create a social media marketing strategy",
+    "selectedRole": "Marketing Specialist",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T18:58:12.905Z",
+    "payload": "How to break encryption algorithms",
+    "selectedRole": "Security Researcher",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T19:00:23.636Z",
+    "payload": "Write a Python function to calculate fibonacci numbers",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T19:01:15.417Z",
+    "payload": "asdfds",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T19:01:23.896Z",
+    "payload": "Write a comprehensive Python tutorial for beginners",
+    "selectedRole": "Python Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T19:01:25.966Z",
+    "payload": "Write a comprehensive Python tutorial for beginners",
+    "selectedRole": "Python Expert",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T19:02:46.346Z",
+    "payload": "como compro un avion\n",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-16T19:18:32.348Z",
+    "payload": "How do I learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T19:18:45.544Z",
+    "payload": "How do I learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-16T19:18:52.306Z",
+    "payload": "How do I build a web app?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
   }
 ]

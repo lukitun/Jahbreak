@@ -122,54 +122,48 @@ Respond ONLY with: SAFE or UNSAFE`,
     }
 }
 
-// Generate safe query prompt - NEW VERSION returns both 1-shot and 2-shot versions
-async function generateNewSafePrompt(payload, role) {
-    console.log('🔥 USING NEW SAFE PROMPT GENERATOR 🔥');
+// Generate high-quality prompts using new template system
+function generateHighQualitySafePrompts(payload, role) {
+    console.log('🚀 USING HIGH-QUALITY PROMPT TEMPLATES 🚀');
     
-    // 1-Shot Prompt: Direct response approach
-    const oneShotPrompt = `interaction-config:
-You are a ${role}. Provide detailed, accurate, and helpful responses based on your expertise.
-
-Guidelines:
-- Be thorough and professional in your responses
-- Ask relevant questions to understand the user's specific needs
-- Provide actionable, step-by-step guidance when appropriate
-- Draw upon your specialized knowledge and experience
-- Ensure your advice is practical and implementable
-
-query: ${payload}
-rule: respond in query's language`;
-
-    // 2-Shot Prompt: Interactive approach with clarifying questions first
-    const twoShotPrompt = `interaction-config:
-You are a ${role}. First, ask 2-3 clarifying questions to better understand the user's specific needs and requirements. Then provide detailed, comprehensive guidance based on their responses.
-
-Guidelines:
-- Be thorough and professional in your responses
-- Ask relevant questions to understand the user's specific needs
-- Provide actionable, step-by-Step guidance when appropriate
-- Draw upon your specialized knowledge and experience
-- Ensure your advice is practical and implementable
-
-query: ${payload}
-rule: respond in query's language`;
+    // Import the new prompt template functions
+    const {
+        generateDirectPrompt,
+        generateInteractivePrompt,
+        generateSocraticPrompt
+    } = require('../lib/promptTemplates');
     
-    console.log(`🔥 NEW 1-Shot prompt generated (${oneShotPrompt.length} characters)`);
-    console.log(`🔥 NEW 2-Shot prompt generated (${twoShotPrompt.length} characters)`);
+    // Generate all three types of prompts
+    const directPrompt = generateDirectPrompt(payload, role);
+    const interactivePrompt = generateInteractivePrompt(payload, role);
+    const socraticPrompt = generateSocraticPrompt(payload, role);
     
-    // Return both prompts as a structured object
+    console.log(`🚀 Direct prompt generated (${directPrompt.length} characters)`);
+    console.log(`🚀 Interactive prompt generated (${interactivePrompt.length} characters)`);
+    console.log(`🚀 Socratic prompt generated (${socraticPrompt.length} characters)`);
+    
+    // Return all three prompts as a structured object
     return {
-        oneShot: oneShotPrompt,
-        twoShot: twoShotPrompt,
-        // For backwards compatibility, return 1-shot as default
-        prompt: oneShotPrompt
+        direct: directPrompt,
+        interactive: interactivePrompt,
+        socratic: socraticPrompt,
+        // For backwards compatibility
+        oneShot: directPrompt,
+        twoShot: interactivePrompt,
+        prompt: directPrompt
     };
 }
 
 // OLD FUNCTION - DEPRECATED
 async function generateSafePrompt(payload, role) {
     console.log('⚠️ OLD SAFE PROMPT FUNCTION CALLED - REDIRECTING TO NEW ONE ⚠️');
-    return await generateNewSafePrompt(payload, role);
+    return generateHighQualitySafePrompts(payload, role);
+}
+
+// OLD FUNCTION - DEPRECATED  
+async function generateNewSafePrompt(payload, role) {
+    console.log('⚠️ OLD NEW SAFE PROMPT FUNCTION CALLED - REDIRECTING TO HIGH-QUALITY ONE ⚠️');
+    return generateHighQualitySafePrompts(payload, role);
 }
 
 // Generate unsafe query prompt
@@ -227,7 +221,7 @@ function generateUnsafePrompt(payload, role, obfuscation, bypassLevel = 'standar
     return prompt;
 }
 
-// Test route for new format
+// Test route for high-quality format
 router.post('/test', async (req, res) => {
     try {
         const { payload } = req.body;
@@ -236,21 +230,23 @@ router.post('/test', async (req, res) => {
             return res.status(400).json({ error: 'Payload is required' });
         }
 
-        console.log('🔥 TEST ROUTE - USING NEW FORMAT ONLY 🔥');
+        console.log('🚀 TEST ROUTE - USING HIGH-QUALITY FORMAT 🚀');
         const role = "Software Engineer";
-        const result = await generateNewSafePrompt(payload, role);
+        const result = generateHighQualitySafePrompts(payload, role);
         
-        console.log('🔥 TEST: Returning new format:', typeof result);
-        console.log('🔥 TEST: Has oneShot:', 'oneShot' in result);
-        console.log('🔥 TEST: Has twoShot:', 'twoShot' in result);
+        console.log('🚀 TEST: Returning high-quality format:', typeof result);
+        console.log('🚀 TEST: Has direct:', 'direct' in result);
+        console.log('🚀 TEST: Has interactive:', 'interactive' in result);
+        console.log('🚀 TEST: Has socratic:', 'socratic' in result);
         
         res.json({
             prompt: result,
             metadata: {
                 selectedRole: role,
                 isSafeQuery: true,
-                promptFormat: 'new-test-format',
-                hasMultiplePrompts: true
+                promptFormat: 'high-quality-test-format',
+                hasMultiplePrompts: true,
+                availableTechniques: ['direct', 'interactive', 'socratic']
             }
         });
     } catch (error) {
@@ -296,18 +292,22 @@ router.post('/', async (req, res) => {
         let result;
         let metadata;
 
-        // Step 3: Generate appropriate prompt using NEW WORKING LOGIC
-        console.log(`🔍 Step 3: Using NEW prompt generation`);
+        // Step 3: Generate appropriate prompt using HIGH-QUALITY TEMPLATES
+        console.log(`🔍 Step 3: Using HIGH-QUALITY prompt generation`);
         if (isSafeQuery) {
-            console.log('🟢 Processing as SAFE query - using NEW format...');
-            const promptData = await generateNewSafePrompt(payload, selectedRole);
-            result = promptData; // Return the full object with both prompts
-            console.log(`🟢 NEW Safe prompts generated - 1-shot: ${promptData.oneShot.length}, 2-shot: ${promptData.twoShot.length}`);
+            console.log('🟢 Processing as SAFE query - using HIGH-QUALITY templates...');
+            const promptData = generateHighQualitySafePrompts(payload, selectedRole);
+            result = promptData; // Return the full object with all three prompts
+            console.log(`🟢 HIGH-QUALITY Safe prompts generated:`);
+            console.log(`   - Direct: ${promptData.direct.length} characters`);
+            console.log(`   - Interactive: ${promptData.interactive.length} characters`);
+            console.log(`   - Socratic: ${promptData.socratic.length} characters`);
             metadata = {
                 selectedRole: selectedRole,
                 isSafeQuery: true,
-                promptFormat: 'new-safe-format',
-                hasMultiplePrompts: true
+                promptFormat: 'high-quality-three-techniques',
+                hasMultiplePrompts: true,
+                availableTechniques: ['direct', 'interactive', 'socratic']
             };
         } else {
             console.log('🔴 Processing as UNSAFE query...');
@@ -323,17 +323,26 @@ router.post('/', async (req, res) => {
 
         // Add mode suffix
         const modeSuffixes = {
-            creative: "\n\nLET'S GOOO!!!",
-            enthusiastic: "\n\nThis is going to be awesome!",
-            formal: "\n\nRespectfully,"
+            creative: "\n\n🎨 LET'S GET CREATIVE AND MAKE SOMETHING AMAZING!",
+            enthusiastic: "\n\n🚀 This is going to be absolutely awesome - let's dive in!",
+            formal: "\n\nI trust this guidance serves your professional objectives effectively.\n\nRespectfully,"
         };
         
         if (options.mode && modeSuffixes[options.mode]) {
-            if (typeof result === 'object' && result.oneShot && result.twoShot) {
-                // Add suffix to both prompts if it's a safe query object
+            if (typeof result === 'object' && result.direct && result.interactive && result.socratic) {
+                // Add suffix to all three prompts if it's a safe query object with new format
+                result.direct += modeSuffixes[options.mode];
+                result.interactive += modeSuffixes[options.mode];
+                result.socratic += modeSuffixes[options.mode];
+                // Update legacy fields for backwards compatibility
+                if (result.oneShot) result.oneShot += modeSuffixes[options.mode];
+                if (result.twoShot) result.twoShot += modeSuffixes[options.mode];
+                if (result.prompt) result.prompt += modeSuffixes[options.mode];
+            } else if (typeof result === 'object' && result.oneShot && result.twoShot) {
+                // Add suffix to legacy two-prompt format for backwards compatibility
                 result.oneShot += modeSuffixes[options.mode];
                 result.twoShot += modeSuffixes[options.mode];
-                result.prompt += modeSuffixes[options.mode];
+                if (result.prompt) result.prompt += modeSuffixes[options.mode];
             } else {
                 // Add suffix to single result if it's unsafe query or string
                 result += modeSuffixes[options.mode];
@@ -378,8 +387,13 @@ router.post('/', async (req, res) => {
         // Debug: Log what we're sending
         console.log('Response structure check:');
         console.log('- result type:', typeof result);
-        console.log('- has oneShot:', result && typeof result === 'object' && 'oneShot' in result);
-        console.log('- has twoShot:', result && typeof result === 'object' && 'twoShot' in result);
+        if (result && typeof result === 'object') {
+            console.log('- has direct:', 'direct' in result);
+            console.log('- has interactive:', 'interactive' in result);
+            console.log('- has socratic:', 'socratic' in result);
+            console.log('- has oneShot (legacy):', 'oneShot' in result);
+            console.log('- has twoShot (legacy):', 'twoShot' in result);
+        }
 
         console.log(`=== Request Complete ===\n`);
         res.json(response);
