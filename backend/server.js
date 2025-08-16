@@ -1,0 +1,89 @@
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
+
+// Load environment variables
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+
+// Middleware - Allow all origins for public API
+app.use(cors({
+    origin: true, // Allow all origins
+    credentials: false // Disable credentials for public API
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Import routes
+const generateRoute = require('./routes/generate');
+const feedbackRoute = require('./routes/feedback');
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// CORS test endpoint
+app.get('/test-cors', (req, res) => {
+    res.json({ 
+        message: 'CORS test successful', 
+        origin: req.headers.origin,
+        timestamp: new Date().toISOString() 
+    });
+});
+
+app.post('/test-cors', (req, res) => {
+    res.json({ 
+        message: 'POST CORS test successful', 
+        origin: req.headers.origin,
+        body: req.body,
+        timestamp: new Date().toISOString() 
+    });
+});
+
+// Serve static frontend files from public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve index.html for root path
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// API routes
+app.use('/api/generate', generateRoute);
+app.use('/api/feedback', feedbackRoute);
+
+// Serve API documentation
+app.get('/api/docs', (req, res) => {
+    res.json({
+        name: 'Jahbreak API',
+        version: '1.0.0',
+        description: 'Advanced Prompt Engineering API',
+        endpoints: {
+            generate: 'POST /api/generate',
+            feedback: 'POST /api/feedback',
+            health: 'GET /health'
+        },
+        github: 'https://github.com/lukitun/Jahbreak'
+    });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        error: 'Internal server error',
+        message: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
+});
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`API Server running on port ${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});
