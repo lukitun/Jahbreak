@@ -414,7 +414,7 @@ class JahbreakTester:
         try:
             # Test templates page navigation
             try:
-                templates_link = self.driver.find_element(By.XPATH, "//a[@href='templates.html']")
+                templates_link = self.driver.find_element(By.XPATH, "//a[@href='/templates']")
                 templates_link.click()
                 self.log("✓ Clicked templates link")
                 
