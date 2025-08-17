@@ -300,11 +300,28 @@ Available ${technique} templates:
 
 ${templateDescriptions}
 
+CRITICAL CODING AGENT RULE:
+- If the query mentions ANY of these: code, program, build, create, develop, software, app, application, script, website, web, API, database, mobile, programming, implementation, scraper, make, write
+- AND the technique is "socratic" 
+- AND "coding_agent" template exists in the list
+- THEN YOU MUST SELECT THE CODING_AGENT TEMPLATE
+
+The coding_agent template is specifically designed for programming requests and provides superior code implementation with requirements gathering.
+
+Examples that MUST use coding_agent (if available):
+- "Build a Python script"
+- "Create a web application"  
+- "Write code for..."
+- "Develop software..."
+- "Make an app..."
+- "Program a solution..."
+- "Build a website..."
+
 Selection criteria:
-- Match query intent with template strengths
-- Consider query complexity and scope
-- Evaluate user's likely needs and preferences
-- Think about what approach would be most helpful
+1. MANDATORY: Check for coding/programming keywords - if found and coding_agent exists, select it
+2. Match query intent with template strengths
+3. Consider query complexity and scope
+4. Evaluate user's likely needs and preferences
 
 Respond with ONLY the template number (1-${templates.length}). No explanation needed.`;
 
@@ -327,10 +344,10 @@ Which ${technique} template would be most appropriate for this query?`;
         }
     } catch (error) {
         console.error(`❌ Error selecting ${technique} template:`, error);
-        console.log(`🔄 Falling back to default template selection`);
+        console.log(`❌ No fallback - Groq selection required`);
         
-        // Fallback: simple keyword matching
-        return selectTemplateFallback(technique, query);
+        // No fallback - throw error to force Groq usage
+        throw new Error(`Template selection failed - Groq API required`);
     }
 }
 
@@ -340,6 +357,19 @@ function selectTemplateFallback(technique, query) {
     
     const templates = TEMPLATE_REGISTRY[technique];
     const queryLower = query.toLowerCase();
+    
+    // Check for coding/software keywords first
+    const codingKeywords = ['code', 'program', 'build', 'create', 'develop', 'software', 'app', 'application', 'script', 'scraper', 'write', 'make', 'implement', 'programming', 'website', 'web', 'api', 'database', 'mobile'];
+    const isCodingQuery = codingKeywords.some(keyword => queryLower.includes(keyword.toLowerCase()));
+    
+    if (isCodingQuery && technique === 'socratic') {
+        // For coding queries, prioritize coding_agent template in socratic technique
+        const codingAgentTemplate = templates.find(t => t.name === 'coding_agent');
+        if (codingAgentTemplate) {
+            console.log(`✅ Fallback selected coding_agent template for programming query`);
+            return codingAgentTemplate;
+        }
+    }
     
     // Score each template based on keyword matches
     let bestTemplate = templates[0];
@@ -351,6 +381,11 @@ function selectTemplateFallback(technique, query) {
             if (queryLower.includes(keyword.toLowerCase())) {
                 score++;
             }
+        }
+        
+        // Give extra boost to coding_agent for programming queries
+        if (template.name === 'coding_agent' && isCodingQuery) {
+            score += 10; // Heavy boost for coding queries
         }
         
         if (score > bestScore) {

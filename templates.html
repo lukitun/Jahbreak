@@ -151,6 +151,40 @@
             transform: translateY(-2px);
         }
 
+        /* Special styling for coding agent template */
+        .coding-agent-card {
+            border: 2px solid #ffd700;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 179, 71, 0.05));
+        }
+
+        .coding-agent-card::before {
+            content: "🚀 AI CODING AGENT";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            color: #000;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .coding-agent-card:hover {
+            border-color: #ffd700;
+            box-shadow: 0 6px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .coding-agent-card .template-name {
+            color: #ffd700;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
         .template-name {
             font-size: 1.2rem;
             font-weight: 600;
@@ -176,6 +210,15 @@
             max-height: 200px;
             overflow-y: auto;
             white-space: pre-wrap;
+        }
+
+        .template-best-for {
+            margin-top: 0.75rem;
+            padding: 0.5rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--subtext-color);
         }
 
         .key-features {
@@ -352,297 +395,148 @@
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
 
-        // Template data
-        const templates = {
-            direct: [
-                {
-                    name: "Comprehensive Framework",
-                    description: "Systematic methodology with detailed execution plans",
-                    preview: `SYSTEMATIC FRAMEWORK: "{query}"
+        // Template data - will be loaded dynamically from API
+        let templates = {
+            direct: [],
+            interactive: [],
+            socratic: []
+        };
 
-IMPLEMENTATION:
-1. FOUNDATION: Define objectives, assess resources, plan approach
-2. EXECUTION: Apply best practices, track progress, maintain quality
-3. OPTIMIZATION: Measure, gather feedback, scale
-
-EXPERT GUIDANCE ({specialty}):
-• Focus on fundamentals first
-• Use proven frameworks
-• Avoid common pitfalls
-• Plan for long-term success
-
-TIMELINE:
-Week 1: Foundation | Weeks 2-4: Implementation | Month 2+: Optimization
-
-Adapt this framework to your specific context and requirements.`
-                },
-                {
-                    name: "Expert Masterclass",
-                    description: "Deep expertise sharing with professional insights",
-                    preview: `EXPERT MASTERCLASS: "{query}"
-
-CORE PRINCIPLES ({specialty}):
-1. Master basics before advancing
-2. Maintain professional standards
-3. Apply real-world lessons
-4. Stay current with evolution
-
-EXPERT EXECUTION:
-• FOUNDATION: Build proper groundwork
-• IMPLEMENTATION: Apply industry standards
-• OPTIMIZATION: Use advanced techniques
-• MASTERY: Handle complex challenges
-
-INSIDER KNOWLEDGE:
-• Focus on high-impact fundamentals (80/20 rule)
-• Avoid common pitfalls through proven prevention
-• Follow consistent success patterns
-• Apply expert-only techniques`
-                },
-                {
-                    name: "Practical Blueprint",
-                    description: "Hands-on implementation with concrete examples and templates",
-                    preview: `PRACTICAL BLUEPRINT: "{query}"
-
-QUICK START:
-□ Prerequisites & setup
-□ Tools & environment
-□ First milestone
-□ Success validation
-
-IMPLEMENTATION:
-PHASE 1 (Days 1-3): Setup & foundation
-PHASE 2 (Week 1-2): Core development using {specialty} practices
-PHASE 3 (Week 3-4): Optimization & deployment
-
-DELIVERABLES:
-Day 1: Setup | Week 1: Prototype | Week 2: Refined version | Week 3: Production-ready
-
-SUCCESS ACCELERATORS:
-• Use proven templates
-• Apply automation
-• Implement quality gates
-• Follow best practices`
-                },
-                {
-                    name: "Strategic Roadmap",
-                    description: "Long-term vision with strategic planning and systematic progression",
-                    preview: `STRATEGIC ROADMAP: "{query}"
-
-VISION: Sustainable long-term success in {specialty}
-
-STRATEGIC HORIZONS:
-HORIZON 1 (0-3 months): Foundation - capabilities, standards, alignment
-HORIZON 2 (3-12 months): Expansion - scale, advanced {specialty}, value creation
-HORIZON 3 (12+ months): Leadership - recognition, innovation, lasting impact
-
-RESOURCE ALLOCATION:
-40% Foundation | 30% Value creation | 20% Strategic development | 10% Innovation
-
-EXECUTION PRINCIPLES:
-• Ruthless prioritization
-• Quality standards
-• Continuous learning
-• Stakeholder value
-• Strategic patience`
-                }
-            ],
-            interactive: [
-                {
-                    name: "Focused Dialogue",
-                    description: "3-4 strategic questions for efficient customization",
-                    preview: `FOCUSED CONSULTATION: "{query}"
-
-ESSENTIAL QUESTIONS:
-
-1. OBJECTIVES & SUCCESS: What specific outcome and success metrics? Deadlines/constraints?
-
-2. POSITION & RESOURCES: Experience level? Available resources (time, budget, tools, team)?
-
-3. CONTEXT & CONSTRAINTS: Broader goals? Specific requirements/limitations?
-
-4. APPROACH PREFERENCES: Hands-on, structured, or strategic? What's worked before?
-
-CUSTOMIZED RESPONSE:
-• Targeted action plan for your situation
-• Optimized approach for your style
-• Relevant resources and tools
-• Risk mitigation strategies
-
-EFFICIENCY FOCUS ({specialty}):
-• 80/20 high-impact activities
-• Shortcuts and accelerators
-• Common mistakes to avoid
-• Optimal sequencing`
-                },
-                {
-                    name: "Comprehensive Discovery",
-                    description: "7-9 questions for thorough, multi-dimensional exploration",
-                    preview: `COMPREHENSIVE DISCOVERY: "{query}"
-
-DISCOVERY QUESTIONS:
-
-FOUNDATIONAL:
-1. OBJECTIVES & METRICS: Goals and success measures? Immediate + long-term?
-2. CURRENT STATE: Knowledge level? Related skills? Familiar/unfamiliar areas?
-3. RESOURCES & CONSTRAINTS: Available resources? Deadlines/limitations?
-
-CONTEXTUAL:
-4. STAKEHOLDERS: Who's involved/affected? Organizational/personal context?
-5. EXPERIENCE: Previous attempts? What worked/didn't? Key insights?
-6. APPROACH & RISK: Methodical vs experimental? Risk tolerance?
-
-STRATEGIC:
-7. LEARNING STYLE: Hands-on/theoretical/examples? Communication preferences?
-8. SUCCESS PATTERNS: Past effective approaches? Motivation factors?
-9. FUTURE VISION: Long-term capability use? Specialization vs breadth?
-
-MULTI-LAYERED RESPONSE:
-STRATEGIC: Customized methodology, success pathway, risk management
-TACTICAL: Action plan, resource optimization, quality checkpoints
-OPERATIONAL: Daily structure, tools, support systems, progress tracking
-ADAPTIVE: Contingencies, scaling, knowledge transfer, optimization`
-                },
-                {
-                    name: "Iterative Refinement",
-                    description: "5-6 questions with progressive deepening and refinement",
-                    preview: `ITERATIVE DISCOVERY: "{query}"
-
-PROGRESSIVE METHODOLOGY:
-Using {specialties} expertise, I'll identify core variables then iteratively refine.
-
-DISCOVERY SEQUENCE:
-
-INITIAL:
-1. OBJECTIVE & CONTEXT: Specific outcome? Broader context? Goal connections?
-2. CAPABILITY & RESOURCES: Experience/skills? Biggest gaps? Previous attempts/budget/team?
-3. APPROACH & CONSTRAINTS: Challenge preferences? Learning style/risk tolerance/timeline?
-
-REFINEMENT:
-4. SUCCESS PATTERNS: Past effective approaches? Motivation factors?
-5. STAKEHOLDER DYNAMICS: Who's involved/affected? Collaboration preferences?
-6. SCALING & EVOLUTION: Future capability use? One-time vs expertise building?
-
-ITERATIVE FRAMEWORK:
-ITERATION 1: Foundation approach, pathway, success factors, essential tools
-ITERATION 2: Step-by-step breakdown, targeted materials, obstacles/countermeasures
-ITERATION 3: Efficiency techniques, quality enhancement, scaling, innovation`
-                }
-            ],
-            socratic: [
-                {
-                    name: "Guided Inquiry",
-                    description: "Classical Socratic method with guided self-discovery",
-                    preview: `SOCRATIC INQUIRY: "{query}"
-
-FOUNDATION: True understanding comes from within through guided self-discovery.
-
-DISCOVERY PROCESS:
-• Examine assumptions and hidden beliefs
-• Connect existing knowledge to new challenges
-• Arrive at authentic insights
-• Develop transferable critical thinking
-
-EXPLORATION QUESTIONS:
-
-FOUNDATIONAL:
-"What assumptions about this challenge are worth examining?"
-"How would you explain this to someone unfamiliar?"
-"What do you already know that's more valuable than you realize?"
-"What beliefs do you hold, and where did they originate?"
-
-ANALYTICAL:
-"What if you approached from the opposite direction?"
-"With unlimited resources, what would ideal look like?"
-"What patterns from other experiences might apply?"
-"How would you test if a solution works?"
-
-SYNTHESIS:
-"What connections exist with past successful solutions?"
-"How does this serve larger goals and values?"
-"What patterns emerge from these questions?"
-
-SOCRATIC PRINCIPLES:
-Knowledge from within | Quality questioning over quick answers | Understanding through examination | Wisdom through reflection`
-                },
-                {
-                    name: "Critical Thinking",
-                    description: "Develops analytical and evaluative thinking skills",
-                    preview: `CRITICAL THINKING DEVELOPMENT: "{query}"
-
-FRAMEWORK: Drawing from {specialty}, exceptional solutions emerge through systematic critical thinking.
-
-SYSTEMATIC INQUIRY:
-
-PROBLEM DECONSTRUCTION:
-"What exactly is the problem? Break into components?"
-"How do you know it's worth solving? Supporting evidence?"
-"Who might define this differently? What would that reveal?"
-"Real constraints vs perceived limitations?"
-
-EVIDENCE & REASONING:
-"What evidence are you using? How reliable/complete?"
-"What information might you be missing?"
-"How might confirmation bias affect selection?"
-"Logical steps connecting problem to solutions? Reasoning gaps?"
-
-PERSPECTIVE EXPLORATION:
-"How would a {different expert} approach this?"
-"What would status quo beneficiaries argue?"
-"If arguing opposite position, strongest points?"
-"What impossible solutions might actually work?"
-
-CRITICAL PRINCIPLES:
-Intellectual humility | Systematic analysis | Evidence-based reasoning | Perspective diversity | Metacognitive awareness`
-                },
-                {
-                    name: "Reflective Learning",
-                    description: "Personal growth and deep understanding through reflection",
-                    preview: `REFLECTIVE LEARNING JOURNEY: "{query}"
-
-PHILOSOPHY: True mastery comes from developing deep self-awareness about how you learn, think, and grow.
-
-REFLECTIVE PATHWAY:
-
-PERSONAL CONNECTION:
-"What draws you to this challenge? Deeper needs/values/aspirations?"
-"If successful, what would be different about how you see yourself?"
-"What fears/excitements arise? What do they tell you?"
-
-LEARNING PATTERNS:
-"When learning difficult things, what conditions served you best?"
-"What does 'understanding' feel like vs memorization?"
-"What patterns in how you approach new challenges?"
-
-WISDOM DEVELOPMENT:
-"What do you already know that you might be undervaluing?"
-"If you trusted instincts completely, what would they tell you?"
-"What advice would you give someone else facing this?"
-
-GROWTH & TRANSFORMATION:
-"What kind of person would you become through navigating this?"
-"How might this prepare you for future challenges?"
-"How would you design learning experience honoring strengths while stretching?"
-
-REFLECTIVE PRINCIPLES:
-Self-awareness foundation | Process over outcome | Integration of intellectual + emotional | Growth through challenge | Wisdom through reflection`
-                }
-            ]
+        // Template preview examples (simplified)
+        const previewExamples = {
+            'comprehensive_framework': 'Create a systematic framework with three phases: Foundation, Execution, and Optimization.',
+            'expert_masterclass': 'Share expert insights including professional perspectives, proven techniques, essential tools, insider tips, and advanced strategies.',
+            'practical_blueprint': 'Provide an immediately actionable blueprint with quick start guide, step-by-step plan, required tools, templates, success checkpoints, and troubleshooting.',
+            'strategic_roadmap': 'Create a strategic roadmap with long-term vision, multi-phase development plan, capability progression, resource allocation strategy, and regular review cycles.',
+            'quick_solution': 'Provide a fast, efficient solution with immediate actionable steps, quick wins, and time-sensitive priorities.',
+            'detailed_analysis': 'Provide detailed analytical breakdown with multiple perspectives, underlying factors, implications, evidence evaluation, and comprehensive examination.',
+            'step_by_step_tutorial': 'Create a progressive learning tutorial with foundational concepts, skill-building exercises, practical examples, and mastery checkpoints.',
+            'troubleshooting_guide': 'Provide systematic troubleshooting methodology with problem diagnosis, root cause identification, solution pathways, testing procedures, and prevention strategies.',
+            'best_practices_guide': 'Share industry best practices, proven methodologies, quality standards, common pitfalls to avoid, and optimization techniques.',
+            'resource_compilation': 'Compile comprehensive resources including essential tools, reference materials, learning sources, communities, experts to follow, and practical resources.',
+            'implementation_checklist': 'Create systematic implementation checklist with preparation steps, execution phases, quality checkpoints, verification procedures, and completion criteria.',
+            'focused_dialogue': 'Ask strategic questions to understand their situation: objectives, experience level, resources, broader context, and approach preferences.',
+            'comprehensive_discovery': 'Conduct comprehensive discovery through 7-9 detailed questions covering objectives, current state, resources, context, experience, preferences, learning style, success patterns, and future vision.',
+            'iterative_refinement': 'Use iterative discovery with progressive rounds: initial questions about outcome, experience, resources, and approach; then deeper questions about past successes, collaboration, and motivation.',
+            'diagnostic_interview': 'Conduct diagnostic interview to identify root causes, symptoms versus problems, contributing factors, and impact assessment.',
+            'needs_assessment': 'Conduct thorough needs assessment exploring requirements, constraints, stakeholder needs, success criteria, resource availability, and priority levels.',
+            'collaborative_planning': 'Facilitate collaborative planning by exploring stakeholder perspectives, shared objectives, resource coordination, role clarification, and consensus building.',
+            'decision_framework': 'Guide decision-making by exploring options, evaluation criteria, trade-offs, risk factors, stakeholder impact, and decision consequences.',
+            'learning_assessment': 'Assess learning needs by exploring current knowledge level, learning preferences, available time, practice opportunities, and educational goals.',
+            'goal_setting_session': 'Facilitate goal setting by exploring aspirations, current situation, obstacles, resources, timelines, and success measures.',
+            'creative_workshop': 'Facilitate creative exploration by asking about inspiration sources, creative constraints, audience considerations, innovative possibilities, and experimental approaches.',
+            'guided_inquiry': 'Use Socratic questioning to guide self-discovery rather than giving direct answers. Progress through foundational questions about assumptions and beliefs, analytical questions about alternative approaches, synthesis questions about connections, and metacognitive questions about their thinking process.',
+            'critical_thinking': 'Guide systematic critical thinking through Socratic questioning. Challenge surface-level analysis through problem deconstruction, evidence examination, perspective exploration, metacognitive evaluation, and scenario analysis.',
+            'reflective_learning': 'Guide reflective learning that develops deep self-awareness about how they learn, think, and grow. Focus on personal transformation through reflection.',
+            'assumption_challenging': 'Challenge assumptions and unexamined beliefs through systematic questioning. Explore what they take for granted, inherited beliefs, cultural assumptions, and unstated premises.',
+            'root_cause_analysis': 'Guide deep root cause exploration through progressive "why" questioning, system thinking, and fundamental cause identification.',
+            'perspective_exploration': 'Explore multiple perspectives through questioning different viewpoints, stakeholder positions, cultural lenses, and alternative framings.',
+            'value_discovery': 'Discover underlying values and motivations through questions about what matters most, driving forces, meaningful outcomes, and personal significance.',
+            'wisdom_extraction': 'Extract wisdom from their experiences through questions about lessons learned, pattern recognition, intuitive knowledge, and accumulated insights.',
+            'belief_examination': 'Examine beliefs through questions about evidence, origins, consistency, consequences, and alternatives.',
+            'pattern_recognition': 'Guide pattern recognition through questions about recurring themes, connections, cycles, similarities, and underlying structures.',
+            'coding_agent': '🚀 This appears to be a programming request. I\'ll gather all necessary requirements through questions, then implement the solution. Ask targeted questions to understand exact functionality, programming language preferences, technical constraints, target platform, input/output specifications, and integration requirements. After gathering complete requirements, provide full working code implementation with setup instructions, usage examples, and deployment guidance.'
         };
 
         // Function to create template card
         function createTemplateCard(template) {
+            const isCodingAgent = template.name === 'coding_agent';
+            const cardClass = isCodingAgent ? 'template-card coding-agent-card' : 'template-card';
+            const preview = previewExamples[template.name] || template.description;
+            
             return `
-                <div class="template-card">
-                    <div class="template-name">${template.name}</div>
+                <div class="${cardClass}">
+                    <div class="template-name">${template.displayName || template.name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}${isCodingAgent ? ' 🚀' : ''}</div>
                     <div class="template-description">${template.description}</div>
-                    <div class="template-preview">${template.preview}</div>
+                    <div class="template-preview">${preview}</div>
+                    ${template.bestFor ? `<div class="template-best-for"><strong>Best for:</strong> ${template.bestFor.join(', ')}</div>` : ''}
                 </div>
             `;
         }
 
-        // Load templates
-        function loadTemplates() {
+        // Load templates from backend
+        async function loadTemplatesFromAPI() {
+            try {
+                console.log('Loading templates from backend...');
+                
+                // Create a test request to get template registry information
+                const response = await fetch('https://bando.life/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        payload: 'test query',
+                        personality: 'Software Engineer',
+                        mode: 'professional'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Template metadata received:', data.prompt?.templateMetadata);
+                    
+                    // Since we can't directly access the template registry, we'll use the hardcoded template list
+                    // but load it dynamically to show all 32 templates
+                    loadStaticTemplates();
+                } else {
+                    console.error('Failed to load templates, using static fallback');
+                    loadStaticTemplates();
+                }
+            } catch (error) {
+                console.error('Error loading templates:', error);
+                loadStaticTemplates();
+            }
+        }
+
+        // Load static template definitions (all 32 templates)
+        function loadStaticTemplates() {
+            templates = {
+                direct: [
+                    { name: 'comprehensive_framework', description: 'Systematic methodology with detailed execution plans', bestFor: ['complex projects', 'systematic implementation', 'methodology-focused', 'step-by-step guidance'] },
+                    { name: 'expert_masterclass', description: 'Deep expertise sharing with professional insights', bestFor: ['skill development', 'professional growth', 'industry knowledge', 'expert insights'] },
+                    { name: 'practical_blueprint', description: 'Hands-on implementation with concrete examples and templates', bestFor: ['hands-on learning', 'immediate implementation', 'practical guidance', 'examples'] },
+                    { name: 'strategic_roadmap', description: 'Long-term vision with strategic planning and systematic progression', bestFor: ['long-term planning', 'strategic thinking', 'vision development', 'scaling'] },
+                    { name: 'quick_solution', description: 'Fast, efficient solutions for urgent problems', bestFor: ['urgent problems', 'time-sensitive issues', 'quick fixes', 'immediate needs'] },
+                    { name: 'detailed_analysis', description: 'Deep analytical breakdown of complex topics', bestFor: ['complex analysis', 'research topics', 'detailed examination', 'comprehensive understanding'] },
+                    { name: 'step_by_step_tutorial', description: 'Educational guidance with progressive skill building', bestFor: ['learning new skills', 'educational content', 'tutorials', 'skill development'] },
+                    { name: 'troubleshooting_guide', description: 'Systematic problem diagnosis and resolution', bestFor: ['technical problems', 'debugging', 'error resolution', 'system issues'] },
+                    { name: 'best_practices_guide', description: 'Industry standards and proven methodologies', bestFor: ['professional standards', 'quality improvement', 'optimization', 'industry guidelines'] },
+                    { name: 'resource_compilation', description: 'Comprehensive resource gathering and organization', bestFor: ['resource discovery', 'learning materials', 'tool recommendations', 'reference gathering'] },
+                    { name: 'implementation_checklist', description: 'Systematic execution planning with detailed checklists', bestFor: ['project execution', 'systematic implementation', 'process management', 'quality control'] }
+                ],
+                interactive: [
+                    { name: 'focused_dialogue', description: '3-4 strategic questions for efficient customization', bestFor: ['quick clarification', 'focused consultation', 'time-constrained', 'specific needs'] },
+                    { name: 'comprehensive_discovery', description: '7-9 questions for thorough, multi-dimensional exploration', bestFor: ['complex situations', 'thorough understanding', 'multi-faceted problems', 'comprehensive planning'] },
+                    { name: 'iterative_refinement', description: '5-6 questions with progressive deepening and refinement', bestFor: ['collaborative approach', 'progressive understanding', 'iterative development', 'balanced exploration'] },
+                    { name: 'diagnostic_interview', description: 'Problem identification through systematic questioning', bestFor: ['problem diagnosis', 'root cause analysis', 'troubleshooting', 'issue identification'] },
+                    { name: 'needs_assessment', description: 'Understanding requirements and constraints through discovery', bestFor: ['requirement gathering', 'project scoping', 'needs analysis', 'constraint identification'] },
+                    { name: 'collaborative_planning', description: 'Group-oriented planning with stakeholder consideration', bestFor: ['team planning', 'stakeholder alignment', 'group projects', 'collaborative initiatives'] },
+                    { name: 'decision_framework', description: 'Choice evaluation through structured questioning', bestFor: ['decision making', 'option evaluation', 'choice analysis', 'strategic decisions'] },
+                    { name: 'learning_assessment', description: 'Educational level and learning style discovery', bestFor: ['educational planning', 'skill development', 'learning paths', 'knowledge assessment'] },
+                    { name: 'goal_setting_session', description: 'Objective clarification and prioritization through discovery', bestFor: ['goal setting', 'objective clarification', 'planning sessions', 'vision development'] },
+                    { name: 'creative_workshop', description: 'Brainstorming and ideation through collaborative dialogue', bestFor: ['creative projects', 'brainstorming', 'innovation', 'ideation sessions'] }
+                ],
+                socratic: [
+                    { name: 'guided_inquiry', description: 'Classical Socratic method with guided self-discovery', bestFor: ['self-discovery', 'philosophical exploration', 'assumption challenging', 'classical learning'] },
+                    { name: 'critical_thinking', description: 'Develops analytical and evaluative thinking skills', bestFor: ['analytical thinking', 'problem analysis', 'critical evaluation', 'logical reasoning'] },
+                    { name: 'reflective_learning', description: 'Personal growth and deep understanding through reflection', bestFor: ['personal development', 'self-awareness', 'growth mindset', 'reflective learning'] },
+                    { name: 'assumption_challenging', description: 'Questioning underlying beliefs and assumptions', bestFor: ['belief examination', 'assumption testing', 'critical thinking', 'perspective shifting'] },
+                    { name: 'root_cause_analysis', description: 'Deep exploration of fundamental causes', bestFor: ['problem analysis', 'system thinking', 'cause identification', 'deep investigation'] },
+                    { name: 'perspective_exploration', description: 'Multiple viewpoint examination and perspective shifting', bestFor: ['perspective taking', 'viewpoint analysis', 'empathy development', 'complex understanding'] },
+                    { name: 'value_discovery', description: 'Understanding core values and motivations', bestFor: ['value clarification', 'motivation discovery', 'purpose exploration', 'meaning-making'] },
+                    { name: 'wisdom_extraction', description: 'Drawing insights and wisdom from experience', bestFor: ['experience reflection', 'wisdom development', 'insight extraction', 'learning integration'] },
+                    { name: 'belief_examination', description: 'Questioning and testing beliefs through inquiry', bestFor: ['belief testing', 'evidence evaluation', 'truth seeking', 'cognitive examination'] },
+                    { name: 'pattern_recognition', description: 'Identifying recurring themes and connections', bestFor: ['pattern identification', 'theme recognition', 'connection discovery', 'structural analysis'] },
+                    { name: 'coding_agent', description: 'Requirements gathering for programming requests, then code implementation', bestFor: ['programming requests', 'code generation', 'software development', 'application building'] }
+                ]
+            };
+            
+            renderTemplates();
+        }
+
+        // Render templates
+        function renderTemplates() {
             document.getElementById('directTemplates').innerHTML = 
                 templates.direct.map(createTemplateCard).join('');
             
@@ -651,10 +545,12 @@ Self-awareness foundation | Process over outcome | Integration of intellectual +
             
             document.getElementById('socraticTemplates').innerHTML = 
                 templates.socratic.map(createTemplateCard).join('');
+                
+            console.log(`Loaded ${templates.direct.length + templates.interactive.length + templates.socratic.length} templates total`);
         }
 
         // Initialize page
-        loadTemplates();
+        loadTemplatesFromAPI();
     </script>
 </body>
 </html>

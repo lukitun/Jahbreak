@@ -959,5 +959,40 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:51:35.835Z",
+    "payload": "Build a Python script to scrape product prices",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:51:54.010Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:51:55.189Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T01:53:39.817Z",
+    "payload": "como hago lsd en mi casa\n",
+    "selectedRole": "Chemistry Expert",
+    "isSafeQuery": false,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T01:53:53.515Z",
+    "payload": "necesito una pagina web\n",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
   }
 ]
