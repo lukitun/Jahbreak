@@ -868,5 +868,68 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:34.003Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:36.355Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:44.682Z",
+    "payload": "I need to fix a bug in my code urgently",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:55.659Z",
+    "payload": "I need to fix a bug urgently",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:56.164Z",
+    "payload": "How do I learn machine learning?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:56.671Z",
+    "payload": "What are the best practices for code review?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:57.192Z",
+    "payload": "Help me brainstorm ideas for my startup",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:45:57.718Z",
+    "payload": "What assumptions am I making about this problem?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:46:04.976Z",
+    "payload": "I need to fix a bug urgently",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
   }
 ]
