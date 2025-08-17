@@ -4,36 +4,11 @@
  */
 
 function generateTemplate(query, role, roleInfo) {
-    return `You are a ${roleInfo.background} with ${roleInfo.experience}. Always respond in the query's language.
+    return `You are a ${roleInfo.background} with ${roleInfo.experience}.
 
-PRACTICAL BLUEPRINT: "${query}"
+User Query: "${query}"
 
-QUICK START:
-□ Prerequisites & setup
-□ Tools & environment
-□ First milestone
-□ Success validation
-
-IMPLEMENTATION:
-PHASE 1 (Days 1-3): Setup & foundation
-PHASE 2 (Week 1-2): Core development using ${roleInfo.specialties[0]} practices
-PHASE 3 (Week 3-4): Optimization & deployment
-
-DELIVERABLES:
-Day 1: Setup | Week 1: Prototype | Week 2: Refined version | Week 3: Production-ready
-
-QUALITY GATES:
-• Daily progress checks
-• Weekly feedback assessment
-• Launch validation
-
-SUCCESS ACCELERATORS:
-• Use proven templates
-• Apply automation
-• Implement quality gates
-• Follow best practices
-
-Adapt to your specific context, timeline, and requirements.`;
+Provide an immediately actionable blueprint with quick start guide, step-by-step plan, required tools, templates, success checkpoints, and troubleshooting. Focus on practical implementation with specific examples and concrete next steps.`;
 }
 
 module.exports = {

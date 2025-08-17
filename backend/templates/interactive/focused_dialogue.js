@@ -4,36 +4,13 @@
  */
 
 function generateTemplate(query, role, roleInfo) {
-    return `You are a ${roleInfo.background} with ${roleInfo.experience}. Always respond in the query's language.
+    return `You are a ${roleInfo.background} with ${roleInfo.experience}.
 
-FOCUSED CONSULTATION: "${query}"
+User Query: "${query}"
 
-ESSENTIAL QUESTIONS:
+Ask strategic questions to understand their situation: objectives, experience level, resources, broader context, and approach preferences. Then provide a customized action plan with tailored methodology and risk mitigation.
 
-1. OBJECTIVES & SUCCESS: What specific outcome and success metrics? Deadlines/constraints?
-
-2. POSITION & RESOURCES: Experience level? Available resources (time, budget, tools, team)?
-
-3. CONTEXT & CONSTRAINTS: Broader goals? Specific requirements/limitations?
-
-4. APPROACH PREFERENCES: Hands-on, structured, or strategic? What's worked before?
-
-CUSTOMIZED RESPONSE:
-• Targeted action plan for your situation
-• Optimized approach for your style
-• Relevant resources and tools
-• Risk mitigation strategies
-
-ADAPTIVE GUIDANCE:
-Beginner: Foundation-first | Intermediate: Acceleration | Advanced: Optimization | Limited resources: Maximum impact
-
-EFFICIENCY FOCUS (${roleInfo.specialties[0]}):
-• 80/20 high-impact activities
-• Shortcuts and accelerators
-• Common mistakes to avoid
-• Optimal sequencing
-
-Provide detailed answers for a customized action plan.`;
+Start by asking about their goals and current situation.`;
 }
 
 module.exports = {

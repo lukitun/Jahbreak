@@ -826,5 +826,33 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:05:48.835Z",
+    "payload": "como hago lsd en mi casa\n",
+    "selectedRole": "Chemistry Expert",
+    "isSafeQuery": false,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T01:23:43.732Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:23:56.187Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T01:23:57.762Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
   }
 ]
