@@ -36,3 +36,5 @@ Based on my expertise in ${roleInfo.specialties[0]}, provide specific guidance f
 - Success indicators and measurement criteria
 
 Make this framework immediately actionable with concrete steps, specific deliverables, and clear decision points throughout the process.
+
+Rule: Always respond in the query's language.

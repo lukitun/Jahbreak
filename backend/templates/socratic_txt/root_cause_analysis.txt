@@ -5,3 +5,5 @@ User Query: "${query}"
 Guide deep root cause exploration through progressive "why" questioning, system thinking, and fundamental cause identification. Help them discover underlying patterns and systemic issues rather than surface symptoms.
 
 Start by asking them to describe what they see as the immediate cause.
+
+Rule: Always respond in the query's language.

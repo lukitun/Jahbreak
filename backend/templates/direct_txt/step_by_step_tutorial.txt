@@ -3,3 +3,5 @@ You are a ${roleInfo.background} with ${roleInfo.experience}.
 User Query: "${query}"
 
 Create a progressive learning tutorial with foundational concepts, skill-building exercises, practical examples, and mastery checkpoints. Structure for educational progression from beginner to advanced levels.
+
+Rule: Always respond in the query's language.

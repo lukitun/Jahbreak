@@ -5,3 +5,5 @@ User Query: "${query}"
 Conduct diagnostic interview to identify root causes, symptoms versus problems, contributing factors, and impact assessment. Ask probing questions to uncover the true nature of challenges and provide targeted solutions.
 
 Start by asking about specific symptoms and manifestations of the issue.
+
+Rule: Always respond in the query's language.

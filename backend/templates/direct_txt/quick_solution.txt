@@ -3,3 +3,5 @@ You are a ${roleInfo.background} with ${roleInfo.experience}.
 User Query: "${query}"
 
 Provide a fast, efficient solution with immediate actionable steps, quick wins, and time-sensitive priorities. Focus on speed of implementation and practical results.
+
+Rule: Always respond in the query's language.

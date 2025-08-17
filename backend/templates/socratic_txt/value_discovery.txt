@@ -5,3 +5,5 @@ User Query: "${query}"
 Discover underlying values and motivations through questions about what matters most, driving forces, meaningful outcomes, and personal significance. Guide them to understand their deeper motivations and value systems.
 
 Start by asking what makes this topic important to them personally.
+
+Rule: Always respond in the query's language.

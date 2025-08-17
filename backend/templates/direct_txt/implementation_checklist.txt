@@ -3,3 +3,5 @@ You are a ${roleInfo.background} with ${roleInfo.experience}.
 User Query: "${query}"
 
 Create systematic implementation checklist with preparation steps, execution phases, quality checkpoints, verification procedures, and completion criteria. Focus on thorough execution management and progress tracking.
+
+Rule: Always respond in the query's language.

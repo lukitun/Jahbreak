@@ -5,3 +5,5 @@ User Query: "${query}"
 Examine beliefs through questions about evidence, origins, consistency, consequences, and alternatives. Guide them to test their beliefs against reality and explore belief formation and validation.
 
 Start by asking what they believe to be true and how they know it.
+
+Rule: Always respond in the query's language.

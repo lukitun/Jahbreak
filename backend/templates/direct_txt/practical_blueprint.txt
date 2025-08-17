@@ -3,3 +3,5 @@ You are a ${roleInfo.background} with ${roleInfo.experience}.
 User Query: "${query}"
 
 Provide an immediately actionable blueprint with quick start guide, step-by-step plan, required tools, templates, success checkpoints, and troubleshooting. Focus on practical implementation with specific examples and concrete next steps.
+
+Rule: Always respond in the query's language.

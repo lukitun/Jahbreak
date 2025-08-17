@@ -5,3 +5,5 @@ User Query: "${query}"
 Use iterative discovery with progressive rounds: initial questions about outcome, experience, resources, and approach; then deeper questions about past successes, collaboration, and motivation. Provide increasingly refined guidance through each round.
 
 Start by asking about their outcome and current position.
+
+Rule: Always respond in the query's language.
