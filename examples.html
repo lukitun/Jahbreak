@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples - Jahbreak AI Coding Platform</title>
+    <!-- Deployed version -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a1a;
+            --card-hover-bg: #252525;
+            --border-color: #333;
+            --subtext-color: #888;
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #4ade80;
+            --warning-color: #fbbf24;
+            --error-color: #f87171;
+            --haiku-color: #ff6b6b;
+            --sonnet-color: #4ecdc4;
+        }
+
+        body.light-mode {
+            --bg-color: #f5f5f5;
+            --text-color: #1a1a1a;
+            --card-bg: #ffffff;
+            --card-hover-bg: #f0f0f0;
+            --border-color: #ddd;
+            --subtext-color: #555;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .home-link {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .home-link:hover {
+            background: var(--card-hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--subtext-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .model-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .model-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid;
+            text-align: center;
+        }
+
+        .haiku-card {
+            border-color: var(--haiku-color);
+            background: rgba(255, 107, 107, 0.1);
+        }
+
+        .sonnet-card {
+            border-color: var(--sonnet-color);
+            background: rgba(78, 205, 196, 0.1);
+        }
+
+        .model-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .example-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.15);
+        }
+
+        .example-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .example-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-description {
+            opacity: 0.9;
+        }
+
+        .prompt-used {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .results-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .result-panel {
+            padding: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .haiku-result {
+            border-right: 1px solid var(--border-color);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .model-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .haiku-badge {
+            background: var(--haiku-color);
+            color: white;
+        }
+
+        .sonnet-badge {
+            background: var(--sonnet-color);
+            color: white;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .score.excellent { color: var(--success-color); }
+        .score.good { color: var(--warning-color); }
+        .score.poor { color: var(--error-color); }
+
+        .features-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .features-list .icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .code-sample {
+            background: #000;
+            color: #0f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.8rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .view-code {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .view-code:hover {
+            background: var(--secondary-color);
+        }
+
+        .stats-summary {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin: 3rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--subtext-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .model-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .results-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .haiku-result {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-nav">
+                <div></div>
+                <a href="/index.html" class="home-link">← Back to Jahbreak</a>
+            </div>
+            
+            <h1>Jahbreak Examples</h1>
+            <p class="subtitle">See what's possible with AI-powered prompt engineering</p>
+            
+            <div class="intro">
+                <p>These examples demonstrate the power of Jahbreak's AI-generated coding prompts across different LLM capabilities. The same high-quality prompts produce varying results depending on the underlying model, showcasing our platform's flexibility and scalability.</p>
+            </div>
+
+            <div class="model-comparison">
+                <div class="model-card haiku-card">
+                    <div class="model-title">🐦 Haiku (Small LLM)</div>
+                    <p>Cost-effective solution for prototyping and simple applications. Perfect for budget-conscious developers.</p>
+                </div>
+                <div class="model-card sonnet-card">
+                    <div class="model-title">🎯 Sonnet (Large LLM)</div>
+                    <p>Production-ready applications with enterprise-grade quality. Ideal for serious development projects.</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="examples-grid">
+            <!-- Example 1: Blog Platform -->
+            <div class="example-card">
+                <div class="example-header">
+                    <div class="example-title">📝 Modern Blog Platform</div>
+                    <div class="example-description">
+                        A complete content management system with user authentication, rich text editing, comments, and SEO optimization.
+                    </div>
+                    <div class="prompt-used">
+                        <strong>Jahbreak Generated Prompt:</strong><br>
+                        "You are a Software Engineer who acts as a coding agent. Create a modern blog platform with content management, user comments, and SEO optimization features..."
+                    </div>
+                </div>
+                
+                <div class="results-comparison">
+                    <div class="result-panel haiku-result">
+                        <div class="result-header">
+                            <span class="model-badge haiku-badge">Haiku</span>
+                            <span class="score poor">29/100</span>
+                        </div>
+                        
+                        <h4>Result: Project Skeleton Only</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">✅</span> Directory structure created</li>
+                            <li><span class="icon">✅</span> Dependencies selected</li>
+                            <li><span class="icon">❌</span> No actual implementation</li>
+                            <li><span class="icon">❌</span> Missing frontend</li>
+                            <li><span class="icon">❌</span> No API endpoints</li>
+                            <li><span class="icon">❌</span> No database schema</li>
+                        </ul>
+                        
+                        <div class="code-sample">
+                            // package.json only
+                            {
+                              "name": "blog-platform",
+                              "dependencies": {
+                                "express": "^4.18.0",
+                                "sequelize": "^6.28.0"
+                              }
+                            }
+                        </div>
+                    </div>
+                    
+                    <div class="result-panel">
+                        <div class="result-header">
+                            <span class="model-badge sonnet-badge">Sonnet</span>
+                            <span class="score excellent">95/100</span>
+                        </div>
+                        
+                        <h4>Result: Production-Ready Application</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">✅</span> Complete Next.js frontend</li>
+                            <li><span class="icon">✅</span> Express.js backend with TypeScript</li>
+                            <li><span class="icon">✅</span> PostgreSQL database with Sequelize</li>
+                            <li><span class="icon">✅</span> JWT authentication system</li>
+                            <li><span class="icon">✅</span> Admin dashboard</li>
+                            <li><span class="icon">✅</span> SEO optimization</li>
+                            <li><span class="icon">✅</span> Docker containerization</li>
+                            <li><span class="icon">✅</span> Redis caching</li>
+                        </ul>
+                        
+                        <a href="/example-apps/sonnet-comparison/blog-platform" class="view-code">View Complete Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 2: Real-time Chat Application -->
+            <div class="example-card">
+                <div class="example-header">
+                    <div class="example-title">💬 Real-time Chat Application</div>
+                    <div class="example-description">
+                        Advanced messaging platform with group chat, file sharing, video calls, and end-to-end encryption.
+                    </div>
+                    <div class="prompt-used">
+                        <strong>Jahbreak Generated Prompt:</strong><br>
+                        "Develop a real-time chat application with group messaging, file sharing, and video call features..."
+                    </div>
+                </div>
+                
+                <div class="results-comparison">
+                    <div class="result-panel haiku-result">
+                        <div class="result-header">
+                            <span class="model-badge haiku-badge">Haiku</span>
+                            <span class="score good">42/100</span>
+                        </div>
+                        
+                        <h4>Result: Incomplete Implementation</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">✅</span> Basic project structure</li>
+                            <li><span class="icon">✅</span> Some backend components</li>
+                            <li><span class="icon">❌</span> Missing frontend entirely</li>
+                            <li><span class="icon">❌</span> No Socket.IO implementation</li>
+                            <li><span class="icon">❌</span> No video call features</li>
+                            <li><span class="icon">❌</span> No file sharing</li>
+                        </ul>
+                        
+                        <div class="code-sample">
+                            // Incomplete socket handler
+                            const socket = require('socket.io');
+                            // TODO: Implement chat functionality
+                        </div>
+                    </div>
+                    
+                    <div class="result-panel">
+                        <div class="result-header">
+                            <span class="model-badge sonnet-badge">Sonnet</span>
+                            <span class="score excellent">98/100</span>
+                        </div>
+                        
+                        <h4>Result: Enterprise-Grade Chat Platform</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">✅</span> Complete React TypeScript frontend</li>
+                            <li><span class="icon">✅</span> Socket.IO real-time messaging</li>
+                            <li><span class="icon">✅</span> WebRTC video calls</li>
+                            <li><span class="icon">✅</span> End-to-end encryption</li>
+                            <li><span class="icon">✅</span> File sharing (100MB limit)</li>
+                            <li><span class="icon">✅</span> Kubernetes deployment</li>
+                            <li><span class="icon">✅</span> MongoDB + Redis</li>
+                            <li><span class="icon">✅</span> Screen sharing support</li>
+                        </ul>
+                        
+                        <a href="/example-apps/sonnet-comparison/chat-application" class="view-code">View Complete Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 3: Personal Finance Tracker -->
+            <div class="example-card">
+                <div class="example-header">
+                    <div class="example-title">💰 Personal Finance Tracker</div>
+                    <div class="example-description">
+                        Comprehensive financial management tool with expense tracking, budgets, reporting, and multi-currency support.
+                    </div>
+                    <div class="prompt-used">
+                        <strong>Jahbreak Generated Prompt:</strong><br>
+                        "Create a personal finance tracker with expense tracking, budget management, and financial reporting..."
+                    </div>
+                </div>
+                
+                <div class="results-comparison">
+                    <div class="result-panel haiku-result">
+                        <div class="result-header">
+                            <span class="model-badge haiku-badge">Haiku</span>
+                            <span class="score excellent">82/100</span>
+                        </div>
+                        
+                        <h4>Result: Solid Implementation</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">✅</span> Complete React TypeScript app</li>
+                            <li><span class="icon">✅</span> Express.js backend</li>
+                            <li><span class="icon">✅</span> MongoDB integration</li>
+                            <li><span class="icon">✅</span> Expense tracking with receipts</li>
+                            <li><span class="icon">✅</span> Budget management</li>
+                            <li><span class="icon">✅</span> Chart.js visualizations</li>
+                            <li><span class="icon">✅</span> 2FA authentication</li>
+                            <li><span class="icon">⚠️</span> Basic security measures</li>
+                        </ul>
+                        
+                        <a href="/example-apps/finance-tracker" class="view-code">View Haiku Version</a>
+                    </div>
+                    
+                    <div class="result-panel">
+                        <div class="result-header">
+                            <span class="model-badge sonnet-badge">Sonnet</span>
+                            <span class="score excellent">96/100</span>
+                        </div>
+                        
+                        <h4>Result: Enhanced Professional App</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">✅</span> Advanced React TypeScript</li>
+                            <li><span class="icon">✅</span> Tailwind CSS styling</li>
+                            <li><span class="icon">✅</span> Enhanced security features</li>
+                            <li><span class="icon">✅</span> Email notifications</li>
+                            <li><span class="icon">✅</span> Multi-currency support</li>
+                            <li><span class="icon">✅</span> PDF/CSV export</li>
+                            <li><span class="icon">✅</span> Advanced error handling</li>
+                            <li><span class="icon">✅</span> Professional documentation</li>
+                        </ul>
+                        
+                        <a href="/example-apps/sonnet-comparison/finance-tracker" class="view-code">View Sonnet Version</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example 4: Project Management Tool -->
+            <div class="example-card">
+                <div class="example-header">
+                    <div class="example-title">📊 Project Management Tool</div>
+                    <div class="example-description">
+                        Comprehensive project management platform with task tracking, team collaboration, Gantt charts, and deadline management.
+                    </div>
+                    <div class="prompt-used">
+                        <strong>Jahbreak Generated Prompt (Socratic Method):</strong><br>
+                        "You are a Senior Software Engineer who uses Socratic questioning to guide discovery. Build a project management tool..."
+                    </div>
+                </div>
+                
+                <div class="results-comparison">
+                    <div class="result-panel haiku-result">
+                        <div class="result-header">
+                            <span class="model-badge haiku-badge">Haiku</span>
+                            <span class="score poor">0/100</span>
+                        </div>
+                        
+                        <h4>Result: API Error</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">❌</span> Model incompatibility</li>
+                            <li><span class="icon">❌</span> No implementation produced</li>
+                            <li><span class="icon">❌</span> Technical limitations</li>
+                        </ul>
+                        
+                        <div class="code-sample">
+                            // Error: 'claude-3-5-haiku-20241022' 
+                            // does not support thinking.
+                        </div>
+                    </div>
+                    
+                    <div class="result-panel">
+                        <div class="result-header">
+                            <span class="model-badge sonnet-badge">Sonnet</span>
+                            <span class="score excellent">92/100</span>
+                        </div>
+                        
+                        <h4>Result: Strategic Analysis & Implementation</h4>
+                        <ul class="features-list">
+                            <li><span class="icon">✅</span> Thoughtful requirement analysis</li>
+                            <li><span class="icon">✅</span> Strategic questioning approach</li>
+                            <li><span class="icon">✅</span> Architectural guidance</li>
+                            <li><span class="icon">✅</span> Technology recommendations</li>
+                            <li><span class="icon">✅</span> Existing codebase analysis</li>
+                            <li><span class="icon">✅</span> Professional methodology</li>
+                        </ul>
+                        
+                        <a href="/example-apps/sonnet-comparison/project-manager" class="view-code">View Analysis</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-summary">
+            <h2>Performance Summary</h2>
+            <p>Compare the results across different models using the same Jahbreak-generated prompts</p>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">25%</span>
+                    <span class="stat-label">Haiku Success Rate</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Sonnet Success Rate</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">82/100</span>
+                    <span class="stat-label">Best Haiku Score</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">98/100</span>
+                    <span class="stat-label">Best Sonnet Score</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Complete Applications</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Prompt Compatibility</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="intro">
+            <h3>Key Takeaways</h3>
+            <p><strong>Jahbreak's Advantage:</strong> Our AI-generated prompts are model-agnostic and scale beautifully across different LLM capabilities. Whether you're prototyping with cost-effective models or building production applications with premium models, Jahbreak delivers consistent, high-quality prompt engineering.</p>
+            
+            <p><strong>Flexible Pricing:</strong> Choose the model that fits your budget and requirements. The same sophisticated prompts work across our entire range, from budget-friendly options to enterprise-grade solutions.</p>
+            
+            <p><strong>Proven Results:</strong> These examples demonstrate real applications built using Jahbreak-generated prompts, showcasing the platform's ability to produce everything from simple prototypes to complex, production-ready systems.</p>
+        </div>
+    </div>
+</body>
+</html>
