@@ -402,10 +402,58 @@
             socratic: []
         };
 
-        // Template preview examples (actual LLM prompts)
+        // Template preview examples (actual LLM prompts)  
         const previewExamples = {
-            'comprehensive_framework': 'You are a General Expert with broad knowledge across various fields and strong analytical skills. You have consulted across diverse industries and solved complex interdisciplinary challenges and specialize in problem-solving, critical thinking, research methodology.\\n\\nAlways respond in the same language as the user\\'s query.\\n\\nUser Query: "[YOUR QUERY]"\\n\\nI need you to provide a comprehensive systematic framework for this query. Structure your response as follows:\\n\\n## SYSTEMATIC FRAMEWORK\\n\\n### Phase 1: Foundation Analysis\\n- **Current State Assessment**: Analyze the starting point and existing conditions\\n- **Requirements Definition**: Define clear objectives and success criteria\\n- **Resource Mapping**: Identify needed resources, tools, and capabilities\\n- **Risk Assessment**: Evaluate potential challenges and mitigation strategies\\n\\n### Phase 2: Strategic Execution Plan\\n- **Implementation Roadmap**: Create a step-by-step execution timeline\\n- **Methodology Selection**: Choose optimal approaches and techniques\\n- **Quality Checkpoints**: Define validation and testing procedures\\n- **Progress Metrics**: Establish measurable milestones and KPIs\\n\\n### Phase 3: Optimization & Scaling\\n- **Performance Monitoring**: Set up tracking and measurement systems\\n- **Continuous Improvement**: Build feedback loops and iterative enhancement\\n- **Scaling Strategy**: Plan for growth and expansion opportunities\\n- **Knowledge Transfer**: Document lessons learned and best practices\\n\\n## EXPERT RECOMMENDATIONS\\n\\nBased on my expertise in problem-solving, provide specific guidance for each phase, including:\\n- Critical success factors and potential pitfalls\\n- Industry best practices and proven methodologies\\n- Recommended tools and technologies\\n- Timeline estimates and resource requirements\\n- Success indicators and measurement criteria\\n\\nMake this framework immediately actionable with concrete steps, specific deliverables, and clear decision points throughout the process.',
-            'expert_masterclass': 'You are a General Expert with broad knowledge across various fields and strong analytical skills. You have consulted across diverse industries and solved complex interdisciplinary challenges and specialize in problem-solving, critical thinking, research methodology.\\n\\nAlways respond in the same language as the user\\'s query.\\n\\nUser Query: \"[YOUR QUERY]\"\\n\\n## EXPERT MASTERCLASS SESSION\\n\\nWelcome to this masterclass where I will share deep expertise and professional insights on your topic.\\n\\n### PROFESSIONAL PERSPECTIVE\\nBased on my extensive experience in problem-solving, I\\'ll provide you with insider knowledge that comes from real-world application across diverse industries.\\n\\n### PROVEN TECHNIQUES\\n1. **Strategic Framework**: [Specific methodologies I\\'ve tested]\\n2. **Implementation Tactics**: [Battle-tested approaches]\\n3. **Optimization Methods**: [Performance enhancement techniques]\\n\\n### ESSENTIAL TOOLS & TECHNOLOGIES\\n- **Primary Tools**: [Professional-grade solutions]\\n- **Supporting Platforms**: [Complementary technologies]\\n- **Quality Assurance**: [Validation and testing tools]\\n\\n### INSIDER TIPS & SECRETS\\n💡 **Pro Tip 1**: [Industry secret that saves time/money]\\n💡 **Pro Tip 2**: [Common mistake to avoid]\\n💡 **Pro Tip 3**: [Advanced technique for scaling]\\n\\n### ADVANCED STRATEGIES\\n**Level 1 - Foundation**: [Beginner approach]\\n**Level 2 - Professional**: [Intermediate techniques]\\n**Level 3 - Expert**: [Advanced methodologies]\\n\\n### REAL-WORLD APPLICATION\\nI\\'ll provide specific examples from my experience solving similar challenges, including what worked, what didn\\'t, and key lessons learned.\\n\\n### SUCCESS METRICS\\nDefine how to measure success and track progress using industry-standard KPIs and benchmarks.',
+            'comprehensive_framework': `You are a General Expert with broad knowledge across various fields and strong analytical skills.
+
+User Query: "[YOUR QUERY]"
+
+I need you to provide a comprehensive systematic framework for this query. Structure your response as follows:
+
+## SYSTEMATIC FRAMEWORK
+
+### Phase 1: Foundation Analysis
+- Current State Assessment
+- Requirements Definition  
+- Resource Mapping
+- Risk Assessment
+
+### Phase 2: Strategic Execution Plan
+- Implementation Roadmap
+- Methodology Selection
+- Quality Checkpoints
+- Progress Metrics
+
+### Phase 3: Optimization & Scaling
+- Performance Monitoring
+- Continuous Improvement
+- Scaling Strategy
+- Knowledge Transfer
+
+Make this framework immediately actionable with concrete steps.`,
+            'expert_masterclass': `You are a General Expert with broad knowledge across various fields and strong analytical skills.
+
+User Query: "[YOUR QUERY]"
+
+## EXPERT MASTERCLASS SESSION
+
+Welcome to this masterclass where I will share deep expertise and professional insights.
+
+### PROFESSIONAL PERSPECTIVE
+Based on my extensive experience, I'll provide insider knowledge from real-world application.
+
+### PROVEN TECHNIQUES
+1. Strategic Framework: [Specific methodologies tested]
+2. Implementation Tactics: [Battle-tested approaches]  
+3. Optimization Methods: [Performance enhancement techniques]
+
+### ESSENTIAL TOOLS & TECHNOLOGIES
+- Primary Tools: [Professional-grade solutions]
+- Supporting Platforms: [Complementary technologies]
+- Quality Assurance: [Validation and testing tools]
+
+### SUCCESS METRICS
+Define how to measure success and track progress using industry-standard KPIs.`,
             'practical_blueprint': 'Provide an immediately actionable blueprint with quick start guide, step-by-step plan, required tools, templates, success checkpoints, and troubleshooting.',
             'strategic_roadmap': 'Create a strategic roadmap with long-term vision, multi-phase development plan, capability progression, resource allocation strategy, and regular review cycles.',
             'quick_solution': 'Provide a fast, efficient solution with immediate actionable steps, quick wins, and time-sensitive priorities.',
