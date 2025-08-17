@@ -35,6 +35,55 @@ const TEMPLATE_REGISTRY = {
             description: "Long-term vision with strategic planning and systematic progression",
             bestFor: ["long-term planning", "strategic thinking", "vision development", "scaling"],
             keywords: ["strategy", "long-term", "vision", "roadmap", "planning", "scale", "future"]
+        },
+        {
+            name: "quick_solution",
+            path: path.join(__dirname, '../templates/direct/quick_solution.js'),
+            description: "Fast, efficient solutions for urgent problems",
+            bestFor: ["urgent problems", "time-sensitive issues", "quick fixes", "immediate needs"],
+            keywords: ["quick", "fast", "urgent", "immediate", "emergency", "solution", "fix"]
+        },
+        {
+            name: "detailed_analysis",
+            path: path.join(__dirname, '../templates/direct/detailed_analysis.js'),
+            description: "Deep analytical breakdown of complex topics",
+            bestFor: ["complex analysis", "research topics", "detailed examination", "comprehensive understanding"],
+            keywords: ["analysis", "research", "detailed", "deep", "examine", "understand", "breakdown"]
+        },
+        {
+            name: "step_by_step_tutorial",
+            path: path.join(__dirname, '../templates/direct/step_by_step_tutorial.js'),
+            description: "Educational guidance with progressive skill building",
+            bestFor: ["learning new skills", "educational content", "tutorials", "skill development"],
+            keywords: ["tutorial", "learn", "teach", "education", "skill", "training", "guide"]
+        },
+        {
+            name: "troubleshooting_guide",
+            path: path.join(__dirname, '../templates/direct/troubleshooting_guide.js'),
+            description: "Systematic problem diagnosis and resolution",
+            bestFor: ["technical problems", "debugging", "error resolution", "system issues"],
+            keywords: ["troubleshoot", "debug", "error", "problem", "fix", "diagnose", "resolve"]
+        },
+        {
+            name: "best_practices_guide",
+            path: path.join(__dirname, '../templates/direct/best_practices_guide.js'),
+            description: "Industry standards and proven methodologies",
+            bestFor: ["professional standards", "quality improvement", "optimization", "industry guidelines"],
+            keywords: ["best", "practices", "standards", "quality", "optimize", "industry", "proven"]
+        },
+        {
+            name: "resource_compilation",
+            path: path.join(__dirname, '../templates/direct/resource_compilation.js'),
+            description: "Comprehensive resource gathering and organization",
+            bestFor: ["resource discovery", "learning materials", "tool recommendations", "reference gathering"],
+            keywords: ["resources", "tools", "materials", "references", "collection", "list", "compilation"]
+        },
+        {
+            name: "implementation_checklist",
+            path: path.join(__dirname, '../templates/direct/implementation_checklist.js'),
+            description: "Systematic execution planning with detailed checklists",
+            bestFor: ["project execution", "systematic implementation", "process management", "quality control"],
+            keywords: ["checklist", "implementation", "execution", "process", "steps", "workflow", "management"]
         }
     ],
     interactive: [
@@ -58,6 +107,55 @@ const TEMPLATE_REGISTRY = {
             description: "5-6 questions with progressive deepening and refinement",
             bestFor: ["collaborative approach", "progressive understanding", "iterative development", "balanced exploration"],
             keywords: ["iterative", "progressive", "collaborative", "refinement", "balanced", "evolution"]
+        },
+        {
+            name: "diagnostic_interview",
+            path: path.join(__dirname, '../templates/interactive/diagnostic_interview.js'),
+            description: "Problem identification through systematic questioning",
+            bestFor: ["problem diagnosis", "root cause analysis", "troubleshooting", "issue identification"],
+            keywords: ["diagnose", "problem", "interview", "identify", "symptoms", "cause", "troubleshoot"]
+        },
+        {
+            name: "needs_assessment",
+            path: path.join(__dirname, '../templates/interactive/needs_assessment.js'),
+            description: "Understanding requirements and constraints through discovery",
+            bestFor: ["requirement gathering", "project scoping", "needs analysis", "constraint identification"],
+            keywords: ["needs", "requirements", "assessment", "constraints", "scope", "analysis", "discovery"]
+        },
+        {
+            name: "collaborative_planning",
+            path: path.join(__dirname, '../templates/interactive/collaborative_planning.js'),
+            description: "Group-oriented planning with stakeholder consideration",
+            bestFor: ["team planning", "stakeholder alignment", "group projects", "collaborative initiatives"],
+            keywords: ["collaborate", "team", "group", "stakeholder", "planning", "alignment", "together"]
+        },
+        {
+            name: "decision_framework",
+            path: path.join(__dirname, '../templates/interactive/decision_framework.js'),
+            description: "Choice evaluation through structured questioning",
+            bestFor: ["decision making", "option evaluation", "choice analysis", "strategic decisions"],
+            keywords: ["decision", "choice", "evaluate", "options", "choose", "select", "compare"]
+        },
+        {
+            name: "learning_assessment",
+            path: path.join(__dirname, '../templates/interactive/learning_assessment.js'),
+            description: "Educational level and learning style discovery",
+            bestFor: ["educational planning", "skill development", "learning paths", "knowledge assessment"],
+            keywords: ["learning", "education", "assessment", "skill", "knowledge", "development", "training"]
+        },
+        {
+            name: "goal_setting_session",
+            path: path.join(__dirname, '../templates/interactive/goal_setting_session.js'),
+            description: "Objective clarification and prioritization through discovery",
+            bestFor: ["goal setting", "objective clarification", "planning sessions", "vision development"],
+            keywords: ["goal", "objective", "vision", "target", "aim", "purpose", "planning"]
+        },
+        {
+            name: "creative_workshop",
+            path: path.join(__dirname, '../templates/interactive/creative_workshop.js'),
+            description: "Brainstorming and ideation through collaborative dialogue",
+            bestFor: ["creative projects", "brainstorming", "innovation", "ideation sessions"],
+            keywords: ["creative", "brainstorm", "ideation", "innovation", "ideas", "workshop", "generate"]
         }
     ],
     socratic: [
@@ -81,6 +179,55 @@ const TEMPLATE_REGISTRY = {
             description: "Personal growth and deep understanding through reflection",
             bestFor: ["personal development", "self-awareness", "growth mindset", "reflective learning"],
             keywords: ["growth", "personal", "reflection", "development", "learning", "self-awareness", "mindset"]
+        },
+        {
+            name: "assumption_challenging",
+            path: path.join(__dirname, '../templates/socratic/assumption_challenging.js'),
+            description: "Questioning underlying beliefs and assumptions",
+            bestFor: ["belief examination", "assumption testing", "critical thinking", "perspective shifting"],
+            keywords: ["assumptions", "beliefs", "challenge", "question", "examine", "test", "perspective"]
+        },
+        {
+            name: "root_cause_analysis",
+            path: path.join(__dirname, '../templates/socratic/root_cause_analysis.js'),
+            description: "Deep exploration of fundamental causes",
+            bestFor: ["problem analysis", "system thinking", "cause identification", "deep investigation"],
+            keywords: ["root", "cause", "why", "deep", "fundamental", "analysis", "investigation"]
+        },
+        {
+            name: "perspective_exploration",
+            path: path.join(__dirname, '../templates/socratic/perspective_exploration.js'),
+            description: "Multiple viewpoint examination and perspective shifting",
+            bestFor: ["perspective taking", "viewpoint analysis", "empathy development", "complex understanding"],
+            keywords: ["perspective", "viewpoint", "multiple", "explore", "empathy", "understanding", "different"]
+        },
+        {
+            name: "value_discovery",
+            path: path.join(__dirname, '../templates/socratic/value_discovery.js'),
+            description: "Understanding core values and motivations",
+            bestFor: ["value clarification", "motivation discovery", "purpose exploration", "meaning-making"],
+            keywords: ["values", "motivation", "purpose", "meaning", "important", "matters", "core"]
+        },
+        {
+            name: "wisdom_extraction",
+            path: path.join(__dirname, '../templates/socratic/wisdom_extraction.js'),
+            description: "Drawing insights and wisdom from experience",
+            bestFor: ["experience reflection", "wisdom development", "insight extraction", "learning integration"],
+            keywords: ["wisdom", "experience", "insights", "lessons", "learned", "knowledge", "reflection"]
+        },
+        {
+            name: "belief_examination",
+            path: path.join(__dirname, '../templates/socratic/belief_examination.js'),
+            description: "Questioning and testing beliefs through inquiry",
+            bestFor: ["belief testing", "evidence evaluation", "truth seeking", "cognitive examination"],
+            keywords: ["belief", "truth", "evidence", "examine", "test", "verify", "know"]
+        },
+        {
+            name: "pattern_recognition",
+            path: path.join(__dirname, '../templates/socratic/pattern_recognition.js'),
+            description: "Identifying recurring themes and connections",
+            bestFor: ["pattern identification", "theme recognition", "connection discovery", "structural analysis"],
+            keywords: ["pattern", "theme", "connection", "recurring", "structure", "similarity", "recognize"]
         }
     ]
 };
@@ -152,7 +299,7 @@ Selection criteria:
 - Evaluate user's likely needs and preferences
 - Think about what approach would be most helpful
 
-Respond with ONLY the template number (1, 2, 3, or 4). No explanation needed.`;
+Respond with ONLY the template number (1-${templates.length}). No explanation needed.`;
 
     const userPrompt = `Query: "${query}"
 Role: ${role}

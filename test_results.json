@@ -1,47 +1,47 @@
 {
-  "timestamp": "2025-08-17T03:23:50.188478",
+  "timestamp": "2025-08-17T03:38:19.352259",
   "tests": [
     {
       "name": "Website Accessibility",
       "passed": true,
       "details": "Title: Jahbreak - Advanced Prompt Engineering",
       "error": "",
-      "timestamp": "2025-08-17T03:23:54.086644"
+      "timestamp": "2025-08-17T03:38:20.785554"
     },
     {
       "name": "UI Elements",
       "passed": true,
       "details": "Found: Query textarea, Generate button, Personality input, Obfuscation select, Mode select, Theme toggle button",
       "error": "",
-      "timestamp": "2025-08-17T03:23:54.343035"
+      "timestamp": "2025-08-17T03:38:21.033901"
     },
     {
       "name": "Theme Toggle",
       "passed": true,
       "details": "Changed from 'Light Mode' to 'Dark Mode'",
       "error": "",
-      "timestamp": "2025-08-17T03:23:55.591846"
+      "timestamp": "2025-08-17T03:38:22.241636"
     },
     {
       "name": "API Direct Call",
       "passed": true,
       "details": "Generated 3 techniques",
       "error": "",
-      "timestamp": "2025-08-17T03:23:56.195246"
+      "timestamp": "2025-08-17T03:38:22.834091"
     },
     {
       "name": "Navigation",
       "passed": true,
       "details": "Templates page navigation works",
       "error": "",
-      "timestamp": "2025-08-17T03:23:56.913888"
+      "timestamp": "2025-08-17T03:38:23.561381"
     },
     {
       "name": "Frontend API Integration",
       "passed": true,
       "details": "Generated: Direct (Q:1.0), Interactive (Q:1.0), Socratic (Q:1.0)",
       "error": "",
-      "timestamp": "2025-08-17T03:23:58.196597"
+      "timestamp": "2025-08-17T03:38:24.879087"
     }
   ],
   "summary": {
