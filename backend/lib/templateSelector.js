@@ -249,6 +249,8 @@ async function callGroqAPI({ systemPrompt, userPrompt }) {
     }
 
     console.log('🤖 Calling Groq API for template selection...');
+    console.log('📤 System prompt:', systemPrompt.substring(0, 200) + '...');
+    console.log('📤 User prompt:', userPrompt);
     
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
@@ -274,7 +276,9 @@ async function callGroqAPI({ systemPrompt, userPrompt }) {
     }
 
     const data = await response.json();
-    return data.choices[0].message.content;
+    const selection = data.choices[0].message.content;
+    console.log('📥 Groq response:', selection);
+    return selection;
 }
 
 // Analyze query and select best template for a technique
