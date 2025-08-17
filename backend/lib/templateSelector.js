@@ -439,7 +439,28 @@ async function selectAndGenerateTemplate(technique, query, role, roleInfo) {
         
     } catch (error) {
         console.error(`❌ Error in template selection and generation:`, error);
-        throw error;
+        console.log(`🔄 Attempting fallback template selection...`);
+        
+        try {
+            // Use fallback template selection
+            const fallbackTemplate = selectTemplateFallback(technique, query);
+            
+            // Load and execute fallback template
+            const templateModule = loadTemplate(fallbackTemplate);
+            const generatedContent = templateModule.generateTemplate(query, role, roleInfo);
+            
+            console.log(`✅ Generated ${technique} content using fallback ${fallbackTemplate.name}: ${generatedContent.length} characters`);
+            
+            return {
+                content: generatedContent,
+                templateUsed: fallbackTemplate.name,
+                templateDescription: fallbackTemplate.description
+            };
+            
+        } catch (fallbackError) {
+            console.error(`❌ Fallback template selection also failed:`, fallbackError);
+            throw new Error(`Both Groq and fallback template selection failed for ${technique}`);
+        }
     }
 }
 
