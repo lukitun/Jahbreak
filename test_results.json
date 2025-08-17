@@ -1,52 +1,52 @@
 {
-  "timestamp": "2025-08-17T02:52:47.193222",
+  "timestamp": "2025-08-17T02:55:22.807029",
   "tests": [
     {
       "name": "Website Accessibility",
       "passed": true,
       "details": "Title: Jahbreak - Advanced Prompt Engineering",
       "error": "",
-      "timestamp": "2025-08-17T02:52:48.812730"
+      "timestamp": "2025-08-17T02:55:23.891651"
     },
     {
       "name": "UI Elements",
       "passed": true,
       "details": "Found: Query textarea, Generate button, Personality input, Obfuscation select, Mode select, Theme toggle button",
       "error": "",
-      "timestamp": "2025-08-17T02:52:49.018972"
+      "timestamp": "2025-08-17T02:55:24.164391"
     },
     {
       "name": "Theme Toggle",
       "passed": true,
       "details": "Changed from 'Light Mode' to 'Dark Mode'",
       "error": "",
-      "timestamp": "2025-08-17T02:52:50.157261"
+      "timestamp": "2025-08-17T02:55:25.353649"
     },
     {
       "name": "API Direct Call",
       "passed": true,
       "details": "Generated 3 techniques",
       "error": "",
-      "timestamp": "2025-08-17T02:52:50.738417"
+      "timestamp": "2025-08-17T02:55:25.950223"
     },
     {
       "name": "Navigation",
-      "passed": false,
-      "details": "Templates navigation error: Message: no such element: Unable to locate element: {\"method\":\"xpath\",\"selector\":\"//a[@href='templates.html']\"}\n  (Session info: chrome=139.0.7258.127); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#nosuchelementexception\nStacktrace:\n#0 0x55c16480701a <unknown>\n#1 0x55c1642a6a70 <unknown>\n#2 0x55c1642f8907 <unknown>\n#3 0x55c1642f8b01 <unknown>\n#4 0x55c164346d54 <unknown>\n#5 0x55c16431e40d <unknown>\n#6 0x55c16434414f <unknown>\n#7 0x55c16431e1b3 <unknown>\n#8 0x55c1642ea59b <unknown>\n#9 0x55c1642eb971 <unknown>\n#10 0x55c1647cc1eb <unknown>\n#11 0x55c1647cff39 <unknown>\n#12 0x55c1647b32c9 <unknown>\n#13 0x55c1647d0ae8 <unknown>\n#14 0x55c164797baf <unknown>\n#15 0x55c1647f40a8 <unknown>\n#16 0x55c1647f4286 <unknown>\n#17 0x55c164805ff6 <unknown>\n#18 0x7f3db8491ac3 <unknown>\n",
+      "passed": true,
+      "details": "Templates page navigation works",
       "error": "",
-      "timestamp": "2025-08-17T02:53:00.970252"
+      "timestamp": "2025-08-17T02:55:26.848122"
     },
     {
       "name": "Frontend API Integration",
       "passed": false,
       "details": "Frontend error: Failed to execute 'json' on 'Response': Unexpected end of JSON input",
       "error": "",
-      "timestamp": "2025-08-17T02:53:01.714474"
+      "timestamp": "2025-08-17T02:55:27.624016"
     }
   ],
   "summary": {
     "total": 6,
-    "passed": 4,
-    "failed": 2
+    "passed": 5,
+    "failed": 1
   }
 }

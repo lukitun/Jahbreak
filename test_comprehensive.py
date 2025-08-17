@@ -55,6 +55,46 @@ class JahbreakTester:
         else:
             self.test_results["summary"]["failed"] += 1
 
+    def validate_prompt_quality(self, content, technique_name):
+        """Validate prompt quality and relevance"""
+        quality_score = 0.0
+        
+        # Check 1: Length (proper prompts should be substantial)
+        if len(content) > 200:
+            quality_score += 0.2
+        elif len(content) > 100:
+            quality_score += 0.1
+            
+        # Check 2: Contains technique-specific keywords
+        technique_keywords = {
+            "Direct": ["implementation", "steps", "process", "blueprint", "framework", "guide"],
+            "Interactive": ["questions", "what", "how", "why", "clarify", "consultation"],
+            "Socratic": ["question", "think", "consider", "analyze", "evaluate", "critical"]
+        }
+        
+        keywords = technique_keywords.get(technique_name, [])
+        keyword_count = sum(1 for keyword in keywords if keyword.lower() in content.lower())
+        if keyword_count >= 2:
+            quality_score += 0.3
+        elif keyword_count >= 1:
+            quality_score += 0.2
+            
+        # Check 3: Professional structure (contains formatting)
+        if any(marker in content for marker in ["□", "•", ":", "1.", "2.", "PHASE", "STEP"]):
+            quality_score += 0.2
+            
+        # Check 4: Mentions the actual query topic
+        test_query = "python"  # Our test query is about learning Python
+        if test_query.lower() in content.lower():
+            quality_score += 0.2
+            
+        # Check 5: Contains professional language indicators
+        professional_indicators = ["expertise", "professional", "experience", "best practices", "guidance"]
+        if any(indicator in content.lower() for indicator in professional_indicators):
+            quality_score += 0.1
+            
+        return min(quality_score, 1.0)  # Cap at 1.0
+
     def setup_driver(self):
         """Setup Chrome driver with comprehensive options"""
         self.log("Setting up Chrome WebDriver...")
@@ -339,8 +379,14 @@ class JahbreakTester:
                                     content = output_element.text.strip()
                                     
                                     if content and len(content) > 50:  # Reasonable content length
-                                        successful_techniques.append(technique_name)
-                                        self.log(f"✓ {technique_name} technique: {len(content)} characters")
+                                        # Enhanced quality checks
+                                        quality_score = self.validate_prompt_quality(content, technique_name)
+                                        if quality_score >= 0.7:  # 70% quality threshold
+                                            successful_techniques.append(f"{technique_name} (Q:{quality_score:.1f})")
+                                            self.log(f"✓ {technique_name} technique: {len(content)} chars, quality: {quality_score:.1f}")
+                                        else:
+                                            failed_techniques.append(f"{technique_name} (low quality: {quality_score:.1f})")
+                                            self.log(f"⚠️ {technique_name} technique: low quality ({quality_score:.1f})", "WARNING")
                                     else:
                                         failed_techniques.append(f"{technique_name} (empty/short)")
                                         self.log(f"✗ {technique_name} technique: insufficient content ({len(content)} chars)", "WARNING")
