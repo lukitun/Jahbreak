@@ -344,6 +344,29 @@
             overflow: hidden;
         }
 
+        /* Special styling for coding agent prompts */
+        .prompt-section.coding-agent {
+            order: -1; /* Display at top */
+            border: 2px solid #ffd700;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .prompt-section.coding-agent::before {
+            content: "🚀 AI CODING AGENT";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: linear-gradient(135deg, #ffd700, #ffb347);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
         .prompt-header {
             display: flex;
             justify-content: space-between;
@@ -353,11 +376,23 @@
             border-bottom: 1px solid var(--border-color);
         }
 
+        .prompt-section.coding-agent .prompt-header {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 179, 71, 0.1));
+            border-bottom: 2px solid #ffd700;
+        }
+
         .prompt-header h4 {
             margin: 0;
             color: #667eea;
             font-size: 1.1rem;
             font-weight: 600;
+        }
+
+        .prompt-section.coding-agent .prompt-header h4 {
+            color: #ffd700;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
         .prompt-actions {
@@ -538,7 +573,7 @@
                 
                 <!-- Three prompt engineering techniques -->
                 <div id="safeQueryOutputs" style="display: none;">
-                    <div class="prompt-section">
+                    <div class="prompt-section" id="directPromptSection">
                         <div class="prompt-header">
                             <h4>🎯 Direct Technique</h4>
                             <div class="prompt-actions">
@@ -558,7 +593,7 @@
                         </div>
                     </div>
                     
-                    <div class="prompt-section">
+                    <div class="prompt-section" id="interactivePromptSection">
                         <div class="prompt-header">
                             <h4>💬 Interactive Technique</h4>
                             <div class="prompt-actions">
@@ -578,7 +613,7 @@
                         </div>
                     </div>
 
-                    <div class="prompt-section">
+                    <div class="prompt-section" id="socraticPromptSection">
                         <div class="prompt-header">
                             <h4>🤔 Socratic Technique</h4>
                             <div class="prompt-actions">
@@ -797,13 +832,34 @@
                 const { direct, interactive, socratic } = parseSafePrompt(data.prompt);
                 
                 // Show safe query outputs
-                safeQueryOutputs.style.display = 'block';
+                safeQueryOutputs.style.display = 'flex';
                 unsafeQueryOutput.style.display = 'none';
                 
                 // Set content for all three techniques
                 directOutput.textContent = direct;
                 interactiveOutput.textContent = interactive;
                 socraticOutput.textContent = socratic;
+                
+                // Check for coding agent template and apply special styling
+                const promptSections = document.querySelectorAll('.prompt-section');
+                promptSections.forEach(section => {
+                    section.classList.remove('coding-agent');
+                });
+                
+                // Check if any template is coding_agent
+                if (data.prompt.templateMetadata) {
+                    const metadata = data.prompt.templateMetadata;
+                    
+                    if (metadata.direct && metadata.direct.templateUsed === 'coding_agent') {
+                        document.querySelector('#directPromptSection').classList.add('coding-agent');
+                    }
+                    if (metadata.interactive && metadata.interactive.templateUsed === 'coding_agent') {
+                        document.querySelector('#interactivePromptSection').classList.add('coding-agent');
+                    }
+                    if (metadata.socratic && metadata.socratic.templateUsed === 'coding_agent') {
+                        document.querySelector('#socraticPromptSection').classList.add('coding-agent');
+                    }
+                }
                 
             } else {
                 queryStatusIndicator.innerHTML = '<span class="unsafe-query-indicator">⚠ Unsafe Query</span>';
