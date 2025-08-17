@@ -1,0 +1,43 @@
+{
+  "name": "finance-tracker",
+  "version": "1.0.0",
+  "description": "Personal Finance Tracker - Full-stack application for expense tracking, budget management, and financial reporting",
+  "main": "index.js",
+  "scripts": {
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd backend && npm run build",
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\"",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "test": "concurrently \"cd backend && npm test\" \"cd frontend && npm test\"",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm start"
+  },
+  "keywords": [
+    "finance",
+    "expense-tracker",
+    "budget-management",
+    "savings-goals",
+    "financial-reporting",
+    "typescript",
+    "react",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Finance Tracker Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/finance-tracker/finance-tracker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/finance-tracker/finance-tracker/issues"
+  },
+  "homepage": "https://github.com/finance-tracker/finance-tracker#readme"
+}
