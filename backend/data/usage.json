@@ -735,5 +735,12 @@
     "selectedRole": "General Expert",
     "isSafeQuery": true,
     "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T00:41:25.845Z",
+    "payload": "How to learn Python?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
   }
 ]
