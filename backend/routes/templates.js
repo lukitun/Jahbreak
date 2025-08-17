@@ -1,7 +1,32 @@
 const express = require('express');
+const fs = require('fs');
 const router = express.Router();
 const { TEMPLATE_REGISTRY } = require('../lib/templateSelector');
 const { getTemplateInfo } = require('../lib/promptTemplates');
+
+// Function to load template content from .txt file (same as in templateSelector.js)
+function loadTemplateContent(templatePath) {
+    try {
+        const templateContent = fs.readFileSync(templatePath, 'utf8');
+        
+        if (!templateContent || templateContent.trim().length === 0) {
+            throw new Error(`Template is empty or not readable`);
+        }
+        
+        // Return a function that can substitute variables
+        return (query, role, roleInfo) => {
+            return templateContent
+                .replace(/\$\{roleInfo\.background\}/g, roleInfo.background)
+                .replace(/\$\{roleInfo\.experience\}/g, roleInfo.experience)
+                .replace(/\$\{roleInfo\.specialties\.join\(", "\)\}/g, roleInfo.specialties.join(", "))
+                .replace(/\$\{roleInfo\.specialties\[0\]\}/g, roleInfo.specialties[0] || roleInfo.background)
+                .replace(/\$\{query\}/g, query);
+        };
+    } catch (error) {
+        console.error(`❌ Error loading template from ${templatePath}:`, error);
+        throw error;
+    }
+}
 
 /**
  * GET /api/templates
@@ -28,10 +53,10 @@ router.get('/', (req, res) => {
         for (const [category, templates] of Object.entries(TEMPLATE_REGISTRY)) {
             formattedTemplates[category] = templates.map(template => {
                 try {
-                    // Load the actual template module
-                    const templateModule = require(template.path);
+                    // Load the template content from .txt file
+                    const templateFunction = loadTemplateContent(template.path);
                     // Generate example content with placeholder query
-                    const actualContent = templateModule.generateTemplate(
+                    const actualContent = templateFunction(
                         "[YOUR QUERY HERE]", 
                         "General Expert", 
                         roleInfo
@@ -104,12 +129,12 @@ router.post('/preview', (req, res) => {
             });
         }
         
-        // Load and execute the template
-        const templateModule = require(foundTemplate.path);
+        // Load and execute the template from .txt file
+        const templateFunction = loadTemplateContent(foundTemplate.path);
         const { ROLE_EXPERTISE } = require('../lib/promptTemplates');
         const roleInfo = ROLE_EXPERTISE[role] || ROLE_EXPERTISE['General Expert'];
         
-        const preview = templateModule.generateTemplate(query, role, roleInfo);
+        const preview = templateFunction(query, role, roleInfo);
         
         res.json({
             success: true,
