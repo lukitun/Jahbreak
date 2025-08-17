@@ -294,36 +294,19 @@ async function selectBestTemplate(technique, query, role) {
    Keywords: ${template.keywords.join(', ')}`;
     }).join('\n\n');
 
-    const systemPrompt = `You are an expert template selector. Your job is to analyze user queries and select the most appropriate template based on the query's characteristics and user needs.
+    const systemPrompt = `You are a template selector. 
 
 Available ${technique} templates:
-
 ${templateDescriptions}
 
-CRITICAL CODING AGENT RULE:
-- If the query mentions ANY of these: code, program, build, create, develop, software, app, application, script, website, web, API, database, mobile, programming, implementation, scraper, make, write
-- AND the technique is "socratic" 
-- AND "coding_agent" template exists in the list
-- THEN YOU MUST SELECT THE CODING_AGENT TEMPLATE
+MANDATORY RULE FOR SOCRATIC TECHNIQUE:
+If the query is about programming/software development AND technique is socratic, respond with template number 11 (coding_agent).
 
-The coding_agent template is specifically designed for programming requests and provides superior code implementation with requirements gathering.
+Programming keywords that trigger template 11: code, program, build, create, develop, software, app, application, script, website, web, API, database, mobile, programming, implementation, scraper, make, write
 
-Examples that MUST use coding_agent (if available):
-- "Build a Python script"
-- "Create a web application"  
-- "Write code for..."
-- "Develop software..."
-- "Make an app..."
-- "Program a solution..."
-- "Build a website..."
+For all other queries, select the most appropriate template.
 
-Selection criteria:
-1. MANDATORY: Check for coding/programming keywords - if found and coding_agent exists, select it
-2. Match query intent with template strengths
-3. Consider query complexity and scope
-4. Evaluate user's likely needs and preferences
-
-Respond with ONLY the template number (1-${templates.length}). No explanation needed.`;
+Respond with ONLY a number (1-${templates.length}).`;
 
     const userPrompt = `Query: "${query}"
 Role: ${role}
