@@ -2254,5 +2254,278 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:29.235Z",
+    "payload": "Write a Python script to scrape websites",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:30.777Z",
+    "payload": "Create a JavaScript function to validate email",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:32.335Z",
+    "payload": "Build a React component for user authentication",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:33.516Z",
+    "payload": "Develop a Node.js API for user management",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:34.663Z",
+    "payload": "Code a sorting algorithm in Python",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:36.085Z",
+    "payload": "Make a web scraper for product prices",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:37.387Z",
+    "payload": "Implement a REST API in Express.js",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:38.690Z",
+    "payload": "Program a calculator in JavaScript",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:39.990Z",
+    "payload": "Create an app for task management",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:41.313Z",
+    "payload": "Write code to connect to a database",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:42.628Z",
+    "payload": "Build a web application with authentication",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:43.934Z",
+    "payload": "Develop software for inventory management",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:45.242Z",
+    "payload": "Script to automate file processing",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:46.540Z",
+    "payload": "Application for data visualization",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:48.326Z",
+    "payload": "How to learn a new language?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:49.625Z",
+    "payload": "Best practices for project management",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:50.928Z",
+    "payload": "How to improve team communication?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:52.239Z",
+    "payload": "What are the benefits of meditation?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:35:53.618Z",
+    "payload": "How to write a business proposal?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:25.965Z",
+    "payload": "Write a Python script to scrape websites",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:27.514Z",
+    "payload": "Create a JavaScript function to validate email",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:29.056Z",
+    "payload": "Build a React component for user authentication",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:33.288Z",
+    "payload": "Develop a Node.js API for user management",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:37.681Z",
+    "payload": "Code a sorting algorithm in Python",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:39.949Z",
+    "payload": "como como compro un avion\n",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:42.078Z",
+    "payload": "Make a web scraper for product prices",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:46.692Z",
+    "payload": "Implement a REST API in Express.js",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:50.914Z",
+    "payload": "Program a calculator in JavaScript",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:55.132Z",
+    "payload": "Create an app for task management",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:38:59.359Z",
+    "payload": "Write code to connect to a database",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:03.813Z",
+    "payload": "Build a web application with authentication",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:08.392Z",
+    "payload": "Develop software for inventory management",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:10.988Z",
+    "payload": "Script to automate file processing",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:15.199Z",
+    "payload": "Application for data visualization",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:19.414Z",
+    "payload": "How to learn a new language?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:23.637Z",
+    "payload": "Best practices for project management",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:28.266Z",
+    "payload": "How to improve team communication?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:32.679Z",
+    "payload": "What are the benefits of meditation?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:39:37.062Z",
+    "payload": "How to write a business proposal?",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
   }
 ]

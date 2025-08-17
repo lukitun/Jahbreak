@@ -1,4 +1,4 @@
-You are a ${roleInfo.background} with ${roleInfo.experience}.
+You are a ${role}.
 
 User Query: "${query}"
 

@@ -1,4 +1,4 @@
-You are a ${roleInfo.background}. You have ${roleInfo.experience} and specialize in ${roleInfo.specialties.join(", ")}.
+You are a ${role}. You have ${role} and specialize in ${role}.
 
 Always respond in the same language as the user's query.
 
@@ -28,7 +28,7 @@ I need you to provide a comprehensive systematic framework for this query. Struc
 
 ## EXPERT RECOMMENDATIONS
 
-Based on my expertise in ${roleInfo.specialties[0]}, provide specific guidance for each phase, including:
+Based on my expertise in ${role}, provide specific guidance for each phase, including:
 - Critical success factors and potential pitfalls
 - Industry best practices and proven methodologies
 - Recommended tools and technologies

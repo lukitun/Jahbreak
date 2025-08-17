@@ -240,8 +240,8 @@ const TEMPLATE_REGISTRY = {
     ]
 };
 
-// Helper function to call Groq API for template selection
-async function callGroqAPI({ systemPrompt, userPrompt }) {
+// Helper function to call Groq API for template selection with retry mechanism
+async function callGroqAPI({ systemPrompt, userPrompt }, retries = 3) {
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
     
     if (!GROQ_API_KEY) {
@@ -249,37 +249,53 @@ async function callGroqAPI({ systemPrompt, userPrompt }) {
         throw new Error('GROQ_API_KEY not configured');
     }
 
-    console.log('🤖 Calling Groq API for template selection...');
-    console.log('📤 System prompt:', systemPrompt.substring(0, 200) + '...');
-    console.log('📤 User prompt:', userPrompt);
-    
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${GROQ_API_KEY}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            model: 'llama3-70b-8192',
-            messages: [
-                { role: 'system', content: systemPrompt },
-                { role: 'user', content: userPrompt }
-            ],
-            temperature: 0.3, // Lower temperature for more consistent selection
-            max_tokens: 100
-        })
-    });
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            console.log(`🤖 Calling Groq API for template selection (attempt ${attempt}/${retries})...`);
+            console.log('📤 System prompt:', systemPrompt.substring(0, 200) + '...');
+            console.log('📤 User prompt:', userPrompt);
+            
+            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${GROQ_API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'llama3-70b-8192',
+                    messages: [
+                        { role: 'system', content: systemPrompt },
+                        { role: 'user', content: userPrompt }
+                    ],
+                    temperature: 0.3, // Lower temperature for more consistent selection
+                    max_tokens: 100
+                })
+            });
 
-    if (!response.ok) {
-        const errorBody = await response.text();
-        console.error(`Groq API error for template selection: ${response.status}`, errorBody);
-        throw new Error(`Groq API error: ${response.status}`);
+            if (!response.ok) {
+                const errorBody = await response.text();
+                console.error(`Groq API error for template selection: ${response.status}`, errorBody);
+                throw new Error(`Groq API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const selection = data.choices[0].message.content;
+            console.log(`✅ Groq response (attempt ${attempt}):`, selection);
+            return selection;
+            
+        } catch (error) {
+            console.error(`❌ Groq API attempt ${attempt} failed:`, error.message);
+            
+            if (attempt === retries) {
+                throw new Error(`Groq API failed after ${retries} attempts: ${error.message}`);
+            }
+            
+            // Wait before retry (exponential backoff)
+            const waitTime = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+            console.log(`⏳ Waiting ${waitTime}ms before retry...`);
+            await new Promise(resolve => setTimeout(resolve, waitTime));
+        }
     }
-
-    const data = await response.json();
-    const selection = data.choices[0].message.content;
-    console.log('📥 Groq response:', selection);
-    return selection;
 }
 
 // Analyze query and select best template for a technique
@@ -339,52 +355,6 @@ Which ${technique} template would be most appropriate for this query?`;
     }
 }
 
-// Fallback template selection using keyword matching
-function selectTemplateFallback(technique, query) {
-    console.log(`🔄 Using fallback selection for ${technique} technique`);
-    
-    const templates = TEMPLATE_REGISTRY[technique];
-    const queryLower = query.toLowerCase();
-    
-    // Check for coding/software keywords first
-    const codingKeywords = ['code', 'program', 'build', 'create', 'develop', 'software', 'app', 'application', 'script', 'scraper', 'write', 'make', 'implement', 'programming', 'website', 'web', 'api', 'database', 'mobile'];
-    const isCodingQuery = codingKeywords.some(keyword => queryLower.includes(keyword.toLowerCase()));
-    
-    if (isCodingQuery && technique === 'socratic') {
-        // For coding queries, prioritize coding_agent template in socratic technique
-        const codingAgentTemplate = templates.find(t => t.name === 'coding_agent');
-        if (codingAgentTemplate) {
-            console.log(`✅ Fallback selected coding_agent template for programming query`);
-            return codingAgentTemplate;
-        }
-    }
-    
-    // Score each template based on keyword matches
-    let bestTemplate = templates[0];
-    let bestScore = 0;
-    
-    for (const template of templates) {
-        let score = 0;
-        for (const keyword of template.keywords) {
-            if (queryLower.includes(keyword.toLowerCase())) {
-                score++;
-            }
-        }
-        
-        // Give extra boost to coding_agent for programming queries
-        if (template.name === 'coding_agent' && isCodingQuery) {
-            score += 10; // Heavy boost for coding queries
-        }
-        
-        if (score > bestScore) {
-            bestScore = score;
-            bestTemplate = template;
-        }
-    }
-    
-    console.log(`✅ Fallback selected ${technique} template: ${bestTemplate.name} (score: ${bestScore})`);
-    return bestTemplate;
-}
 
 // Load template content from .txt file
 function loadTemplate(templateInfo) {
@@ -400,13 +370,10 @@ function loadTemplate(templateInfo) {
         
         // Return an object with generateTemplate function that returns the content
         return {
-            generateTemplate: (query, role, roleInfo) => {
+            generateTemplate: (query, role) => {
                 // Replace template variables with actual values
                 return templateContent
-                    .replace(/\$\{roleInfo\.background\}/g, roleInfo.background)
-                    .replace(/\$\{roleInfo\.experience\}/g, roleInfo.experience)
-                    .replace(/\$\{roleInfo\.specialties\.join\(", "\)\}/g, roleInfo.specialties.join(", "))
-                    .replace(/\$\{roleInfo\.specialties\[0\]\}/g, roleInfo.specialties[0] || roleInfo.background)
+                    .replace(/\$\{role\}/g, role)
                     .replace(/\$\{query\}/g, query);
             }
         };
@@ -418,7 +385,7 @@ function loadTemplate(templateInfo) {
 }
 
 // Main function to select and generate template
-async function selectAndGenerateTemplate(technique, query, role, roleInfo) {
+async function selectAndGenerateTemplate(technique, query, role) {
     console.log(`🚀 Generating ${technique} template for role: ${role}`);
     
     try {
@@ -427,7 +394,7 @@ async function selectAndGenerateTemplate(technique, query, role, roleInfo) {
         
         // Load and execute template
         const templateModule = loadTemplate(selectedTemplate);
-        const generatedContent = templateModule.generateTemplate(query, role, roleInfo);
+        const generatedContent = templateModule.generateTemplate(query, role);
         
         console.log(`✅ Generated ${technique} content using ${selectedTemplate.name}: ${generatedContent.length} characters`);
         
@@ -439,28 +406,7 @@ async function selectAndGenerateTemplate(technique, query, role, roleInfo) {
         
     } catch (error) {
         console.error(`❌ Error in template selection and generation:`, error);
-        console.log(`🔄 Attempting fallback template selection...`);
-        
-        try {
-            // Use fallback template selection
-            const fallbackTemplate = selectTemplateFallback(technique, query);
-            
-            // Load and execute fallback template
-            const templateModule = loadTemplate(fallbackTemplate);
-            const generatedContent = templateModule.generateTemplate(query, role, roleInfo);
-            
-            console.log(`✅ Generated ${technique} content using fallback ${fallbackTemplate.name}: ${generatedContent.length} characters`);
-            
-            return {
-                content: generatedContent,
-                templateUsed: fallbackTemplate.name,
-                templateDescription: fallbackTemplate.description
-            };
-            
-        } catch (fallbackError) {
-            console.error(`❌ Fallback template selection also failed:`, fallbackError);
-            throw new Error(`Both Groq and fallback template selection failed for ${technique}`);
-        }
+        throw error;
     }
 }
 

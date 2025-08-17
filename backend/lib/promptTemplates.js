@@ -180,14 +180,10 @@ Through this questioning process, you'll develop understanding that feels authen
         direct: directPrompt,
         interactive: interactivePrompt,
         socratic: socraticPrompt,
-        // For backwards compatibility
-        oneShot: directPrompt,
-        twoShot: interactivePrompt,
-        prompt: directPrompt,
         templateMetadata: {
-            direct: { templateUsed: "fallback_comprehensive", description: "Fallback comprehensive guidance" },
-            interactive: { templateUsed: "fallback_collaborative", description: "Fallback collaborative consultation" },
-            socratic: { templateUsed: "fallback_inquiry", description: "Fallback Socratic inquiry" }
+            direct: { templateUsed: "error", description: "Template generation failed" },
+            interactive: { templateUsed: "error", description: "Template generation failed" },
+            socratic: { templateUsed: "error", description: "Template generation failed" }
         }
     };
 }
@@ -198,10 +194,8 @@ Through this questioning process, you'll develop understanding that feels authen
 async function generateTechniqueWithTemplate(technique, query, role) {
     console.log(`🎯 Generating ${technique} technique using AI-selected template`);
     
-    const roleInfo = ROLE_EXPERTISE[role] || ROLE_EXPERTISE["General Expert"];
-    
     try {
-        return await selectAndGenerateTemplate(technique, query, role, roleInfo);
+        return await selectAndGenerateTemplate(technique, query, role);
     } catch (error) {
         console.error(`❌ Error generating ${technique} template:`, error);
         throw error;

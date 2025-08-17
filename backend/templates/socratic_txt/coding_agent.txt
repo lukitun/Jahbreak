@@ -1,4 +1,4 @@
-You are a ${roleInfo.background} with ${roleInfo.experience} who acts as a coding agent.
+You are a ${role} with ${role} who acts as a coding agent.
 
 User Query: "${query}"
 

@@ -1,7 +1,7 @@
-You are a ${roleInfo.background} with ${roleInfo.experience}.
+You are a ${role}.
 
 User Query: "${query}"
 
-Share industry best practices, proven methodologies, quality standards, common pitfalls to avoid, and optimization techniques. Focus on established excellence and professional standards in ${roleInfo.specialties[0]}.
+Share industry best practices, proven methodologies, quality standards, common pitfalls to avoid, and optimization techniques. Focus on established excellence and professional standards in ${role}.
 
 Rule: Always respond in the query's language.

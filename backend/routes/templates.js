@@ -14,12 +14,9 @@ function loadTemplateContent(templatePath) {
         }
         
         // Return a function that can substitute variables
-        return (query, role, roleInfo) => {
+        return (query, role) => {
             return templateContent
-                .replace(/\$\{roleInfo\.background\}/g, roleInfo.background)
-                .replace(/\$\{roleInfo\.experience\}/g, roleInfo.experience)
-                .replace(/\$\{roleInfo\.specialties\.join\(", "\)\}/g, roleInfo.specialties.join(", "))
-                .replace(/\$\{roleInfo\.specialties\[0\]\}/g, roleInfo.specialties[0] || roleInfo.background)
+                .replace(/\$\{role\}/g, role)
                 .replace(/\$\{query\}/g, query);
         };
     } catch (error) {
@@ -58,8 +55,7 @@ router.get('/', (req, res) => {
                     // Generate example content with placeholder query
                     const actualContent = templateFunction(
                         "[YOUR QUERY HERE]", 
-                        "General Expert", 
-                        roleInfo
+                        "General Expert"
                     );
                     
                     return {
@@ -131,10 +127,8 @@ router.post('/preview', (req, res) => {
         
         // Load and execute the template from .txt file
         const templateFunction = loadTemplateContent(foundTemplate.path);
-        const { ROLE_EXPERTISE } = require('../lib/promptTemplates');
-        const roleInfo = ROLE_EXPERTISE[role] || ROLE_EXPERTISE['General Expert'];
         
-        const preview = templateFunction(query, role, roleInfo);
+        const preview = templateFunction(query, role);
         
         res.json({
             success: true,
