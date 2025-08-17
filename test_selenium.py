@@ -272,8 +272,8 @@ def run_tests(base_url="http://localhost:3001"):
 if __name__ == "__main__":
     import sys
     
-    # Default to localhost, but accept URL as argument
-    test_url = "http://localhost:3001"
+    # Default to live site, but accept URL as argument
+    test_url = "https://jahbreak.lukitun.xyz"
     if len(sys.argv) > 1:
         test_url = sys.argv[1]
     
