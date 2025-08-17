@@ -50,13 +50,8 @@ router.get('/', (req, res) => {
         for (const [category, templates] of Object.entries(TEMPLATE_REGISTRY)) {
             formattedTemplates[category] = templates.map(template => {
                 try {
-                    // Load the template content from .txt file
-                    const templateFunction = loadTemplateContent(template.path);
-                    // Generate example content with placeholder query
-                    const actualContent = templateFunction(
-                        "[YOUR QUERY HERE]", 
-                        "General Expert"
-                    );
+                    // Load the raw template content from .txt file (without substitution)
+                    const actualContent = fs.readFileSync(template.path, 'utf8');
                     
                     return {
                         name: template.name,
