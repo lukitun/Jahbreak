@@ -376,7 +376,8 @@ class JahbreakTester:
                             for output_id, technique_name in techniques:
                                 try:
                                     output_element = self.driver.find_element(By.ID, output_id)
-                                    content = output_element.text.strip()
+                                    # Use textContent to get content even if element is hidden by collapsible UI
+                                    content = self.driver.execute_script(f"return document.getElementById('{output_id}').textContent || '';").strip()
                                     
                                     if content and len(content) > 50:  # Reasonable content length
                                         # Enhanced quality checks
@@ -420,7 +421,7 @@ class JahbreakTester:
                     try:
                         unsafe_output = self.driver.find_element(By.ID, "unsafeQueryOutput")
                         if unsafe_output.is_displayed():
-                            content = unsafe_output.text.strip()
+                            content = self.driver.execute_script("return document.getElementById('singleOutput').textContent || '';").strip()
                             if content:
                                 self.log("✓ Unsafe query handled with content", "SUCCESS")
                                 self.add_test_result(test_name, True, "Unsafe query handled properly")

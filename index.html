@@ -351,6 +351,102 @@
             text-align: center;
         }
 
+        /* Technique Selection Styles */
+        .technique-selector {
+            margin-bottom: 2rem;
+        }
+
+        .technique-selector h4 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .technique-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .technique-btn {
+            flex: 1;
+            min-width: 250px;
+            padding: 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .technique-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--card-hover-bg);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+        }
+
+        .technique-btn.coding-agent {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 179, 71, 0.05));
+        }
+
+        .technique-btn.coding-agent:hover {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 179, 71, 0.1));
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .technique-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .technique-btn.coding-agent .technique-title {
+            color: #ffd700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        }
+
+        .technique-desc {
+            font-size: 0.9rem;
+            color: var(--subtext-color);
+            line-height: 1.4;
+        }
+
+        /* Prompt Display Styles */
+        .prompt-display {
+            margin-top: 2rem;
+        }
+
+        .active-prompt {
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.15);
+        }
+
+        .active-prompt.coding-agent {
+            border-color: #ffd700;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .back-button {
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--card-hover-bg);
+            border-color: var(--primary-color);
+        }
+
         .output-content {
             padding: 1.5rem;
             white-space: pre-wrap;
@@ -625,9 +721,9 @@
             <div class="option-group">
                 <h3>Obfuscation (for unsafe queries only)</h3>
                 <select id="obfuscation">
-                    <option value="none" selected>None</option>
+                    <option value="none">None</option>
                     <option value="base64">Base64</option>
-                    <option value="leet">Leet Speak</option>
+                    <option value="leet" selected>Leet Speak</option>
                     <option value="rot13">ROT13</option>
                     <option value="reverse">Reverse</option>
                     <option value="unicode">Unicode</option>
@@ -657,62 +753,52 @@
                     </h3>
                 </div>
                 
-                <!-- Three prompt engineering techniques -->
+                <!-- Technique Selection for Safe Queries -->
                 <div id="safeQueryOutputs" style="display: none;">
-                    <div class="prompt-section" id="directPromptSection">
-                        <div class="prompt-header" onclick="togglePrompt('direct')">
-                            <div class="prompt-title">
-                                <h4>🎯 1-Shot</h4>
-                                <span class="prompt-description">Use this prompt directly (for simple tasks)</span>
-                            </div>
-                            <div class="expand-indicator" id="directIndicator">▶</div>
-                        </div>
-                        <div class="prompt-content" id="directContent" style="display: none;">
-                            <div class="prompt-actions">
-                                <button class="copy-button" onclick="copyToClipboard('direct')">📋 Copy</button>
-                                <button class="feedback-button thumbs-up" onclick="sendFeedback(true, 'direct')" title="Thumbs Up">👍</button>
-                                <button class="feedback-button thumbs-down" onclick="sendFeedback(false, 'direct')" title="Thumbs Down">👎</button>
-                            </div>
-                            <div class="output-content" id="directOutput"></div>
-                            <div class="feedback-message" id="directFeedbackMessage" style="display: none;"></div>
+                    <div class="technique-selector">
+                        <h4>Choose Your Prompt Technique:</h4>
+                        <div class="technique-buttons">
+                            <button class="technique-btn" data-technique="direct" onclick="selectTechnique('direct')">
+                                <div class="technique-title">🎯 1-Shot</div>
+                                <div class="technique-desc">Use this prompt directly (for simple tasks)</div>
+                            </button>
+                            <button class="technique-btn" data-technique="interactive" onclick="selectTechnique('interactive')">
+                                <div class="technique-title">💬 Multiple-Shot</div>
+                                <div class="technique-desc">Respond to questions for complex tasks</div>
+                            </button>
+                            <button class="technique-btn" data-technique="socratic" onclick="selectTechnique('socratic')" id="socraticTechniqueBtn">
+                                <div class="technique-title" id="socraticTechniqueTitle">🤔 Learning Mode</div>
+                                <div class="technique-desc" id="socraticTechniqueDesc">Use this to learn about topics</div>
+                            </button>
                         </div>
                     </div>
                     
-                    <div class="prompt-section" id="interactivePromptSection">
-                        <div class="prompt-header" onclick="togglePrompt('interactive')">
-                            <div class="prompt-title">
-                                <h4>💬 Multiple-Shot</h4>
-                                <span class="prompt-description">Respond to questions to give more context to the AI and then it will generate the answer (complex tasks)</span>
+                    <!-- Single Prompt Display -->
+                    <div class="prompt-display" id="promptDisplay" style="display: none;">
+                        <div class="prompt-section active-prompt">
+                            <div class="prompt-header">
+                                <div class="prompt-title">
+                                    <h4 id="activePromptTitle">Selected Technique</h4>
+                                    <span class="prompt-description" id="activePromptDesc">Description</span>
+                                </div>
+                                <button class="back-button" onclick="showTechniqueSelector()">← Choose Different</button>
                             </div>
-                            <div class="expand-indicator" id="interactiveIndicator">▶</div>
-                        </div>
-                        <div class="prompt-content" id="interactiveContent" style="display: none;">
-                            <div class="prompt-actions">
-                                <button class="copy-button" onclick="copyToClipboard('interactive')">📋 Copy</button>
-                                <button class="feedback-button thumbs-up" onclick="sendFeedback(true, 'interactive')" title="Thumbs Up">👍</button>
-                                <button class="feedback-button thumbs-down" onclick="sendFeedback(false, 'interactive')" title="Thumbs Down">👎</button>
+                            <div class="prompt-content">
+                                <div class="prompt-actions">
+                                    <button class="copy-button" onclick="copyToClipboard('active')">📋 Copy</button>
+                                    <button class="feedback-button thumbs-up" onclick="sendFeedback(true, 'active')" title="Thumbs Up">👍</button>
+                                    <button class="feedback-button thumbs-down" onclick="sendFeedback(false, 'active')" title="Thumbs Down">👎</button>
+                                </div>
+                                <div class="output-content" id="activeOutput"></div>
+                                <div class="feedback-message" id="activeFeedbackMessage" style="display: none;"></div>
+                                
+                                <!-- Hidden content holders -->
+                                <div style="display: none;">
+                                    <div id="directOutput"></div>
+                                    <div id="interactiveOutput"></div>
+                                    <div id="socraticOutput"></div>
+                                </div>
                             </div>
-                            <div class="output-content" id="interactiveOutput"></div>
-                            <div class="feedback-message" id="interactiveFeedbackMessage" style="display: none;"></div>
-                        </div>
-                    </div>
-
-                    <div class="prompt-section" id="socraticPromptSection">
-                        <div class="prompt-header" onclick="togglePrompt('socratic')">
-                            <div class="prompt-title">
-                                <h4>🤔 Learning Mode</h4>
-                                <span class="prompt-description">Use this prompt to learn about this topic and remember this conversation longer (use this to learn)</span>
-                            </div>
-                            <div class="expand-indicator" id="socraticIndicator">▶</div>
-                        </div>
-                        <div class="prompt-content" id="socraticContent" style="display: none;">
-                            <div class="prompt-actions">
-                                <button class="copy-button" onclick="copyToClipboard('socratic')">📋 Copy</button>
-                                <button class="feedback-button thumbs-up" onclick="sendFeedback(true, 'socratic')" title="Thumbs Up">👍</button>
-                                <button class="feedback-button thumbs-down" onclick="sendFeedback(false, 'socratic')" title="Thumbs Down">👎</button>
-                            </div>
-                            <div class="output-content" id="socraticOutput"></div>
-                            <div class="feedback-message" id="socraticFeedbackMessage" style="display: none;"></div>
                         </div>
                     </div>
                 </div>
@@ -774,18 +860,78 @@
         });
 
         // Toggle prompt content visibility
-        function togglePrompt(type) {
-            const content = document.getElementById(`${type}Content`);
-            const indicator = document.getElementById(`${type}Indicator`);
+        // New technique selection functions
+        function selectTechnique(technique) {
+            const techniqueSelector = document.querySelector('.technique-selector');
+            const promptDisplay = document.getElementById('promptDisplay');
+            const activeOutput = document.getElementById('activeOutput');
+            const activePromptTitle = document.getElementById('activePromptTitle');
+            const activePromptDesc = document.getElementById('activePromptDesc');
+            const activePrompt = document.querySelector('.active-prompt');
             
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                indicator.classList.add('expanded');
-                indicator.textContent = '▼';
+            // Get content from the hidden holders
+            const sourceOutput = document.getElementById(`${technique}Output`);
+            const content = sourceOutput ? sourceOutput.textContent : '';
+            
+            // Set the content
+            activeOutput.textContent = content;
+            
+            // Update title and description based on technique
+            const titles = {
+                'direct': '🎯 1-Shot',
+                'interactive': '💬 Multiple-Shot',
+                'socratic': '🤔 Learning Mode'
+            };
+            
+            const descriptions = {
+                'direct': 'Use this prompt directly (for simple tasks)',
+                'interactive': 'Respond to questions for complex tasks',
+                'socratic': 'Use this to learn about topics'
+            };
+            
+            activePromptTitle.textContent = titles[technique];
+            activePromptDesc.textContent = descriptions[technique];
+            
+            // Check if this is a coding agent and update accordingly
+            if (window.currentTemplateMetadata && window.currentTemplateMetadata[technique] && 
+                window.currentTemplateMetadata[technique].templateUsed === 'coding_agent') {
+                activePromptTitle.textContent = '🚀 Coding Agent';
+                activePromptDesc.textContent = 'Professional coding assistant for software development';
+                activePrompt.classList.add('coding-agent');
             } else {
-                content.style.display = 'none';
-                indicator.classList.remove('expanded');
-                indicator.textContent = '▶';
+                activePrompt.classList.remove('coding-agent');
+            }
+            
+            // Store current technique
+            window.currentTechnique = technique;
+            
+            // Hide selector, show prompt
+            techniqueSelector.style.display = 'none';
+            promptDisplay.style.display = 'block';
+        }
+        
+        function showTechniqueSelector() {
+            const techniqueSelector = document.querySelector('.technique-selector');
+            const promptDisplay = document.getElementById('promptDisplay');
+            
+            techniqueSelector.style.display = 'block';
+            promptDisplay.style.display = 'none';
+        }
+        
+        function updateTechniqueButtons(metadata) {
+            const socraticBtn = document.getElementById('socraticTechniqueBtn');
+            const socraticTitle = document.getElementById('socraticTechniqueTitle');
+            const socraticDesc = document.getElementById('socraticTechniqueDesc');
+            
+            // Check if socratic technique is using coding_agent template
+            if (metadata.socratic && metadata.socratic.templateUsed === 'coding_agent') {
+                socraticTitle.textContent = '🚀 Coding Agent';
+                socraticDesc.textContent = 'Professional coding assistant for software development';
+                socraticBtn.classList.add('coding-agent');
+            } else {
+                socraticTitle.textContent = '🤔 Learning Mode';
+                socraticDesc.textContent = 'Use this to learn about topics';
+                socraticBtn.classList.remove('coding-agent');
             }
         }
 
@@ -931,7 +1077,7 @@
                 const { direct, interactive, socratic } = parseSafePrompt(data.prompt);
                 
                 // Show safe query outputs
-                safeQueryOutputs.style.display = 'flex';
+                safeQueryOutputs.style.display = 'block';
                 unsafeQueryOutput.style.display = 'none';
                 
                 // Set content for all three techniques
@@ -939,26 +1085,14 @@
                 interactiveOutput.textContent = interactive;
                 socraticOutput.textContent = socratic;
                 
-                // Check for coding agent template and apply special styling
-                const promptSections = document.querySelectorAll('.prompt-section');
-                promptSections.forEach(section => {
-                    section.classList.remove('coding-agent');
-                });
+                // Store template metadata globally for technique selection
+                window.currentTemplateMetadata = data.prompt.templateMetadata || {};
                 
-                // Check if any template is coding_agent
-                if (data.prompt.templateMetadata) {
-                    const metadata = data.prompt.templateMetadata;
-                    
-                    if (metadata.direct && metadata.direct.templateUsed === 'coding_agent') {
-                        document.querySelector('#directPromptSection').classList.add('coding-agent');
-                    }
-                    if (metadata.interactive && metadata.interactive.templateUsed === 'coding_agent') {
-                        document.querySelector('#interactivePromptSection').classList.add('coding-agent');
-                    }
-                    if (metadata.socratic && metadata.socratic.templateUsed === 'coding_agent') {
-                        document.querySelector('#socraticPromptSection').classList.add('coding-agent');
-                    }
-                }
+                // Update technique buttons based on coding agent detection
+                updateTechniqueButtons(window.currentTemplateMetadata);
+                
+                // Reset to technique selector view
+                showTechniqueSelector();
                 
             } else {
                 queryStatusIndicator.innerHTML = '<span class="unsafe-query-indicator">⚠ Unsafe Query</span>';
@@ -989,7 +1123,10 @@
             let copyBtn;
             
             // Determine which content to copy based on prompt type
-            if (promptType === 'direct') {
+            if (promptType === 'active') {
+                textToCopy = document.getElementById('activeOutput').textContent;
+                copyBtn = event.target;
+            } else if (promptType === 'direct') {
                 textToCopy = document.getElementById('directOutput').textContent;
                 copyBtn = event.target;
             } else if (promptType === 'interactive') {
@@ -1031,7 +1168,11 @@
             }
             
             // Show feedback message
-            const messageEl = document.getElementById(`${promptType}FeedbackMessage`);
+            let messageElId = `${promptType}FeedbackMessage`;
+            if (promptType === 'active') {
+                messageElId = 'activeFeedbackMessage';
+            }
+            const messageEl = document.getElementById(messageElId);
             if (messageEl) {
                 messageEl.textContent = isHelpful ? 'Thanks for your positive feedback!' : 'Thanks for your feedback. We\'ll improve this.';
                 messageEl.style.display = 'block';
@@ -1046,7 +1187,9 @@
             let prompt;
             
             // Get the specific prompt based on type
-            if (promptType === 'direct') {
+            if (promptType === 'active') {
+                prompt = document.getElementById('activeOutput').textContent;
+            } else if (promptType === 'direct') {
                 prompt = document.getElementById('directOutput').textContent;
             } else if (promptType === 'interactive') {
                 prompt = document.getElementById('interactiveOutput').textContent;
@@ -1064,7 +1207,7 @@
                         payload, 
                         prompt, 
                         feedback: isHelpful ? 'success' : 'failure',
-                        promptType: promptType
+                        promptType: promptType === 'active' ? window.currentTechnique || 'unknown' : promptType
                     })
                 });
                 console.log('Feedback sent successfully');
