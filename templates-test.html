@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates Test - Jahbreak</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .template-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .template-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .template-description {
+            color: #666;
+            font-size: 14px;
+        }
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Templates Test Page</h1>
+    <div id="status"></div>
+    
+    <h2>Direct Templates</h2>
+    <div id="direct-templates" class="template-grid"></div>
+    
+    <h2>Interactive Templates</h2>
+    <div id="interactive-templates" class="template-grid"></div>
+    
+    <h2>Socratic Templates</h2>
+    <div id="socratic-templates" class="template-grid"></div>
+
+    <script>
+        const statusDiv = document.getElementById('status');
+        
+        function addStatus(message, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = message;
+            statusDiv.appendChild(div);
+        }
+        
+        function renderTemplates(templates) {
+            // Render direct templates
+            const directDiv = document.getElementById('direct-templates');
+            templates.direct.forEach(t => {
+                directDiv.innerHTML += `
+                    <div class="template-card">
+                        <div class="template-name">${t.name}</div>
+                        <div class="template-description">${t.description}</div>
+                    </div>
+                `;
+            });
+            
+            // Render interactive templates
+            const interactiveDiv = document.getElementById('interactive-templates');
+            templates.interactive.forEach(t => {
+                interactiveDiv.innerHTML += `
+                    <div class="template-card">
+                        <div class="template-name">${t.name}</div>
+                        <div class="template-description">${t.description}</div>
+                    </div>
+                `;
+            });
+            
+            // Render socratic templates
+            const socraticDiv = document.getElementById('socratic-templates');
+            templates.socratic.forEach(t => {
+                socraticDiv.innerHTML += `
+                    <div class="template-card">
+                        <div class="template-name">${t.name}</div>
+                        <div class="template-description">${t.description}</div>
+                    </div>
+                `;
+            });
+        }
+        
+        // Static template data (all 32 templates)
+        const staticTemplates = {
+            direct: [
+                { name: 'comprehensive_framework', description: 'Systematic methodology with detailed execution plans' },
+                { name: 'expert_masterclass', description: 'Deep expertise sharing with professional insights' },
+                { name: 'practical_blueprint', description: 'Hands-on implementation with concrete examples' },
+                { name: 'strategic_roadmap', description: 'Long-term vision with strategic planning' },
+                { name: 'quick_solution', description: 'Fast, efficient solutions for urgent problems' },
+                { name: 'detailed_analysis', description: 'Deep analytical breakdown of complex topics' },
+                { name: 'step_by_step_tutorial', description: 'Educational guidance with progressive skill building' },
+                { name: 'troubleshooting_guide', description: 'Systematic problem diagnosis and resolution' },
+                { name: 'best_practices_guide', description: 'Industry standards and proven methodologies' },
+                { name: 'resource_compilation', description: 'Comprehensive resource gathering and organization' },
+                { name: 'implementation_checklist', description: 'Systematic execution planning with detailed checklists' }
+            ],
+            interactive: [
+                { name: 'focused_dialogue', description: '3-4 strategic questions for efficient customization' },
+                { name: 'comprehensive_discovery', description: '7-9 questions for thorough exploration' },
+                { name: 'iterative_refinement', description: '5-6 questions with progressive deepening' },
+                { name: 'diagnostic_interview', description: 'Problem identification through questioning' },
+                { name: 'needs_assessment', description: 'Understanding requirements through discovery' },
+                { name: 'collaborative_planning', description: 'Group-oriented planning with stakeholders' },
+                { name: 'decision_framework', description: 'Choice evaluation through structured questioning' },
+                { name: 'learning_assessment', description: 'Educational level and learning style discovery' },
+                { name: 'goal_setting_session', description: 'Objective clarification and prioritization' },
+                { name: 'creative_workshop', description: 'Brainstorming and ideation through dialogue' }
+            ],
+            socratic: [
+                { name: 'guided_inquiry', description: 'Classical Socratic method with self-discovery' },
+                { name: 'critical_thinking', description: 'Develops analytical thinking skills' },
+                { name: 'reflective_learning', description: 'Personal growth through reflection' },
+                { name: 'assumption_challenging', description: 'Questioning underlying beliefs' },
+                { name: 'root_cause_analysis', description: 'Deep exploration of fundamental causes' },
+                { name: 'perspective_exploration', description: 'Multiple viewpoint examination' },
+                { name: 'value_discovery', description: 'Understanding core values and motivations' },
+                { name: 'wisdom_extraction', description: 'Drawing insights from experience' },
+                { name: 'belief_examination', description: 'Testing beliefs through inquiry' },
+                { name: 'pattern_recognition', description: 'Identifying recurring themes' },
+                { name: 'coding_agent', description: 'Programming request handling' }
+            ]
+        };
+        
+        // Load templates
+        async function loadTemplates() {
+            addStatus('Loading templates...', 'info');
+            
+            try {
+                // Try to load from API first
+                addStatus('Attempting to fetch from API: https://bando.life/api/templates', 'info');
+                const response = await fetch('https://bando.life/api/templates');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.templates) {
+                        addStatus('✅ Successfully loaded templates from API', 'success');
+                        addStatus(`Found ${data.stats.totalTemplates} total templates`, 'info');
+                        renderTemplates(data.templates);
+                    } else {
+                        throw new Error('Invalid API response structure');
+                    }
+                } else {
+                    throw new Error(`API returned status ${response.status}`);
+                }
+            } catch (error) {
+                addStatus(`❌ API Error: ${error.message}`, 'error');
+                addStatus('Using static template data as fallback', 'info');
+                renderTemplates(staticTemplates);
+                addStatus(`✅ Rendered ${Object.values(staticTemplates).flat().length} static templates`, 'success');
+            }
+        }
+        
+        // Load on page ready
+        loadTemplates();
+    </script>
+</body>
+</html>
