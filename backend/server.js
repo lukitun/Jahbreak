@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Import routes
 const generateRoute = require('./routes/generate');
 const feedbackRoute = require('./routes/feedback');
+const templatesRoute = require('./routes/templates');
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -62,6 +63,7 @@ app.get('/templates', (req, res) => {
 // API routes
 app.use('/api/generate', generateRoute);
 app.use('/api/feedback', feedbackRoute);
+app.use('/api/templates', templatesRoute);
 
 // Serve API documentation
 app.get('/api/docs', (req, res) => {

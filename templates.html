@@ -589,16 +589,29 @@ Let's start with your specific requirements...`
         // Load templates from backend and get actual prompt previews
         async function loadTemplatesFromAPI() {
             try {
-                console.log('Loading templates with real prompt previews...');
+                console.log('Loading templates from API...');
                 
-                // Load the static templates first
-                loadStaticTemplates();
+                // Try to fetch templates from API
+                const response = await fetch('https://bando.life/api/templates');
                 
-                // Then fetch real previews for each template
-                await loadRealTemplatePreviews();
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.templates) {
+                        templates = data.templates;
+                        console.log('✅ Loaded templates from API:', data.stats);
+                        renderTemplates();
+                        
+                        // Then fetch real previews for some templates
+                        await loadRealTemplatePreviews();
+                    } else {
+                        throw new Error('Invalid API response');
+                    }
+                } else {
+                    throw new Error('API request failed');
+                }
                 
             } catch (error) {
-                console.error('Error loading templates:', error);
+                console.error('Error loading templates from API, using static data:', error);
                 loadStaticTemplates();
             }
         }
@@ -608,45 +621,33 @@ Let's start with your specific requirements...`
             console.log('Fetching real template previews...');
             
             // Get sample previews for a few templates from each category
-            const sampleQueries = {
-                'comprehensive_framework': 'How to build a mobile app',
-                'expert_masterclass': 'Best practices for data analysis',
-                'practical_blueprint': 'Create a marketing strategy',
-                'focused_dialogue': 'Improve team productivity',
-                'comprehensive_discovery': 'Start a new business',
-                'guided_inquiry': 'Learn machine learning',
-                'coding_agent': 'Build a web scraper'
-            };
+            const sampleTemplates = [
+                'comprehensive_framework',
+                'expert_masterclass', 
+                'focused_dialogue',
+                'guided_inquiry',
+                'coding_agent'
+            ];
             
-            for (const [templateName, sampleQuery] of Object.entries(sampleQueries)) {
+            for (const templateName of sampleTemplates) {
                 try {
-                    const response = await fetch('https://bando.life/api/generate', {
+                    const response = await fetch('https://bando.life/api/templates/preview', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            payload: sampleQuery,
-                            personality: 'General Expert',
-                            mode: 'professional'
+                            templateName: templateName,
+                            query: 'Example: How to improve productivity',
+                            role: 'General Expert'
                         })
                     });
                     
                     if (response.ok) {
                         const data = await response.json();
-                        const metadata = data.prompt?.templateMetadata;
-                        
-                        if (metadata) {
+                        if (data.success && data.preview) {
                             // Update preview examples with real content
-                            if (metadata.direct?.templateUsed === templateName) {
-                                previewExamples[templateName] = data.prompt.direct.substring(0, 300) + '...';
-                            }
-                            if (metadata.interactive?.templateUsed === templateName) {
-                                previewExamples[templateName] = data.prompt.interactive.substring(0, 300) + '...';
-                            }
-                            if (metadata.socratic?.templateUsed === templateName) {
-                                previewExamples[templateName] = data.prompt.socratic.substring(0, 300) + '...';
-                            }
+                            previewExamples[templateName] = data.preview;
                         }
                     }
                 } catch (err) {
