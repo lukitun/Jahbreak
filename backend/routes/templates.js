@@ -5,31 +5,58 @@ const { getTemplateInfo } = require('../lib/promptTemplates');
 
 /**
  * GET /api/templates
- * Returns all available templates with metadata
+ * Returns all available templates with metadata and actual content
  */
 router.get('/', (req, res) => {
     try {
-        console.log('📋 Fetching template information');
+        console.log('📋 Fetching template information with full content');
+        
+        const { ROLE_EXPERTISE } = require('../lib/promptTemplates');
+        const roleInfo = ROLE_EXPERTISE['General Expert'];
         
         // Get template info
         const templateInfo = getTemplateInfo();
         
-        // Format templates for frontend
+        // Format templates for frontend with actual content
         const formattedTemplates = {
             direct: [],
             interactive: [],
             socratic: []
         };
         
-        // Process each category
+        // Process each category and load actual template content
         for (const [category, templates] of Object.entries(TEMPLATE_REGISTRY)) {
-            formattedTemplates[category] = templates.map(template => ({
-                name: template.name,
-                displayName: template.name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-                description: template.description,
-                bestFor: template.bestFor,
-                keywords: template.keywords
-            }));
+            formattedTemplates[category] = templates.map(template => {
+                try {
+                    // Load the actual template module
+                    const templateModule = require(template.path);
+                    // Generate example content with placeholder query
+                    const actualContent = templateModule.generateTemplate(
+                        "[YOUR QUERY HERE]", 
+                        "General Expert", 
+                        roleInfo
+                    );
+                    
+                    return {
+                        name: template.name,
+                        displayName: template.name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                        description: template.description,
+                        bestFor: template.bestFor,
+                        keywords: template.keywords,
+                        actualContent: actualContent // The real template prompt
+                    };
+                } catch (err) {
+                    console.error(`Error loading template ${template.name}:`, err);
+                    return {
+                        name: template.name,
+                        displayName: template.name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                        description: template.description,
+                        bestFor: template.bestFor,
+                        keywords: template.keywords,
+                        actualContent: `Error loading template: ${err.message}`
+                    };
+                }
+            });
         }
         
         res.json({

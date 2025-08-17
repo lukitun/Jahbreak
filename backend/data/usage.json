@@ -1323,5 +1323,166 @@
     "selectedRole": "General Expert",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:23.131Z",
+    "payload": "How to build a mobile app",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:23.792Z",
+    "payload": "Best practices for data analysis",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:24.390Z",
+    "payload": "Create a marketing strategy",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:24.995Z",
+    "payload": "Improve team productivity",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:25.577Z",
+    "payload": "Start a new business",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:26.154Z",
+    "payload": "Learn machine learning",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:26.413Z",
+    "payload": "Build a web scraper",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:57.417Z",
+    "payload": "How to build a mobile app",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:58.026Z",
+    "payload": "Best practices for data analysis",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:58.618Z",
+    "payload": "Create a marketing strategy",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:59.035Z",
+    "payload": "Improve team productivity",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:59.448Z",
+    "payload": "Start a new business",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:59.693Z",
+    "payload": "Learn machine learning",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:14:59.924Z",
+    "payload": "Build a web scraper",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:15:32.950Z",
+    "payload": "como compro un avion",
+    "selectedRole": "Financial Analyst",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T15:18:21.442Z",
+    "payload": "How to build a mobile app",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:18:21.676Z",
+    "payload": "Best practices for data analysis",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:18:21.906Z",
+    "payload": "Create a marketing strategy",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:18:22.148Z",
+    "payload": "Improve team productivity",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:18:22.370Z",
+    "payload": "Start a new business",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:18:22.597Z",
+    "payload": "Learn machine learning",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:18:22.823Z",
+    "payload": "Build a web scraper",
+    "selectedRole": "General Expert",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T15:19:54.178Z",
+    "payload": "como hago una pagina web",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
   }
 ]

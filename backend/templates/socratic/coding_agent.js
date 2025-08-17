@@ -42,5 +42,6 @@ module.exports = {
     name: "coding_agent",
     description: "Requirements gathering for programming requests, then code implementation",
     bestFor: ["programming requests", "code generation", "software development", "application building"],
-    keywords: ["code", "program", "build", "create", "develop", "software", "app", "application", "script"]
+    keywords: ["code", "program", "build", "create", "develop", "software", "app", "application", "script"],
+    generateTemplate
 };

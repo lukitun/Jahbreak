@@ -574,13 +574,14 @@ Let's start with your specific requirements...`
         function createTemplateCard(template) {
             const isCodingAgent = template.name === 'coding_agent';
             const cardClass = isCodingAgent ? 'template-card coding-agent-card' : 'template-card';
-            const preview = previewExamples[template.name] || template.description;
+            // Use actualContent if available from API, otherwise use previewExamples or description
+            const preview = template.actualContent || previewExamples[template.name] || template.description;
             
             return `
                 <div class="${cardClass}">
                     <div class="template-name">${template.displayName || template.name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}${isCodingAgent ? ' 🚀' : ''}</div>
                     <div class="template-description">${template.description}</div>
-                    <div class="template-preview"><strong>Actual LLM Prompt:</strong><br><pre style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.3;">${preview}</pre></div>
+                    <div class="template-preview"><strong>Actual LLM Prompt Template:</strong><br><pre style="white-space: pre-wrap; font-size: 0.75rem; line-height: 1.3;">${preview}</pre></div>
                     ${template.bestFor ? `<div class="template-best-for"><strong>Best for:</strong> ${template.bestFor.join(', ')}</div>` : ''}
                 </div>
             `;
@@ -662,9 +663,29 @@ Let's start with your specific requirements...`
             renderTemplates();
         }
 
+        // Load actual template content from static data
+        async function loadActualTemplateContent() {
+            try {
+                const response = await fetch('/static_template_content.js');
+                if (response.ok) {
+                    const scriptText = await response.text();
+                    eval(scriptText);
+                    if (typeof STATIC_TEMPLATE_CONTENT !== 'undefined') {
+                        return STATIC_TEMPLATE_CONTENT;
+                    }
+                }
+            } catch (error) {
+                console.log('Could not load static template content:', error);
+            }
+            return null;
+        }
+
         // Load static template definitions (all 32 templates)
-        function loadStaticTemplates() {
-            templates = {
+        async function loadStaticTemplates() {
+            // Try to load actual template content
+            const actualContent = await loadActualTemplateContent();
+            
+            const baseTemplates = {
                 direct: [
                     { name: 'comprehensive_framework', description: 'Systematic methodology with detailed execution plans', bestFor: ['complex projects', 'systematic implementation', 'methodology-focused', 'step-by-step guidance'] },
                     { name: 'expert_masterclass', description: 'Deep expertise sharing with professional insights', bestFor: ['skill development', 'professional growth', 'industry knowledge', 'expert insights'] },
@@ -705,6 +726,25 @@ Let's start with your specific requirements...`
                 ]
             };
             
+            // Merge actual content if available
+            if (actualContent) {
+                for (const category of ['direct', 'interactive', 'socratic']) {
+                    if (actualContent[category]) {
+                        baseTemplates[category] = baseTemplates[category].map(template => {
+                            const content = actualContent[category][template.name];
+                            if (content && content.content) {
+                                return {
+                                    ...template,
+                                    actualContent: content.content
+                                };
+                            }
+                            return template;
+                        });
+                    }
+                }
+            }
+            
+            templates = baseTemplates;
             renderTemplates();
         }
 
@@ -723,7 +763,10 @@ Let's start with your specific requirements...`
         }
 
         // Initialize page
-        loadTemplatesFromAPI();
+        loadTemplatesFromAPI().catch(() => {
+            console.log('API failed, using static templates');
+            loadStaticTemplates();
+        });
     </script>
 </body>
 </html>
