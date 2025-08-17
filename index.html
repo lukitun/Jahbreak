@@ -282,19 +282,73 @@
             color: var(--text-color);
         }
 
-        .copy-button {
-            width: auto;
+        .prompt-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .copy-button, .feedback-button {
             padding: 0.5rem 1rem;
-            background: transparent;
             border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
             color: var(--text-color);
-            font-size: 0.9rem;
+        }
+
+        .copy-button {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .feedback-button {
+            min-width: 2.5rem;
+        }
+
+        .feedback-button.thumbs-up:hover {
+            background: #22c55e;
+            color: white;
+            border-color: #22c55e;
+            transform: scale(1.05);
+        }
+
+        .feedback-button.thumbs-down:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+            transform: scale(1.05);
+        }
+
+        .feedback-button.selected.thumbs-up {
+            background: #22c55e;
+            color: white;
+            border-color: #22c55e;
+        }
+
+        .feedback-button.selected.thumbs-down {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
         }
 
         .copy-button:hover {
-            background: var(--card-hover-bg);
+            opacity: 0.8;
             transform: none;
             box-shadow: none;
+        }
+
+        .feedback-message {
+            padding: 0.5rem 1.5rem;
+            font-size: 0.8rem;
+            color: var(--subtext-color);
+            text-align: center;
         }
 
         .output-content {
@@ -373,6 +427,38 @@
             align-items: center;
             padding: 1rem 1.5rem;
             background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .prompt-header:hover {
+            background: var(--card-hover-bg);
+        }
+
+        .prompt-title {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .prompt-description {
+            font-size: 0.8rem;
+            color: var(--subtext-color);
+            font-weight: normal;
+        }
+
+        .expand-indicator {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--subtext-color);
+        }
+
+        .expand-indicator.expanded {
+            transform: rotate(90deg);
+        }
+
+        .prompt-content {
             border-bottom: 1px solid var(--border-color);
         }
 
@@ -574,62 +660,59 @@
                 <!-- Three prompt engineering techniques -->
                 <div id="safeQueryOutputs" style="display: none;">
                     <div class="prompt-section" id="directPromptSection">
-                        <div class="prompt-header">
-                            <h4>🎯 Direct Technique</h4>
-                            <div class="prompt-actions">
-                                <button class="copy-button" onclick="copyToClipboard('direct')">Copy</button>
-                                <button class="feedback-button" onclick="showFeedback('direct')">Feedback</button>
+                        <div class="prompt-header" onclick="togglePrompt('direct')">
+                            <div class="prompt-title">
+                                <h4>🎯 1-Shot</h4>
+                                <span class="prompt-description">Use this prompt directly (for simple tasks)</span>
                             </div>
+                            <div class="expand-indicator" id="directIndicator">▶</div>
                         </div>
-                        <div class="prompt-explanation">
-                            <strong>Direct:</strong> Comprehensive, immediately actionable guidance with detailed step-by-step instructions, best practices, and expert insights. Perfect for when you want complete instructions to execute right away.
-                        </div>
-                        <div class="output-content" id="directOutput"></div>
-                        <div class="feedback-section" id="directFeedback" style="display: none;">
-                            <p>Was this direct prompt helpful?</p>
-                            <button onclick="sendFeedback(true, 'direct')">Yes</button>
-                            <button onclick="sendFeedback(false, 'direct')">No</button>
-                            <div class="feedback-message"></div>
+                        <div class="prompt-content" id="directContent" style="display: none;">
+                            <div class="prompt-actions">
+                                <button class="copy-button" onclick="copyToClipboard('direct')">📋 Copy</button>
+                                <button class="feedback-button thumbs-up" onclick="sendFeedback(true, 'direct')" title="Thumbs Up">👍</button>
+                                <button class="feedback-button thumbs-down" onclick="sendFeedback(false, 'direct')" title="Thumbs Down">👎</button>
+                            </div>
+                            <div class="output-content" id="directOutput"></div>
+                            <div class="feedback-message" id="directFeedbackMessage" style="display: none;"></div>
                         </div>
                     </div>
                     
                     <div class="prompt-section" id="interactivePromptSection">
-                        <div class="prompt-header">
-                            <h4>💬 Interactive Technique</h4>
-                            <div class="prompt-actions">
-                                <button class="copy-button" onclick="copyToClipboard('interactive')">Copy</button>
-                                <button class="feedback-button" onclick="showFeedback('interactive')">Feedback</button>
+                        <div class="prompt-header" onclick="togglePrompt('interactive')">
+                            <div class="prompt-title">
+                                <h4>💬 Multiple-Shot</h4>
+                                <span class="prompt-description">Respond to questions to give more context to the AI and then it will generate the answer (complex tasks)</span>
                             </div>
+                            <div class="expand-indicator" id="interactiveIndicator">▶</div>
                         </div>
-                        <div class="prompt-explanation">
-                            <strong>Interactive:</strong> Collaborative approach that asks strategic clarifying questions first, then provides personalized guidance based on your specific context and needs.
-                        </div>
-                        <div class="output-content" id="interactiveOutput"></div>
-                        <div class="feedback-section" id="interactiveFeedback" style="display: none;">
-                            <p>Was this interactive prompt helpful?</p>
-                            <button onclick="sendFeedback(true, 'interactive')">Yes</button>
-                            <button onclick="sendFeedback(false, 'interactive')">No</button>
-                            <div class="feedback-message"></div>
+                        <div class="prompt-content" id="interactiveContent" style="display: none;">
+                            <div class="prompt-actions">
+                                <button class="copy-button" onclick="copyToClipboard('interactive')">📋 Copy</button>
+                                <button class="feedback-button thumbs-up" onclick="sendFeedback(true, 'interactive')" title="Thumbs Up">👍</button>
+                                <button class="feedback-button thumbs-down" onclick="sendFeedback(false, 'interactive')" title="Thumbs Down">👎</button>
+                            </div>
+                            <div class="output-content" id="interactiveOutput"></div>
+                            <div class="feedback-message" id="interactiveFeedbackMessage" style="display: none;"></div>
                         </div>
                     </div>
 
                     <div class="prompt-section" id="socraticPromptSection">
-                        <div class="prompt-header">
-                            <h4>🤔 Socratic Technique</h4>
-                            <div class="prompt-actions">
-                                <button class="copy-button" onclick="copyToClipboard('socratic')">Copy</button>
-                                <button class="feedback-button" onclick="showFeedback('socratic')">Feedback</button>
+                        <div class="prompt-header" onclick="togglePrompt('socratic')">
+                            <div class="prompt-title">
+                                <h4>🤔 Learning Mode</h4>
+                                <span class="prompt-description">Use this prompt to learn about this topic and remember this conversation longer (use this to learn)</span>
                             </div>
+                            <div class="expand-indicator" id="socraticIndicator">▶</div>
                         </div>
-                        <div class="prompt-explanation">
-                            <strong>Socratic:</strong> Learning through guided self-discovery using strategic questions that help you think through the problem and arrive at insights on your own. Builds deep understanding and critical thinking skills.
-                        </div>
-                        <div class="output-content" id="socraticOutput"></div>
-                        <div class="feedback-section" id="socraticFeedback" style="display: none;">
-                            <p>Was this Socratic prompt helpful?</p>
-                            <button onclick="sendFeedback(true, 'socratic')">Yes</button>
-                            <button onclick="sendFeedback(false, 'socratic')">No</button>
-                            <div class="feedback-message"></div>
+                        <div class="prompt-content" id="socraticContent" style="display: none;">
+                            <div class="prompt-actions">
+                                <button class="copy-button" onclick="copyToClipboard('socratic')">📋 Copy</button>
+                                <button class="feedback-button thumbs-up" onclick="sendFeedback(true, 'socratic')" title="Thumbs Up">👍</button>
+                                <button class="feedback-button thumbs-down" onclick="sendFeedback(false, 'socratic')" title="Thumbs Down">👎</button>
+                            </div>
+                            <div class="output-content" id="socraticOutput"></div>
+                            <div class="feedback-message" id="socraticFeedbackMessage" style="display: none;"></div>
                         </div>
                     </div>
                 </div>
@@ -690,7 +773,23 @@
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
         });
 
-        // Show feedback section for specific prompt type
+        // Toggle prompt content visibility
+        function togglePrompt(type) {
+            const content = document.getElementById(`${type}Content`);
+            const indicator = document.getElementById(`${type}Indicator`);
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                indicator.classList.add('expanded');
+                indicator.textContent = '▼';
+            } else {
+                content.style.display = 'none';
+                indicator.classList.remove('expanded');
+                indicator.textContent = '▶';
+            }
+        }
+
+        // Show feedback section for specific prompt type (legacy)
         function showFeedback(promptType) {
             const feedbackSection = document.getElementById(promptType + 'Feedback');
             if (feedbackSection.style.display === 'none' || !feedbackSection.style.display) {
@@ -916,23 +1015,45 @@
         }
 
         async function sendFeedback(isHelpful, promptType) {
+            // Update button states
+            const thumbsUp = document.querySelector(`[onclick="sendFeedback(true, '${promptType}')"]`);
+            const thumbsDown = document.querySelector(`[onclick="sendFeedback(false, '${promptType}')"]`);
+            
+            // Clear previous selections
+            if (thumbsUp) thumbsUp.classList.remove('selected');
+            if (thumbsDown) thumbsDown.classList.remove('selected');
+            
+            // Add selection to clicked button
+            if (isHelpful && thumbsUp) {
+                thumbsUp.classList.add('selected');
+            } else if (!isHelpful && thumbsDown) {
+                thumbsDown.classList.add('selected');
+            }
+            
+            // Show feedback message
+            const messageEl = document.getElementById(`${promptType}FeedbackMessage`);
+            if (messageEl) {
+                messageEl.textContent = isHelpful ? 'Thanks for your positive feedback!' : 'Thanks for your feedback. We\'ll improve this.';
+                messageEl.style.display = 'block';
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    messageEl.style.display = 'none';
+                }, 3000);
+            }
+
             const payload = document.getElementById('payload').value;
             let prompt;
-            let messageEl;
             
             // Get the specific prompt based on type
             if (promptType === 'direct') {
                 prompt = document.getElementById('directOutput').textContent;
-                messageEl = document.querySelector('#directFeedback .feedback-message');
             } else if (promptType === 'interactive') {
                 prompt = document.getElementById('interactiveOutput').textContent;
-                messageEl = document.querySelector('#interactiveFeedback .feedback-message');
             } else if (promptType === 'socratic') {
                 prompt = document.getElementById('socraticOutput').textContent;
-                messageEl = document.querySelector('#socraticFeedback .feedback-message');
             } else if (promptType === 'unsafe') {
                 prompt = document.getElementById('singleOutput').textContent;
-                messageEl = document.querySelector('#unsafeFeedback .feedback-message');
             }
 
             try {
@@ -946,9 +1067,9 @@
                         promptType: promptType
                     })
                 });
-                messageEl.textContent = 'Feedback sent. Thank you!';
+                console.log('Feedback sent successfully');
             } catch (err) {
-                messageEl.textContent = 'Failed to send feedback';
+                console.error('Failed to send feedback:', err);
             }
         }
 

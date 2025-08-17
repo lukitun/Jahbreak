@@ -233,7 +233,7 @@ const TEMPLATE_REGISTRY = {
         {
             name: "coding_agent",
             path: path.join(__dirname, '../templates/socratic_txt/coding_agent.txt'),
-            description: "Requirements gathering for programming requests, then code implementation",
+            description: "Professional coding assistant for comprehensive software development projects",
             bestFor: ["programming requests", "code generation", "software development", "application building"],
             keywords: ["code", "program", "build", "create", "develop", "software", "app", "application", "script", "scraper", "write", "make", "implement", "programming"]
         }
