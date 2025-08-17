@@ -60,10 +60,48 @@ app.get('/templates', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'templates.html'));
 });
 
-// API routes
+// Jahbreak API routes (both with and without prefix for compatibility)
 app.use('/api/generate', generateRoute);
 app.use('/api/feedback', feedbackRoute);
 app.use('/api/templates', templatesRoute);
+
+// Jahbreak API routes with prefix for dual app support
+app.use('/api/jahbreak/generate', generateRoute);
+app.use('/api/jahbreak/feedback', feedbackRoute);
+app.use('/api/jahbreak/templates', templatesRoute);
+
+// Social app API routes placeholder
+app.get('/api/health', (req, res) => {
+    res.json({ 
+        message: 'Social app backend is running',
+        jahbreak: 'Available at /api/jahbreak/',
+        timestamp: new Date().toISOString() 
+    });
+});
+
+// Jahbreak health check
+app.get('/api/jahbreak/health', (req, res) => {
+    res.json({ 
+        status: 'ok', 
+        service: 'jahbreak',
+        timestamp: new Date().toISOString() 
+    });
+});
+
+// Root Jahbreak API info
+app.get('/api/jahbreak/', (req, res) => {
+    res.json({
+        name: 'Jahbreak API',
+        version: '1.0.0',
+        description: 'Advanced Prompt Engineering API',
+        endpoints: {
+            generate: 'POST /api/jahbreak/generate',
+            feedback: 'POST /api/jahbreak/feedback',
+            health: 'GET /api/jahbreak/health'
+        },
+        github: 'https://github.com/lukitun/Jahbreak'
+    });
+});
 
 // Serve API documentation
 app.get('/api/docs', (req, res) => {
