@@ -2177,5 +2177,54 @@
     "selectedRole": "General Expert",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:16:25.046Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:16:26.950Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T17:19:00.268Z",
+    "payload": "How to learn programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:20:08.613Z",
+    "payload": "How to build a simple website?",
+    "selectedRole": "Web Developer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:20:18.045Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:20:20.258Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T17:20:36.503Z",
+    "payload": "Explain quantum computing",
+    "selectedRole": "Physics Professor",
+    "isSafeQuery": true,
+    "contextualization": "default"
   }
 ]
