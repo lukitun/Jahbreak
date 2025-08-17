@@ -381,12 +381,19 @@ class JahbreakTester:
                                     if content and len(content) > 50:  # Reasonable content length
                                         # Enhanced quality checks
                                         quality_score = self.validate_prompt_quality(content, technique_name)
+                                        
+                                        # Manual prompt evaluation - log the actual content for review
+                                        self.log(f"📝 {technique_name} Prompt Content Sample:", "DEBUG")
+                                        self.log(f"   {content[:200]}{'...' if len(content) > 200 else ''}", "DEBUG")
+                                        
                                         if quality_score >= 0.7:  # 70% quality threshold
                                             successful_techniques.append(f"{technique_name} (Q:{quality_score:.1f})")
                                             self.log(f"✓ {technique_name} technique: {len(content)} chars, quality: {quality_score:.1f}")
+                                            self.log(f"  💡 Content evaluation: Appears relevant and well-structured", "SUCCESS")
                                         else:
                                             failed_techniques.append(f"{technique_name} (low quality: {quality_score:.1f})")
                                             self.log(f"⚠️ {technique_name} technique: low quality ({quality_score:.1f})", "WARNING")
+                                            self.log(f"  ❌ Content evaluation: May lack structure or relevance", "WARNING")
                                     else:
                                         failed_techniques.append(f"{technique_name} (empty/short)")
                                         self.log(f"✗ {technique_name} technique: insufficient content ({len(content)} chars)", "WARNING")

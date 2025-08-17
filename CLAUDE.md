@@ -52,3 +52,11 @@ python3 test_selenium.py
 - Use the API domain bando.life for backend API calls if needed
 - **Always maintain a backup**: Before making any changes, create a copy of the latest human-approved version
 - Only proceed with modifications after backing up the current working state
+
+### Prompt Quality Validation
+- **Manual Review Required**: When testing, Claude must read and evaluate the actual prompt content
+- Check that prompts make logical sense and are relevant to the query
+- Verify each technique (Direct, Interactive, Socratic) follows its intended methodology
+- Ensure prompts are professional, well-structured, and actionable
+- Content should be substantial (200+ characters) and contain proper formatting
+- All prompts must be relevant to the user's original query

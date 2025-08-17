@@ -1,52 +1,52 @@
 {
-  "timestamp": "2025-08-17T02:55:22.807029",
+  "timestamp": "2025-08-17T03:00:35.826859",
   "tests": [
     {
       "name": "Website Accessibility",
       "passed": true,
       "details": "Title: Jahbreak - Advanced Prompt Engineering",
       "error": "",
-      "timestamp": "2025-08-17T02:55:23.891651"
+      "timestamp": "2025-08-17T03:00:37.040255"
     },
     {
       "name": "UI Elements",
       "passed": true,
       "details": "Found: Query textarea, Generate button, Personality input, Obfuscation select, Mode select, Theme toggle button",
       "error": "",
-      "timestamp": "2025-08-17T02:55:24.164391"
+      "timestamp": "2025-08-17T03:00:37.335035"
     },
     {
       "name": "Theme Toggle",
       "passed": true,
       "details": "Changed from 'Light Mode' to 'Dark Mode'",
       "error": "",
-      "timestamp": "2025-08-17T02:55:25.353649"
+      "timestamp": "2025-08-17T03:00:38.584409"
     },
     {
       "name": "API Direct Call",
       "passed": true,
       "details": "Generated 3 techniques",
       "error": "",
-      "timestamp": "2025-08-17T02:55:25.950223"
+      "timestamp": "2025-08-17T03:00:39.172729"
     },
     {
       "name": "Navigation",
       "passed": true,
       "details": "Templates page navigation works",
       "error": "",
-      "timestamp": "2025-08-17T02:55:26.848122"
+      "timestamp": "2025-08-17T03:00:40.046975"
     },
     {
       "name": "Frontend API Integration",
-      "passed": false,
-      "details": "Frontend error: Failed to execute 'json' on 'Response': Unexpected end of JSON input",
+      "passed": true,
+      "details": "Generated: Direct (Q:1.0), Interactive (Q:1.0), Socratic (Q:1.0)",
       "error": "",
-      "timestamp": "2025-08-17T02:55:27.624016"
+      "timestamp": "2025-08-17T03:00:41.684406"
     }
   ],
   "summary": {
     "total": 6,
-    "passed": 5,
-    "failed": 1
+    "passed": 6,
+    "failed": 0
   }
 }
