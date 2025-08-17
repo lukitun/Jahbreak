@@ -742,5 +742,33 @@
     "selectedRole": "Software Engineer",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T00:43:52.098Z",
+    "payload": "How to learn Python?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T00:44:05.004Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T00:44:06.224Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
+  },
+  {
+    "timestamp": "2025-08-17T00:46:34.595Z",
+    "payload": "Test query",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
   }
 ]

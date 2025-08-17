@@ -634,7 +634,7 @@
         const API_CONFIG = {
             API_BASE_URL: window.location.hostname === 'localhost' 
                 ? 'http://localhost:3001' 
-                : 'https://bando.life', // API hosted on bando.life
+                : window.location.origin, // Use same origin for jahbreak backend
             ENDPOINTS: {
                 GENERATE: '/api/generate',
                 FEEDBACK: '/api/feedback'
