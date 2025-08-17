@@ -2226,5 +2226,19 @@
     "selectedRole": "Physics Professor",
     "isSafeQuery": true,
     "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:24:48.432Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "default"
+  },
+  {
+    "timestamp": "2025-08-17T17:24:50.468Z",
+    "payload": "How to learn Python programming?",
+    "selectedRole": "Software Engineer",
+    "isSafeQuery": true,
+    "contextualization": "structured_config"
   }
 ]
