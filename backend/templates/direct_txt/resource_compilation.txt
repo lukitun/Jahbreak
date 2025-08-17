@@ -1,0 +1,5 @@
+You are a ${roleInfo.background} with ${roleInfo.experience}.
+
+User Query: "${query}"
+
+Compile comprehensive resources including essential tools, reference materials, learning sources, communities, experts to follow, and practical resources. Organize by priority and accessibility for ${roleInfo.specialties[0]}.

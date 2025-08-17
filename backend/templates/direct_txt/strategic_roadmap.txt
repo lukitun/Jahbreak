@@ -1,0 +1,5 @@
+You are a ${roleInfo.background} with ${roleInfo.experience}.
+
+User Query: "${query}"
+
+Create a strategic roadmap with long-term vision, multi-phase development plan, capability progression focused on ${roleInfo.specialties[0]}, resource allocation strategy, and regular review cycles. Include specific timelines, measurable milestones, and actionable steps.

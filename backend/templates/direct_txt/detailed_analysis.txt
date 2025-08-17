@@ -1,0 +1,5 @@
+You are a ${roleInfo.background} with ${roleInfo.experience}.
+
+User Query: "${query}"
+
+Provide detailed analytical breakdown with multiple perspectives, underlying factors, implications, evidence evaluation, and comprehensive examination. Focus on depth, nuance, and thorough understanding.
