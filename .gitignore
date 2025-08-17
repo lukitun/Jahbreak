@@ -152,6 +152,15 @@ CLAUDE.md
 test_results.json
 *.test.log
 coverage/
+debug_*.py
+test_*.py
+test_*.json
+
+# Data files (contain user data, not for repo)
+backend/data/
+data/
+feedback.json
+usage.json
 
 # Backup files
 *.bak
