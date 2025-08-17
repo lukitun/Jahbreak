@@ -402,9 +402,9 @@
             socratic: []
         };
 
-        // Template preview examples (simplified)
+        // Template preview examples (actual prompt samples)
         const previewExamples = {
-            'comprehensive_framework': 'Create a systematic framework with three phases: Foundation, Execution, and Optimization.',
+            'comprehensive_framework': 'You are a General Expert with broad knowledge across various fields and strong analytical skills.\\n\\nUser Query: "[YOUR QUERY]"\\n\\nI need you to provide a comprehensive systematic framework for this query. Structure your response as follows:\\n\\n## SYSTEMATIC FRAMEWORK\\n\\n### Phase 1: Foundation Analysis\\n- **Current State Assessment**: Analyze the starting point and existing conditions\\n- **Requirements Definition**: Define clear objectives and success criteria...',
             'expert_masterclass': 'Share expert insights including professional perspectives, proven techniques, essential tools, insider tips, and advanced strategies.',
             'practical_blueprint': 'Provide an immediately actionable blueprint with quick start guide, step-by-step plan, required tools, templates, success checkpoints, and troubleshooting.',
             'strategic_roadmap': 'Create a strategic roadmap with long-term vision, multi-phase development plan, capability progression, resource allocation strategy, and regular review cycles.',
@@ -448,45 +448,85 @@
                 <div class="${cardClass}">
                     <div class="template-name">${template.displayName || template.name.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}${isCodingAgent ? ' 🚀' : ''}</div>
                     <div class="template-description">${template.description}</div>
-                    <div class="template-preview">${preview}</div>
+                    <div class="template-preview"><strong>Sample Prompt Structure:</strong><br>${preview}</div>
                     ${template.bestFor ? `<div class="template-best-for"><strong>Best for:</strong> ${template.bestFor.join(', ')}</div>` : ''}
                 </div>
             `;
         }
 
-        // Load templates from backend
+        // Load templates from backend and get actual prompt previews
         async function loadTemplatesFromAPI() {
             try {
-                console.log('Loading templates from backend...');
+                console.log('Loading templates with real prompt previews...');
                 
-                // Create a test request to get template registry information
-                const response = await fetch('https://bando.life/api/generate', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        payload: 'test query',
-                        personality: 'Software Engineer',
-                        mode: 'professional'
-                    })
-                });
+                // Load the static templates first
+                loadStaticTemplates();
                 
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Template metadata received:', data.prompt?.templateMetadata);
-                    
-                    // Since we can't directly access the template registry, we'll use the hardcoded template list
-                    // but load it dynamically to show all 32 templates
-                    loadStaticTemplates();
-                } else {
-                    console.error('Failed to load templates, using static fallback');
-                    loadStaticTemplates();
-                }
+                // Then fetch real previews for each template
+                await loadRealTemplatePreviews();
+                
             } catch (error) {
                 console.error('Error loading templates:', error);
                 loadStaticTemplates();
             }
+        }
+
+        // Load real template previews by calling the API
+        async function loadRealTemplatePreviews() {
+            console.log('Fetching real template previews...');
+            
+            // Get sample previews for a few templates from each category
+            const sampleQueries = {
+                'comprehensive_framework': 'How to build a mobile app',
+                'expert_masterclass': 'Best practices for data analysis',
+                'practical_blueprint': 'Create a marketing strategy',
+                'focused_dialogue': 'Improve team productivity',
+                'comprehensive_discovery': 'Start a new business',
+                'guided_inquiry': 'Learn machine learning',
+                'coding_agent': 'Build a web scraper'
+            };
+            
+            for (const [templateName, sampleQuery] of Object.entries(sampleQueries)) {
+                try {
+                    const response = await fetch('https://bando.life/api/generate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            payload: sampleQuery,
+                            personality: 'General Expert',
+                            mode: 'professional'
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        const metadata = data.prompt?.templateMetadata;
+                        
+                        if (metadata) {
+                            // Update preview examples with real content
+                            if (metadata.direct?.templateUsed === templateName) {
+                                previewExamples[templateName] = data.prompt.direct.substring(0, 300) + '...';
+                            }
+                            if (metadata.interactive?.templateUsed === templateName) {
+                                previewExamples[templateName] = data.prompt.interactive.substring(0, 300) + '...';
+                            }
+                            if (metadata.socratic?.templateUsed === templateName) {
+                                previewExamples[templateName] = data.prompt.socratic.substring(0, 300) + '...';
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.log(`Could not fetch preview for ${templateName}:`, err.message);
+                }
+                
+                // Small delay to avoid overwhelming the API
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            
+            // Re-render templates with updated previews
+            renderTemplates();
         }
 
         // Load static template definitions (all 32 templates)
