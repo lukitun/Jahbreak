@@ -404,7 +404,7 @@
 // Loading actual generated code...
 </div>
                         
-                        <a href="/example-apps/sonnet-comparison/blog-platform" class="view-code">View Complete Code</a>
+                        <a href="https://github.com/lukitun/Jahbreak/tree/main/example-apps/blog-platform" target="_blank" class="view-code">View Complete Code on GitHub</a>
                     </div>
                 </div>
             </div>
@@ -466,7 +466,7 @@
 // Loading actual generated code...
 </div>
                         
-                        <a href="/example-apps/sonnet-comparison/chat-application" class="view-code">View Complete Code</a>
+                        <a href="https://github.com/lukitun/Jahbreak/tree/main/example-apps/sonnet-comparison/chat-application" target="_blank" class="view-code">View Complete Code on GitHub</a>
                     </div>
                 </div>
             </div>
@@ -507,7 +507,7 @@
 // Loading actual generated code...
 </div>
                         
-                        <a href="/example-apps/finance-tracker" class="view-code">View Haiku Version</a>
+                        <a href="https://github.com/lukitun/Jahbreak/tree/main/example-apps/finance-tracker" target="_blank" class="view-code">View Haiku Version on GitHub</a>
                     </div>
                     
                     <div class="result-panel">
@@ -532,7 +532,7 @@
 // Loading actual generated code...
 </div>
                         
-                        <a href="/example-apps/sonnet-comparison/finance-tracker" class="view-code">View Sonnet Version</a>
+                        <a href="https://github.com/lukitun/Jahbreak/tree/main/example-apps/sonnet-comparison/finance-tracker" target="_blank" class="view-code">View Sonnet Version on GitHub</a>
                     </div>
                 </div>
             </div>
@@ -590,7 +590,7 @@
 // Loading actual generated code...
 </div>
                         
-                        <a href="/example-apps/sonnet-comparison/project-manager" class="view-code">View Analysis</a>
+                        <a href="https://github.com/lukitun/Jahbreak/tree/main/example-apps/task-manager" target="_blank" class="view-code">View Analysis on GitHub</a>
                     </div>
                 </div>
             </div>
@@ -689,8 +689,8 @@
             if (!element || !config) return;
             
             try {
-                // Use bando.life API to fetch the code file
-                const response = await fetch(`${API_BASE_URL}/api/code/${encodeURIComponent(config.file)}`);
+                // Use bando.life API to fetch the code file via jahbreak API path
+                const response = await fetch(`${API_BASE_URL}/api/jahbreak/code/${encodeURIComponent(config.file)}`);
                 
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
