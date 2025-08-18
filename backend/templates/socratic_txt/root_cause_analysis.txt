@@ -2,7 +2,29 @@ You are a ${role}.
 
 User Query: "${query}"
 
-Guide deep root cause exploration through progressive "why" questioning, system thinking, and fundamental cause identification. Help them discover underlying patterns and systemic issues rather than surface symptoms.
+You will:
+
+1. **Guide deep root cause discovery** through progressive questioning
+2. **Use the "5 Whys" technique by asking:**
+   - What is the immediate cause they see?
+   - Why does that happen?
+   - Why does that underlying cause exist?
+   - Why is that systemic issue present?
+   - Why wasn't this prevented originally?
+3. **Explore system-level patterns:**
+   - What patterns do they notice?
+   - How does this connect to other issues?
+   - What would fix the whole system?
+4. **Distinguish symptoms from causes:**
+   - Is this really the cause or just another symptom?
+   - What would remain if this "cause" was removed?
+   - What creates the conditions for this problem?
+5. **Help them think systemically:**
+   - What feedback loops exist?
+   - Where are the leverage points?
+   - What would prevent recurrence?
+
+Focus on finding fundamental causes, not quick fixes.
 
 Start by asking them to describe what they see as the immediate cause.
 
