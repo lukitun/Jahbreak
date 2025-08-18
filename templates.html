@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates - Jahbreak AI Coding Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #e0e0e0;
+            --card-bg: #1a1a1a;
+            --card-hover-bg: #252525;
+            --border-color: #333;
+            --subtext-color: #888;
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --success-color: #4ade80;
+            --direct-color: #3b82f6;
+            --interactive-color: #10b981;
+            --socratic-color: #f59e0b;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .home-link {
+            padding: 0.5rem 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .home-link:hover {
+            background: var(--card-hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--subtext-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+        }
+
+        .template-categories {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .category-section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 2px solid var(--border-color);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .direct-title { color: var(--direct-color); }
+        .interactive-title { color: var(--interactive-color); }
+        .socratic-title { color: var(--socratic-color); }
+
+        .category-description {
+            color: var(--subtext-color);
+            margin-bottom: 2rem;
+        }
+
+        .templates-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .template-card {
+            background: #0a0a0a;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .template-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+
+        .template-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .template-filename {
+            font-size: 0.85rem;
+            color: var(--subtext-color);
+            font-family: 'Monaco', 'Courier New', monospace;
+            margin-bottom: 1rem;
+        }
+
+        .template-content {
+            background: #000;
+            color: #4ade80;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #333;
+        }
+
+        .template-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .template-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .template-content::-webkit-scrollbar-thumb {
+            background: #4ade80;
+            border-radius: 4px;
+        }
+
+        .view-full {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .view-full:hover {
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-nav">
+                <div></div>
+                <a href="/index.html" class="home-link">← Back to Jahbreak</a>
+            </div>
+            
+            <h1>Jahbreak Templates</h1>
+            <p class="subtitle">Advanced prompt engineering templates for every use case</p>
+            
+            <div class="intro">
+                <p>These are the actual prompt templates that power Jahbreak's AI-driven code generation. Each template is carefully crafted to extract maximum value from AI models, regardless of their size or capability. Our templates use variable substitution to adapt to your specific needs while maintaining optimal prompt structure.</p>
+            </div>
+        </header>
+
+        <div class="template-categories">
+            <!-- Direct Templates -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">🎯</span>
+                    <h2 class="category-title direct-title">Direct Templates</h2>
+                </div>
+                <p class="category-description">
+                    Immediate, actionable responses for when you need results fast. These templates generate comprehensive solutions with minimal back-and-forth.
+                </p>
+                
+                <div class="templates-grid">
+                    <div class="template-card">
+                        <h3 class="template-name">Quick Solution</h3>
+                        <p class="template-filename">quick_solution.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Provide a fast, efficient solution with immediate actionable steps, quick wins, and time-sensitive priorities. Focus on speed of implementation and practical results.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Step-by-Step Tutorial</h3>
+                        <p class="template-filename">step_by_step_tutorial.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Create a comprehensive tutorial with:
+1. Prerequisites and setup requirements
+2. Detailed step-by-step instructions with code examples
+3. Common pitfalls and how to avoid them
+4. Testing and validation steps
+5. Next steps and advanced topics
+
+Include code snippets, command-line examples, and configuration files where relevant.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Expert Masterclass</h3>
+                        <p class="template-filename">expert_masterclass.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Deliver an expert-level masterclass covering:
+- Advanced concepts and architectural patterns
+- Industry best practices and standards
+- Performance optimization techniques
+- Security considerations
+- Scalability strategies
+- Real-world case studies
+- Professional tips and tricks
+
+Provide production-ready code examples and enterprise-grade solutions.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Implementation Checklist</h3>
+                        <p class="template-filename">implementation_checklist.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Generate a comprehensive implementation checklist including:
+□ Pre-implementation requirements
+□ Development milestones
+□ Testing criteria
+□ Security validations
+□ Performance benchmarks
+□ Documentation requirements
+□ Deployment steps
+□ Post-deployment monitoring
+
+For each item, provide specific acceptance criteria and validation methods.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Templates -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">💬</span>
+                    <h2 class="category-title interactive-title">Interactive Templates</h2>
+                </div>
+                <p class="category-description">
+                    Collaborative problem-solving through guided dialogue. These templates create a conversational flow to refine requirements and deliver tailored solutions.
+                </p>
+                
+                <div class="templates-grid">
+                    <div class="template-card">
+                        <h3 class="template-name">Collaborative Planning</h3>
+                        <p class="template-filename">collaborative_planning.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Let's collaborate on planning this project:
+
+1. First, I'll analyze your requirements
+2. Ask clarifying questions about:
+   - Technical constraints
+   - Performance requirements
+   - Integration needs
+   - Timeline expectations
+3. Propose multiple implementation approaches
+4. Help you choose the best solution
+5. Create a detailed implementation plan
+
+Start by sharing your current understanding and any specific requirements.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Diagnostic Interview</h3>
+                        <p class="template-filename">diagnostic_interview.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Let me help diagnose and solve this issue through a structured interview:
+
+1. Current Symptoms:
+   - What specific problems are you experiencing?
+   - When did these issues first appear?
+   - Are there any error messages?
+
+2. Environment Analysis:
+   - System configuration
+   - Dependencies and versions
+   - Recent changes
+
+3. Reproduction Steps:
+   - Can you consistently reproduce the issue?
+   - What triggers the problem?
+
+4. Previous Attempts:
+   - What solutions have you tried?
+   - What was the outcome?
+
+Based on your answers, I'll provide targeted solutions.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Iterative Refinement</h3>
+                        <p class="template-filename">iterative_refinement.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Let's refine this solution iteratively:
+
+Round 1: Initial Implementation
+- Basic functionality
+- Core features
+- Minimal viable product
+
+Round 2: Enhancement
+- Performance optimization
+- Error handling
+- Edge cases
+
+Round 3: Polish
+- User experience improvements
+- Documentation
+- Testing coverage
+
+At each stage, I'll present the solution and gather your feedback for refinement.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Socratic Templates -->
+            <div class="category-section">
+                <div class="category-header">
+                    <span class="category-icon">🤔</span>
+                    <h2 class="category-title socratic-title">Socratic Templates</h2>
+                </div>
+                <p class="category-description">
+                    Deep understanding through guided questioning. These templates help you discover optimal solutions by exploring the problem space thoroughly.
+                </p>
+                
+                <div class="templates-grid">
+                    <div class="template-card">
+                        <h3 class="template-name">Guided Inquiry</h3>
+                        <p class="template-filename">guided_inquiry.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Let me guide you through understanding this topic deeply:
+
+Essential Questions:
+1. What is the core problem we're solving?
+2. Why is this problem important?
+3. What constraints must we consider?
+4. What would an ideal solution look like?
+5. How will we measure success?
+
+For each question:
+- I'll help you explore implications
+- Identify hidden assumptions
+- Discover optimal approaches
+- Build deep understanding
+
+This inquiry process ensures we build the right solution, not just any solution.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Root Cause Analysis</h3>
+                        <p class="template-filename">root_cause_analysis.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Let's find the root cause using the "5 Whys" technique:
+
+Surface Problem: [Your stated issue]
+
+Why #1: Why is this happening?
+→ [Analysis]
+
+Why #2: Why is that the case?
+→ [Deeper analysis]
+
+Why #3: Why does that occur?
+→ [Underlying factors]
+
+Why #4: Why do those conditions exist?
+→ [System-level issues]
+
+Why #5: Why wasn't this prevented?
+→ [Root cause identification]
+
+Solution Strategy:
+- Address root cause
+- Implement preventive measures
+- Create monitoring systems
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Critical Thinking Framework</h3>
+                        <p class="template-filename">critical_thinking.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+Apply critical thinking to analyze this thoroughly:
+
+1. CLARIFY
+   - Define key terms
+   - Identify assumptions
+   - Establish scope
+
+2. ANALYZE
+   - Break down components
+   - Examine relationships
+   - Identify patterns
+
+3. EVALUATE
+   - Assess strengths/weaknesses
+   - Consider alternatives
+   - Weigh trade-offs
+
+4. SYNTHESIZE
+   - Integrate insights
+   - Form conclusions
+   - Propose solutions
+
+5. REFLECT
+   - Question conclusions
+   - Consider implications
+   - Plan improvements
+
+This framework ensures robust, well-reasoned solutions.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+
+                    <div class="template-card">
+                        <h3 class="template-name">Coding Agent</h3>
+                        <p class="template-filename">coding_agent.txt</p>
+                        <div class="template-content">You are a ${role}.
+
+User Query: "${query}"
+
+As your coding agent, I'll help you think through this implementation:
+
+Questions to Consider:
+1. Architecture: What's the best structure for maintainability?
+2. Performance: Where are the potential bottlenecks?
+3. Security: What vulnerabilities should we guard against?
+4. Testing: How will we ensure reliability?
+5. Documentation: What will future developers need to know?
+
+For each aspect:
+- Current approach analysis
+- Industry best practices
+- Specific recommendations
+- Implementation examples
+
+Let's build something exceptional together.
+
+Rule: Always respond in the query's language.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="intro" style="margin-top: 3rem;">
+            <h3>How Templates Work</h3>
+            <p><strong>Variable Substitution:</strong> The ${role} and ${query} placeholders are dynamically replaced with context-appropriate values based on your input.</p>
+            
+            <p><strong>Language Adaptation:</strong> All templates include instructions to respond in the user's language, ensuring global accessibility.</p>
+            
+            <p><strong>Intelligent Selection:</strong> Jahbreak's AI automatically selects the most appropriate template based on your query type, complexity, and desired outcome.</p>
+        </div>
+    </div>
+</body>
+</html>

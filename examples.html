@@ -331,7 +331,7 @@
             <p class="subtitle">See what's possible with AI-powered prompt engineering</p>
             
             <div class="intro">
-                <p>These examples demonstrate the power of Jahbreak's AI-generated coding prompts across different LLM capabilities. The same high-quality prompts produce varying results depending on the underlying model, showcasing our platform's flexibility and scalability.</p>
+                <p>These examples demonstrate how Jahbreak transforms simple user queries into sophisticated coding agent prompts. Each example shows what happens when the same user input is processed by Jahbreak and then executed by different AI models, showcasing our platform's ability to generate high-quality, model-agnostic prompts.</p>
             </div>
 
             <div class="model-comparison">
@@ -355,8 +355,8 @@
                         A complete content management system with user authentication, rich text editing, comments, and SEO optimization.
                     </div>
                     <div class="prompt-used">
-                        <strong>Jahbreak Generated Prompt:</strong><br>
-                        "You are a Software Engineer who acts as a coding agent. Create a modern blog platform with content management, user comments, and SEO optimization features..."
+                        <strong>User Query to Jahbreak API:</strong><br>
+                        "Create a modern blog platform with content management, user comments, and SEO optimization features"
                     </div>
                 </div>
                 
@@ -378,15 +378,17 @@
                         </ul>
                         
                         <div class="code-sample">
-                            // package.json only
-                            {
-                              "name": "blog-platform",
-                              "dependencies": {
-                                "express": "^4.18.0",
-                                "sequelize": "^6.28.0"
-                              }
-                            }
-                        </div>
+// package.json only - no actual implementation
+{
+  "name": "blog-platform",
+  "dependencies": {
+    "express": "^4.18.0",
+    "sequelize": "^6.28.0"
+  }
+}
+
+// Missing: server.js, routes/, models/, frontend/
+// No actual code was generated</div>
                     </div>
                     
                     <div class="result-panel">
@@ -407,6 +409,34 @@
                             <li><span class="icon">✅</span> Redis caching</li>
                         </ul>
                         
+                        <div class="code-sample">
+// Actual server.js implementation (excerpt)
+import express from 'express';
+import { sequelize } from './database';
+import authRoutes from './routes/auth';
+import postRoutes from './routes/posts';
+import adminRoutes from './routes/admin';
+
+const app = express();
+
+// Middleware
+app.use(express.json());
+app.use(helmet());
+app.use(cors());
+app.use(rateLimiter);
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/admin', adminRoutes);
+
+// Database sync & server start
+sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+});</div>
+                        
                         <a href="/example-apps/sonnet-comparison/blog-platform" class="view-code">View Complete Code</a>
                     </div>
                 </div>
@@ -420,8 +450,8 @@
                         Advanced messaging platform with group chat, file sharing, video calls, and end-to-end encryption.
                     </div>
                     <div class="prompt-used">
-                        <strong>Jahbreak Generated Prompt:</strong><br>
-                        "Develop a real-time chat application with group messaging, file sharing, and video call features..."
+                        <strong>User Query to Jahbreak API:</strong><br>
+                        "Develop a real-time chat application with group messaging, file sharing, and video call features"
                     </div>
                 </div>
                 
@@ -443,10 +473,16 @@
                         </ul>
                         
                         <div class="code-sample">
-                            // Incomplete socket handler
-                            const socket = require('socket.io');
-                            // TODO: Implement chat functionality
-                        </div>
+// Incomplete socket handler - basic structure only
+const socket = require('socket.io');
+
+// TODO: Implement chat functionality
+// Missing:
+// - Message handling
+// - Room management  
+// - User authentication
+// - File sharing logic
+// - Video call integration</div>
                     </div>
                     
                     <div class="result-panel">
@@ -467,6 +503,32 @@
                             <li><span class="icon">✅</span> Screen sharing support</li>
                         </ul>
                         
+                        <div class="code-sample">
+// Socket.IO implementation with rooms & encryption
+import { Server } from 'socket.io';
+import { encryptMessage, decryptMessage } from './crypto';
+
+io.on('connection', (socket) => {
+  socket.on('join-room', async (roomId, userId) => {
+    socket.join(roomId);
+    const user = await User.findById(userId);
+    socket.to(roomId).emit('user-joined', user);
+  });
+
+  socket.on('send-message', async (data) => {
+    const encrypted = encryptMessage(data.message);
+    const message = await Message.create({
+      ...data,
+      content: encrypted
+    });
+    io.to(data.roomId).emit('new-message', message);
+  });
+
+  socket.on('start-video', (roomId, peerId) => {
+    socket.to(roomId).emit('user-video', peerId);
+  });
+});</div>
+                        
                         <a href="/example-apps/sonnet-comparison/chat-application" class="view-code">View Complete Code</a>
                     </div>
                 </div>
@@ -480,8 +542,8 @@
                         Comprehensive financial management tool with expense tracking, budgets, reporting, and multi-currency support.
                     </div>
                     <div class="prompt-used">
-                        <strong>Jahbreak Generated Prompt:</strong><br>
-                        "Create a personal finance tracker with expense tracking, budget management, and financial reporting..."
+                        <strong>User Query to Jahbreak API:</strong><br>
+                        "Create a personal finance tracker with expense tracking, budget management, and financial reporting"
                     </div>
                 </div>
                 
@@ -504,6 +566,29 @@
                             <li><span class="icon">⚠️</span> Basic security measures</li>
                         </ul>
                         
+                        <div class="code-sample">
+// Haiku's implementation - functional but basic
+import React from 'react';
+import { Chart } from 'chart.js';
+
+const ExpenseTracker = () => {
+  const [expenses, setExpenses] = useState([]);
+  
+  const addExpense = (expense) => {
+    // Basic validation
+    if (expense.amount && expense.category) {
+      setExpenses([...expenses, expense]);
+    }
+  };
+
+  return (
+    &lt;div className="expense-tracker"&gt;
+      &lt;ExpenseForm onSubmit={addExpense} /&gt;
+      &lt;ExpenseChart data={expenses} /&gt;
+    &lt;/div&gt;
+  );
+};</div>
+                        
                         <a href="/example-apps/finance-tracker" class="view-code">View Haiku Version</a>
                     </div>
                     
@@ -525,6 +610,57 @@
                             <li><span class="icon">✅</span> Professional documentation</li>
                         </ul>
                         
+                        <div class="code-sample">
+// Sonnet's enhanced implementation with advanced features
+import React, { useContext, useEffect } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { CurrencyContext } from './contexts/CurrencyContext';
+
+const EnhancedExpenseTracker: React.FC = () => {
+  const { currency, convertAmount } = useContext(CurrencyContext);
+  const { data, loading, error } = useQuery(GET_EXPENSES);
+  const [addExpense] = useMutation(ADD_EXPENSE);
+
+  const handleAddExpense = async (expense: Expense) => {
+    try {
+      // Advanced validation with Joi
+      await expenseSchema.validateAsync(expense);
+      
+      // Multi-currency support
+      const convertedAmount = await convertAmount(
+        expense.amount,
+        expense.currency,
+        currency
+      );
+
+      await addExpense({
+        variables: { 
+          ...expense,
+          convertedAmount,
+          timestamp: Date.now()
+        },
+        optimisticResponse: true,
+        refetchQueries: ['GetExpenses', 'GetBudgets']
+      });
+
+      // Send email notification for large expenses
+      if (convertedAmount > 1000) {
+        await sendNotification(expense);
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  return (
+    &lt;ErrorBoundary&gt;
+      &lt;ExpenseForm onSubmit={handleAddExpense} /&gt;
+      &lt;AdvancedCharts data={data?.expenses} /&gt;
+      &lt;ExportOptions formats={['PDF', 'CSV', 'Excel']} /&gt;
+    &lt;/ErrorBoundary&gt;
+  );
+};</div>
+                        
                         <a href="/example-apps/sonnet-comparison/finance-tracker" class="view-code">View Sonnet Version</a>
                     </div>
                 </div>
@@ -538,8 +674,8 @@
                         Comprehensive project management platform with task tracking, team collaboration, Gantt charts, and deadline management.
                     </div>
                     <div class="prompt-used">
-                        <strong>Jahbreak Generated Prompt (Socratic Method):</strong><br>
-                        "You are a Senior Software Engineer who uses Socratic questioning to guide discovery. Build a project management tool..."
+                        <strong>User Query to Jahbreak API:</strong><br>
+                        "Build a project management tool with task tracking, team collaboration, and deadline management"
                     </div>
                 </div>
                 
@@ -558,9 +694,12 @@
                         </ul>
                         
                         <div class="code-sample">
-                            // Error: 'claude-3-5-haiku-20241022' 
-                            // does not support thinking.
-                        </div>
+// Error: Model limitation encountered
+// 'claude-3-5-haiku-20241022' does not support 
+// extended reasoning required for this prompt
+
+// Result: No code generated
+// Haiku unable to process complex project requirements</div>
                     </div>
                     
                     <div class="result-panel">
@@ -578,6 +717,65 @@
                             <li><span class="icon">✅</span> Existing codebase analysis</li>
                             <li><span class="icon">✅</span> Professional methodology</li>
                         </ul>
+                        
+                        <div class="code-sample">
+// Sonnet's strategic approach - thoughtful analysis
+/**
+ * Project Management Tool Architecture
+ * 
+ * Questions to address before implementation:
+ * 1. Will this be SaaS or self-hosted?
+ * 2. Team size expectations (5, 50, 500+ users)?
+ * 3. Integration requirements (GitHub, Slack, etc)?
+ * 4. Real-time collaboration needs?
+ * 5. Data privacy/compliance requirements?
+ * 
+ * Recommended Stack:
+ * - Frontend: Next.js with TypeScript
+ * - State: Redux Toolkit + RTK Query
+ * - Backend: NestJS (enterprise-grade)
+ * - Database: PostgreSQL with TypeORM
+ * - Real-time: Socket.IO or GraphQL subscriptions
+ * - Queue: Bull for background jobs
+ * - Cache: Redis
+ * 
+ * Key Features to Implement:
+ * - Kanban boards with drag-and-drop
+ * - Gantt charts with dependencies
+ * - Resource allocation & tracking
+ * - Time tracking & reporting
+ * - Document management
+ * - Team chat & notifications
+ * - Custom workflows
+ */
+
+// Example: Task management with real-time updates
+class TaskService {
+  async updateTask(taskId: string, updates: Partial&lt;Task&gt;) {
+    const task = await this.taskRepo.findOne(taskId);
+    
+    // Validate permissions
+    await this.validatePermissions(user, task);
+    
+    // Apply business rules
+    if (updates.status === 'COMPLETED') {
+      await this.checkDependencies(task);
+      await this.updateProgress(task.projectId);
+    }
+    
+    // Update with audit trail
+    const updated = await this.taskRepo.update(task, {
+      ...updates,
+      updatedBy: user.id,
+      updatedAt: new Date()
+    });
+    
+    // Real-time notification
+    this.socketService.broadcast('task-updated', updated);
+    
+    return updated;
+  }
+}</div>
                         
                         <a href="/example-apps/sonnet-comparison/project-manager" class="view-code">View Analysis</a>
                     </div>
@@ -619,11 +817,11 @@
 
         <div class="intro">
             <h3>Key Takeaways</h3>
-            <p><strong>Jahbreak's Advantage:</strong> Our AI-generated prompts are model-agnostic and scale beautifully across different LLM capabilities. Whether you're prototyping with cost-effective models or building production applications with premium models, Jahbreak delivers consistent, high-quality prompt engineering.</p>
+            <p><strong>Simple Input, Powerful Output:</strong> Jahbreak transforms basic user queries into sophisticated coding agent prompts that deliver professional results. What you see above started with simple requests like "Create a blog platform" - Jahbreak's AI does the heavy lifting of prompt engineering.</p>
             
-            <p><strong>Flexible Pricing:</strong> Choose the model that fits your budget and requirements. The same sophisticated prompts work across our entire range, from budget-friendly options to enterprise-grade solutions.</p>
+            <p><strong>Model-Agnostic Excellence:</strong> The same Jahbreak-generated prompts work across different AI models, from cost-effective options to premium solutions. You get consistent prompt quality regardless of your budget.</p>
             
-            <p><strong>Proven Results:</strong> These examples demonstrate real applications built using Jahbreak-generated prompts, showcasing the platform's ability to produce everything from simple prototypes to complex, production-ready systems.</p>
+            <p><strong>Proven at Scale:</strong> These aren't toy examples - they're real applications with complete codebases, from basic prototypes (Haiku) to enterprise-grade systems (Sonnet), all generated from the same simple user inputs processed by Jahbreak.</p>
         </div>
     </div>
 </body>
