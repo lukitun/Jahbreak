@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const generateRoute = require('./routes/generate');
 const feedbackRoute = require('./routes/feedback');
 const templatesRoute = require('./routes/templates');
+const codeRoute = require('./routes/code');
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -64,11 +65,13 @@ app.get('/templates', (req, res) => {
 app.use('/api/generate', generateRoute);
 app.use('/api/feedback', feedbackRoute);
 app.use('/api/templates', templatesRoute);
+app.use('/api/code', codeRoute);
 
 // Jahbreak API routes with prefix for dual app support
 app.use('/api/jahbreak/generate', generateRoute);
 app.use('/api/jahbreak/feedback', feedbackRoute);
 app.use('/api/jahbreak/templates', templatesRoute);
+app.use('/api/jahbreak/code', codeRoute);
 
 // Social app API routes placeholder
 app.get('/api/health', (req, res) => {
