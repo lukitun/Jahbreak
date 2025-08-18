@@ -4,40 +4,70 @@ const path = require('path');
 
 const router = express.Router();
 
-// Serve code files from example-apps directory
-router.get('/:filepath(*)', async (req, res) => {
+// Serve specific code files for examples
+router.get('/example-apps/blog-platform/backend/src/server.js', async (req, res) => {
     try {
-        const filePath = req.params.filepath;
-        
-        // Security: Only allow access to example-apps directory
-        if (!filePath.startsWith('example-apps/')) {
-            return res.status(403).json({ error: 'Access denied: Only example-apps files are accessible' });
-        }
-        
-        // Resolve the full path
-        const fullPath = path.join(__dirname, '../../', filePath);
-        
-        // Check if file exists
-        try {
-            await fs.access(fullPath);
-        } catch (error) {
-            return res.status(404).json({ error: 'File not found' });
-        }
-        
-        // Read and return the file content
+        const fullPath = path.join(__dirname, '../../example-apps/blog-platform/backend/src/server.js');
         const content = await fs.readFile(fullPath, 'utf8');
-        
-        // Set appropriate content type
-        const ext = path.extname(fullPath);
-        if (ext === '.js' || ext === '.ts' || ext === '.tsx' || ext === '.jsx') {
-            res.set('Content-Type', 'text/plain');
-        }
-        
+        res.set('Content-Type', 'text/plain');
         res.send(content);
-        
     } catch (error) {
-        console.error('Error serving code file:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(404).json({ error: 'File not found' });
+    }
+});
+
+router.get('/example-apps/chat-application/backend/src/server.ts', async (req, res) => {
+    try {
+        const fullPath = path.join(__dirname, '../../example-apps/chat-application/backend/src/server.ts');
+        const content = await fs.readFile(fullPath, 'utf8');
+        res.set('Content-Type', 'text/plain');
+        res.send(content);
+    } catch (error) {
+        res.status(404).json({ error: 'File not found' });
+    }
+});
+
+router.get('/example-apps/sonnet-comparison/chat-application/backend/src/server.ts', async (req, res) => {
+    try {
+        const fullPath = path.join(__dirname, '../../example-apps/sonnet-comparison/chat-application/backend/src/server.ts');
+        const content = await fs.readFile(fullPath, 'utf8');
+        res.set('Content-Type', 'text/plain');
+        res.send(content);
+    } catch (error) {
+        res.status(404).json({ error: 'File not found' });
+    }
+});
+
+router.get('/example-apps/finance-tracker/frontend/src/App.tsx', async (req, res) => {
+    try {
+        const fullPath = path.join(__dirname, '../../example-apps/finance-tracker/frontend/src/App.tsx');
+        const content = await fs.readFile(fullPath, 'utf8');
+        res.set('Content-Type', 'text/plain');
+        res.send(content);
+    } catch (error) {
+        res.status(404).json({ error: 'File not found' });
+    }
+});
+
+router.get('/example-apps/sonnet-comparison/finance-tracker/frontend/src/App.tsx', async (req, res) => {
+    try {
+        const fullPath = path.join(__dirname, '../../example-apps/sonnet-comparison/finance-tracker/frontend/src/App.tsx');
+        const content = await fs.readFile(fullPath, 'utf8');
+        res.set('Content-Type', 'text/plain');
+        res.send(content);
+    } catch (error) {
+        res.status(404).json({ error: 'File not found' });
+    }
+});
+
+router.get('/example-apps/task-manager/backend/src/server.js', async (req, res) => {
+    try {
+        const fullPath = path.join(__dirname, '../../example-apps/task-manager/backend/src/server.js');
+        const content = await fs.readFile(fullPath, 'utf8');
+        res.set('Content-Type', 'text/plain');
+        res.send(content);
+    } catch (error) {
+        res.status(404).json({ error: 'File not found' });
     }
 });
 
