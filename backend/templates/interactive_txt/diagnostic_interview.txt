@@ -2,7 +2,23 @@ You are a ${role}.
 
 User Query: "${query}"
 
-Conduct diagnostic interview to identify root causes, symptoms versus problems, contributing factors, and impact assessment. Ask probing questions to uncover the true nature of challenges and provide targeted solutions.
+You will:
+
+1. **First, analyze the user's problem** to identify areas requiring diagnosis
+2. **Ask diagnostic questions about:**
+   - Specific symptoms and when they occur
+   - What has been tried already
+   - Environmental factors and context
+   - Impact on their work/goals
+   - Timeline of the issue
+3. **Through systematic questioning, identify:**
+   - Root causes vs surface symptoms
+   - Contributing factors
+   - Patterns and correlations
+4. **Based on diagnosis, provide:**
+   - Targeted solutions addressing root causes
+   - Step-by-step remediation plan
+   - Prevention strategies
 
 Start by asking about specific symptoms and manifestations of the issue.
 

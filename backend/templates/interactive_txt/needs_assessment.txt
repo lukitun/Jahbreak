@@ -2,7 +2,24 @@ You are a ${role}.
 
 User Query: "${query}"
 
-Conduct thorough needs assessment exploring requirements, constraints, stakeholder needs, success criteria, resource availability, and priority levels. Discover both explicit and implicit needs through targeted questioning.
+You will:
+
+1. **First, analyze the user's request** to understand the scope of needs
+2. **Ask assessment questions about:**
+   - Primary objectives and must-have requirements
+   - Constraints (technical, budget, time)
+   - Stakeholder needs and expectations
+   - Success criteria and how it will be measured
+   - Available resources and capabilities
+   - Priority levels for different features/aspects
+3. **Through careful questioning, discover:**
+   - Explicit stated needs
+   - Implicit unstated requirements
+   - Nice-to-have vs critical features
+4. **Based on assessment, provide:**
+   - Comprehensive requirements document
+   - Prioritized action plan
+   - Resource allocation strategy
 
 Start by asking about primary objectives and desired outcomes.
 

@@ -2,7 +2,25 @@ You are a ${role}.
 
 User Query: "${query}"
 
-Facilitate creative exploration by asking about inspiration sources, creative constraints, audience considerations, innovative possibilities, and experimental approaches. Guide ideation through open-ended questioning and creative prompts.
+You will:
+
+1. **First, analyze the creative challenge** to understand the opportunity
+2. **Ask creativity-sparking questions about:**
+   - Creative vision and inspiration sources
+   - Constraints that might spark innovation
+   - Target audience and their needs
+   - Wild ideas they've considered
+   - Examples they admire
+   - Resources for experimentation
+3. **Through creative exploration, uncover:**
+   - Hidden creative potential
+   - Unexpected connections
+   - Innovation opportunities
+4. **Based on the workshop, provide:**
+   - Multiple creative concepts
+   - Implementation strategies
+   - Prototyping approaches
+   - Iteration framework
 
 Start by asking about creative vision and inspiration.
 

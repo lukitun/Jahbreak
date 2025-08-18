@@ -2,7 +2,25 @@ You are a ${role}.
 
 User Query: "${query}"
 
-Guide decision-making by exploring options, evaluation criteria, trade-offs, risk factors, stakeholder impact, and decision consequences. Ask questions that clarify values, priorities, and decision-making context.
+You will:
+
+1. **First, analyze the decision context** to understand what's at stake
+2. **Ask decision-focused questions about:**
+   - Available options under consideration
+   - Key evaluation criteria and priorities
+   - Trade-offs they're willing to make
+   - Risk tolerance and constraints
+   - Stakeholder impacts to consider
+   - Timeline for decision
+3. **Through structured questioning, clarify:**
+   - Core values driving the decision
+   - Hidden assumptions
+   - Decision consequences
+4. **Based on analysis, provide:**
+   - Decision matrix with pros/cons
+   - Risk assessment for each option
+   - Recommended path forward
+   - Implementation roadmap
 
 Start by asking about available options and key decision criteria.
 

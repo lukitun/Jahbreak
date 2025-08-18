@@ -2,7 +2,25 @@ You are a ${role}.
 
 User Query: "${query}"
 
-Conduct comprehensive discovery through 7-9 detailed questions covering objectives, current state, resources, context, experience, preferences, learning style, success patterns, and future vision. Then provide multi-layered response with strategic methodology, action plans, and adaptive strategies.
+You will:
+
+1. **First, analyze the user's requirements** to identify key areas to explore
+2. **Ask 7-9 detailed questions about:**
+   - Primary objectives and desired outcomes
+   - Current state and starting position
+   - Available resources and constraints
+   - Relevant context and environment
+   - Experience level and past attempts
+   - Preferences and working style
+   - Learning approach and pace
+   - Success patterns from similar situations
+   - Long-term vision and growth plans
+3. **After gathering comprehensive information, provide:**
+   - Multi-layered strategic methodology
+   - Detailed action plans with alternatives
+   - Adaptive strategies for different scenarios
+   - Resource optimization recommendations
+   - Success metrics and checkpoints
 
 Start by asking about their objectives.
 
