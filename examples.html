@@ -377,18 +377,9 @@
                             <li><span class="icon">❌</span> No database schema</li>
                         </ul>
                         
-                        <div class="code-sample">
-// package.json only - no actual implementation
-{
-  "name": "blog-platform",
-  "dependencies": {
-    "express": "^4.18.0",
-    "sequelize": "^6.28.0"
-  }
-}
-
-// Missing: server.js, routes/, models/, frontend/
-// No actual code was generated</div>
+                        <div class="code-sample" id="haiku-blog-code">
+// Loading actual generated code...
+</div>
                     </div>
                     
                     <div class="result-panel">
@@ -409,33 +400,9 @@
                             <li><span class="icon">✅</span> Redis caching</li>
                         </ul>
                         
-                        <div class="code-sample">
-// Actual server.js implementation (excerpt)
-import express from 'express';
-import { sequelize } from './database';
-import authRoutes from './routes/auth';
-import postRoutes from './routes/posts';
-import adminRoutes from './routes/admin';
-
-const app = express();
-
-// Middleware
-app.use(express.json());
-app.use(helmet());
-app.use(cors());
-app.use(rateLimiter);
-
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/posts', postRoutes);
-app.use('/api/admin', adminRoutes);
-
-// Database sync & server start
-sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-});</div>
+                        <div class="code-sample" id="sonnet-blog-code">
+// Loading actual generated code...
+</div>
                         
                         <a href="/example-apps/sonnet-comparison/blog-platform" class="view-code">View Complete Code</a>
                     </div>
@@ -472,17 +439,9 @@ sequelize.sync().then(() => {
                             <li><span class="icon">❌</span> No file sharing</li>
                         </ul>
                         
-                        <div class="code-sample">
-// Incomplete socket handler - basic structure only
-const socket = require('socket.io');
-
-// TODO: Implement chat functionality
-// Missing:
-// - Message handling
-// - Room management  
-// - User authentication
-// - File sharing logic
-// - Video call integration</div>
+                        <div class="code-sample" id="haiku-chat-code">
+// Loading actual generated code...
+</div>
                     </div>
                     
                     <div class="result-panel">
@@ -503,31 +462,9 @@ const socket = require('socket.io');
                             <li><span class="icon">✅</span> Screen sharing support</li>
                         </ul>
                         
-                        <div class="code-sample">
-// Socket.IO implementation with rooms & encryption
-import { Server } from 'socket.io';
-import { encryptMessage, decryptMessage } from './crypto';
-
-io.on('connection', (socket) => {
-  socket.on('join-room', async (roomId, userId) => {
-    socket.join(roomId);
-    const user = await User.findById(userId);
-    socket.to(roomId).emit('user-joined', user);
-  });
-
-  socket.on('send-message', async (data) => {
-    const encrypted = encryptMessage(data.message);
-    const message = await Message.create({
-      ...data,
-      content: encrypted
-    });
-    io.to(data.roomId).emit('new-message', message);
-  });
-
-  socket.on('start-video', (roomId, peerId) => {
-    socket.to(roomId).emit('user-video', peerId);
-  });
-});</div>
+                        <div class="code-sample" id="sonnet-chat-code">
+// Loading actual generated code...
+</div>
                         
                         <a href="/example-apps/sonnet-comparison/chat-application" class="view-code">View Complete Code</a>
                     </div>
@@ -566,28 +503,9 @@ io.on('connection', (socket) => {
                             <li><span class="icon">⚠️</span> Basic security measures</li>
                         </ul>
                         
-                        <div class="code-sample">
-// Haiku's implementation - functional but basic
-import React from 'react';
-import { Chart } from 'chart.js';
-
-const ExpenseTracker = () => {
-  const [expenses, setExpenses] = useState([]);
-  
-  const addExpense = (expense) => {
-    // Basic validation
-    if (expense.amount && expense.category) {
-      setExpenses([...expenses, expense]);
-    }
-  };
-
-  return (
-    &lt;div className="expense-tracker"&gt;
-      &lt;ExpenseForm onSubmit={addExpense} /&gt;
-      &lt;ExpenseChart data={expenses} /&gt;
-    &lt;/div&gt;
-  );
-};</div>
+                        <div class="code-sample" id="haiku-finance-code">
+// Loading actual generated code...
+</div>
                         
                         <a href="/example-apps/finance-tracker" class="view-code">View Haiku Version</a>
                     </div>
@@ -610,56 +528,9 @@ const ExpenseTracker = () => {
                             <li><span class="icon">✅</span> Professional documentation</li>
                         </ul>
                         
-                        <div class="code-sample">
-// Sonnet's enhanced implementation with advanced features
-import React, { useContext, useEffect } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
-import { CurrencyContext } from './contexts/CurrencyContext';
-
-const EnhancedExpenseTracker: React.FC = () => {
-  const { currency, convertAmount } = useContext(CurrencyContext);
-  const { data, loading, error } = useQuery(GET_EXPENSES);
-  const [addExpense] = useMutation(ADD_EXPENSE);
-
-  const handleAddExpense = async (expense: Expense) => {
-    try {
-      // Advanced validation with Joi
-      await expenseSchema.validateAsync(expense);
-      
-      // Multi-currency support
-      const convertedAmount = await convertAmount(
-        expense.amount,
-        expense.currency,
-        currency
-      );
-
-      await addExpense({
-        variables: { 
-          ...expense,
-          convertedAmount,
-          timestamp: Date.now()
-        },
-        optimisticResponse: true,
-        refetchQueries: ['GetExpenses', 'GetBudgets']
-      });
-
-      // Send email notification for large expenses
-      if (convertedAmount > 1000) {
-        await sendNotification(expense);
-      }
-    } catch (error) {
-      handleError(error);
-    }
-  };
-
-  return (
-    &lt;ErrorBoundary&gt;
-      &lt;ExpenseForm onSubmit={handleAddExpense} /&gt;
-      &lt;AdvancedCharts data={data?.expenses} /&gt;
-      &lt;ExportOptions formats={['PDF', 'CSV', 'Excel']} /&gt;
-    &lt;/ErrorBoundary&gt;
-  );
-};</div>
+                        <div class="code-sample" id="sonnet-finance-code">
+// Loading actual generated code...
+</div>
                         
                         <a href="/example-apps/sonnet-comparison/finance-tracker" class="view-code">View Sonnet Version</a>
                     </div>
@@ -693,13 +564,10 @@ const EnhancedExpenseTracker: React.FC = () => {
                             <li><span class="icon">❌</span> Technical limitations</li>
                         </ul>
                         
-                        <div class="code-sample">
-// Error: Model limitation encountered
-// 'claude-3-5-haiku-20241022' does not support 
-// extended reasoning required for this prompt
-
-// Result: No code generated
-// Haiku unable to process complex project requirements</div>
+                        <div class="code-sample" id="haiku-project-code">
+// Model limitation - no code generated
+// Haiku unable to process complex requirements
+</div>
                     </div>
                     
                     <div class="result-panel">
@@ -718,64 +586,9 @@ const EnhancedExpenseTracker: React.FC = () => {
                             <li><span class="icon">✅</span> Professional methodology</li>
                         </ul>
                         
-                        <div class="code-sample">
-// Sonnet's strategic approach - thoughtful analysis
-/**
- * Project Management Tool Architecture
- * 
- * Questions to address before implementation:
- * 1. Will this be SaaS or self-hosted?
- * 2. Team size expectations (5, 50, 500+ users)?
- * 3. Integration requirements (GitHub, Slack, etc)?
- * 4. Real-time collaboration needs?
- * 5. Data privacy/compliance requirements?
- * 
- * Recommended Stack:
- * - Frontend: Next.js with TypeScript
- * - State: Redux Toolkit + RTK Query
- * - Backend: NestJS (enterprise-grade)
- * - Database: PostgreSQL with TypeORM
- * - Real-time: Socket.IO or GraphQL subscriptions
- * - Queue: Bull for background jobs
- * - Cache: Redis
- * 
- * Key Features to Implement:
- * - Kanban boards with drag-and-drop
- * - Gantt charts with dependencies
- * - Resource allocation & tracking
- * - Time tracking & reporting
- * - Document management
- * - Team chat & notifications
- * - Custom workflows
- */
-
-// Example: Task management with real-time updates
-class TaskService {
-  async updateTask(taskId: string, updates: Partial&lt;Task&gt;) {
-    const task = await this.taskRepo.findOne(taskId);
-    
-    // Validate permissions
-    await this.validatePermissions(user, task);
-    
-    // Apply business rules
-    if (updates.status === 'COMPLETED') {
-      await this.checkDependencies(task);
-      await this.updateProgress(task.projectId);
-    }
-    
-    // Update with audit trail
-    const updated = await this.taskRepo.update(task, {
-      ...updates,
-      updatedBy: user.id,
-      updatedAt: new Date()
-    });
-    
-    // Real-time notification
-    this.socketService.broadcast('task-updated', updated);
-    
-    return updated;
-  }
-}</div>
+                        <div class="code-sample" id="sonnet-project-code">
+// Loading actual generated code...
+</div>
                         
                         <a href="/example-apps/sonnet-comparison/project-manager" class="view-code">View Analysis</a>
                     </div>
@@ -824,5 +637,94 @@ class TaskService {
             <p><strong>Proven at Scale:</strong> These aren't toy examples - they're real applications with complete codebases, from basic prototypes (Haiku) to enterprise-grade systems (Sonnet), all generated from the same simple user inputs processed by Jahbreak.</p>
         </div>
     </div>
+
+    <script>
+        // Code loading configuration
+        const CODE_EXAMPLES = {
+            'haiku-blog-code': {
+                file: '/example-apps/blog-platform/backend/src/server.js',
+                lines: 150,
+                description: 'Basic blog platform server - incomplete implementation'
+            },
+            'sonnet-blog-code': {
+                file: '/example-apps/blog-platform/backend/src/server.js',
+                lines: 80,
+                description: 'Complete blog platform with Express.js, Sequelize, Redis'
+            },
+            'haiku-chat-code': {
+                file: '/example-apps/chat-application/backend/src/server.ts',
+                lines: 50,
+                description: 'Basic chat structure - missing real-time features'
+            },
+            'sonnet-chat-code': {
+                file: '/example-apps/sonnet-comparison/chat-application/backend/src/server.ts',
+                lines: 80,
+                description: 'Enterprise chat with Socket.IO, encryption, file sharing'
+            },
+            'haiku-finance-code': {
+                file: '/example-apps/finance-tracker/frontend/src/App.tsx',
+                lines: 60,
+                description: 'Functional finance tracker with basic features'
+            },
+            'sonnet-finance-code': {
+                file: '/example-apps/sonnet-comparison/finance-tracker/frontend/src/App.tsx',
+                lines: 80,
+                description: 'Advanced finance tracker with multi-currency, exports'
+            },
+            'sonnet-project-code': {
+                file: '/example-apps/task-manager/backend/src/server.js',
+                lines: 100,
+                description: 'Strategic project management analysis and implementation'
+            }
+        };
+
+        // Function to load and display actual code
+        async function loadCodeExample(elementId) {
+            const element = document.getElementById(elementId);
+            const config = CODE_EXAMPLES[elementId];
+            
+            if (!element || !config) return;
+            
+            try {
+                const response = await fetch(config.file);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const code = await response.text();
+                const lines = code.split('\n');
+                const excerpt = lines.slice(0, config.lines).join('\n');
+                
+                // Add comment header
+                const displayCode = `// ${config.description}\n// File: ${config.file}\n\n${excerpt}${lines.length > config.lines ? '\n\n// ... (truncated, view full code via link below)' : ''}`;
+                
+                element.textContent = displayCode;
+                
+            } catch (error) {
+                console.error(`Failed to load ${config.file}:`, error);
+                element.textContent = `// Error loading actual code from ${config.file}\n// ${error.message}\n\n// This demonstrates real application code generated by Jahbreak\n// The file may not be accessible in this environment`;
+            }
+        }
+
+        // Load all code examples when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            Object.keys(CODE_EXAMPLES).forEach(elementId => {
+                loadCodeExample(elementId);
+            });
+        });
+
+        // Add loading indicators
+        function showLoadingState() {
+            Object.keys(CODE_EXAMPLES).forEach(elementId => {
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.textContent = '// Loading actual generated code...\n// Please wait while we fetch the real implementation';
+                }
+            });
+        }
+
+        // Show loading state immediately
+        showLoadingState();
+    </script>
 </body>
 </html>
