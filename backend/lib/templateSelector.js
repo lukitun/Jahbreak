@@ -85,13 +85,6 @@ const TEMPLATE_REGISTRY = {
             description: "Systematic execution planning with detailed checklists",
             bestFor: ["project execution", "systematic implementation", "process management", "quality control"],
             keywords: ["checklist", "implementation", "execution", "process", "steps", "workflow", "management"]
-        },
-        {
-            name: "coding_implementation",
-            path: path.join(__dirname, '../templates/direct_txt/coding_implementation.txt'),
-            description: "Professional software development implementation with complete code solutions",
-            bestFor: ["programming tasks", "code generation", "software development", "application building", "technical implementation"],
-            keywords: ["code", "program", "build", "create", "develop", "software", "app", "application", "script", "website", "API", "database", "programming", "implementation", "function", "class", "algorithm"]
         }
     ],
     interactive: [
@@ -157,13 +150,6 @@ const TEMPLATE_REGISTRY = {
             description: "Objective clarification and prioritization through discovery",
             bestFor: ["goal setting", "objective clarification", "planning sessions", "vision development"],
             keywords: ["goal", "objective", "vision", "target", "aim", "purpose", "planning"]
-        },
-        {
-            name: "coding_consultation",
-            path: path.join(__dirname, '../templates/interactive_txt/coding_consultation.txt'),
-            description: "Technical consultation for software development projects with requirement gathering",
-            bestFor: ["programming projects", "code planning", "technical requirements", "software architecture", "development consultation"],
-            keywords: ["code", "program", "build", "create", "develop", "software", "app", "application", "script", "technical", "programming", "implementation", "architecture", "development"]
         },
         {
             name: "creative_workshop",
@@ -399,10 +385,11 @@ Which ${technique} template would be most appropriate for this query?`;
         }
     } catch (error) {
         console.error(`❌ Error selecting ${technique} template:`, error);
-        console.log(`❌ No fallback - Groq selection required`);
+        console.log(`⚠️ Using fallback template selection`);
         
-        // No fallback - throw error to force Groq usage
-        throw new Error(`Template selection failed - Groq API required`);
+        // Fallback: Use first template as default
+        console.log(`📌 Defaulting to first template: ${templates[0].name}`);
+        return templates[0];
     }
 }
 
