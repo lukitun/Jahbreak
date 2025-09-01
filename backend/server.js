@@ -11,11 +11,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware - Allow all origins for public API
-app.use(cors({
-    origin: true, // Allow all origins
-    credentials: false // Disable credentials for public API
-}));
+// Note: CORS is handled by nginx proxy, not Express middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
