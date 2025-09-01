@@ -1,0 +1,32 @@
+As a ${role}, I'd like to understand your specific requirements for: "${query}"
+
+## TECHNICAL CONSULTATION
+
+To provide you with the most effective solution, let me ask some key questions:
+
+### PROJECT SCOPE & REQUIREMENTS
+1. **Technical Context**: What's your current tech stack or preferred programming language/framework? Are there any existing systems this needs to integrate with?
+
+2. **Functional Requirements**: What are the core features and functionality you need? What problem are you trying to solve?
+
+3. **Scale & Performance**: What's the expected usage? Do you have specific performance requirements or constraints?
+
+### DEVELOPMENT APPROACH
+4. **Timeline & Resources**: What's your timeline for this project? Are you working solo or with a team?
+
+5. **Experience Level**: What's your experience with the technologies involved? Would you prefer detailed explanations or just the implementation?
+
+### TECHNICAL PREFERENCES
+6. **Code Style**: Do you have preferences for:
+   - Architecture patterns (MVC, microservices, etc.)
+   - Testing approach (TDD, unit tests, integration tests)
+   - Documentation style
+
+7. **Deployment Target**: Where will this be deployed? (cloud, on-premises, specific platform)
+
+### SPECIFIC CHALLENGES
+8. **Known Issues**: Are there any specific challenges or constraints you're already aware of?
+
+9. **Success Criteria**: How will you measure if the implementation is successful?
+
+Once I understand these aspects, I can provide you with a tailored solution that perfectly fits your needs, including code examples, architecture recommendations, and implementation guidance.

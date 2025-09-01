@@ -85,6 +85,13 @@ const TEMPLATE_REGISTRY = {
             description: "Systematic execution planning with detailed checklists",
             bestFor: ["project execution", "systematic implementation", "process management", "quality control"],
             keywords: ["checklist", "implementation", "execution", "process", "steps", "workflow", "management"]
+        },
+        {
+            name: "coding_implementation",
+            path: path.join(__dirname, '../templates/direct_txt/coding_implementation.txt'),
+            description: "Professional software development implementation with complete code solutions",
+            bestFor: ["programming tasks", "code generation", "software development", "application building", "technical implementation"],
+            keywords: ["code", "program", "build", "create", "develop", "software", "app", "application", "script", "website", "API", "database", "programming", "implementation", "function", "class", "algorithm"]
         }
     ],
     interactive: [
@@ -150,6 +157,13 @@ const TEMPLATE_REGISTRY = {
             description: "Objective clarification and prioritization through discovery",
             bestFor: ["goal setting", "objective clarification", "planning sessions", "vision development"],
             keywords: ["goal", "objective", "vision", "target", "aim", "purpose", "planning"]
+        },
+        {
+            name: "coding_consultation",
+            path: path.join(__dirname, '../templates/interactive_txt/coding_consultation.txt'),
+            description: "Technical consultation for software development projects with requirement gathering",
+            bestFor: ["programming projects", "code planning", "technical requirements", "software architecture", "development consultation"],
+            keywords: ["code", "program", "build", "create", "develop", "software", "app", "application", "script", "technical", "programming", "implementation", "architecture", "development"]
         },
         {
             name: "creative_workshop",
@@ -298,6 +312,21 @@ async function callGroqAPI({ systemPrompt, userPrompt }, retries = 3) {
     }
 }
 
+// Helper function to detect if query is programming-related
+function isProgrammingQuery(query) {
+    const programmingKeywords = [
+        'code', 'coding', 'program', 'programming', 'script', 'function', 'class', 
+        'algorithm', 'software', 'app', 'application', 'website', 'web', 'API', 
+        'database', 'backend', 'frontend', 'fullstack', 'build', 'create', 'develop', 
+        'implement', 'debug', 'fix', 'error', 'bug', 'compile', 'javascript', 'python', 
+        'java', 'react', 'node', 'sql', 'html', 'css', 'framework', 'library', 
+        'module', 'package', 'deploy', 'server', 'client', 'mobile', 'desktop'
+    ];
+    
+    const lowerQuery = query.toLowerCase();
+    return programmingKeywords.some(keyword => lowerQuery.includes(keyword));
+}
+
 // Analyze query and select best template for a technique
 async function selectBestTemplate(technique, query, role) {
     console.log(`🎯 Selecting best ${technique} template for query: "${query.substring(0, 50)}..."`);
@@ -308,6 +337,26 @@ async function selectBestTemplate(technique, query, role) {
 
     const templates = TEMPLATE_REGISTRY[technique];
     
+    // Check if this is a programming query
+    const isProgramming = isProgrammingQuery(query) || role === 'Software Engineer';
+    
+    if (isProgramming) {
+        console.log('🖥️ Detected programming query - prioritizing coding templates');
+        
+        // Find coding-specific templates
+        const codingTemplates = templates.filter(t => 
+            t.name.includes('coding') || 
+            t.name.includes('code') || 
+            t.keywords.includes('programming') ||
+            t.keywords.includes('code')
+        );
+        
+        if (codingTemplates.length > 0) {
+            console.log(`✅ Using coding template: ${codingTemplates[0].name}`);
+            return codingTemplates[0];
+        }
+    }
+    
     // Create detailed descriptions for Groq
     const templateDescriptions = templates.map((template, index) => {
         return `${index + 1}. ${template.name}: ${template.description}
@@ -315,17 +364,19 @@ async function selectBestTemplate(technique, query, role) {
    Keywords: ${template.keywords.join(', ')}`;
     }).join('\n\n');
 
-    const systemPrompt = `You are a template selector. 
+    const systemPrompt = `You are a template selector. Analyze the query and select the MOST APPROPRIATE template based on what the user is asking for.
 
 Available ${technique} templates:
 ${templateDescriptions}
 
-MANDATORY RULE FOR SOCRATIC TECHNIQUE:
-If the query is about programming/software development AND technique is socratic, respond with template number 11 (coding_agent).
+IMPORTANT RULES:
+1. Match the template to the ACTUAL CONTENT of the query, not just keywords
+2. For programming/coding queries, ALWAYS select templates with "coding", "code", or "programming" in their name or keywords
+3. Consider the role (${role}) - if it's "Software Engineer", prioritize technical templates
+4. Select based on what would be most helpful for the user's specific need
+5. If the query mentions building, creating, or developing software/apps/websites, choose coding templates
 
-Programming keywords that trigger template 11: code, program, build, create, develop, software, app, application, script, website, web, API, database, mobile, programming, implementation, scraper, make, write
-
-For all other queries, select the most appropriate template.
+${isProgramming ? 'NOTE: This appears to be a programming-related query. Strongly prefer coding/programming templates.' : ''}
 
 Respond with ONLY a number (1-${templates.length}).`;
 
